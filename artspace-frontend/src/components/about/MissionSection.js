@@ -52,7 +52,7 @@ const MissionSection = () => {
                         </FadeIn>
                     </div>
 
-                    <div className="w-[500px] h-[500px] shadow-2xl rounded-2xl">
+                    <div className="w-full sm:w-[400px] md:w-[500px] aspect-square shadow-2xl rounded-2xl mt-10 lg:mt-0">
                         <div
                             className="w-full h-full rounded-2xl bg-cover bg-center"
                             style={{
