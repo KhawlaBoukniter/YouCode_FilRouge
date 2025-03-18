@@ -13,12 +13,12 @@ export default function AdminUsersPage() {
     ];
 
     return (
-        <div className="flex flex-col ml-64 pt-10 min-h-screen ">
+        <div className="flex flex-col ml-64 min-h-screen ">
 
             <div className="flex flex-1 w-full">
                 <AdminSidebar />
 
-                <main className="flex-1 pl-16 p-8 space-y-10">
+                <main className="flex-1 pl-16 p-8 py-20 space-y-10">
                     <Card className="rounded-2xl shadow-md">
                         <CardHeader className="px-8 pb-0">
                             <CardTitle className="text-2xl font-playfair text-gray-800">

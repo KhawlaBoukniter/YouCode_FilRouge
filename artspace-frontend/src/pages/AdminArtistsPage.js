@@ -8,7 +8,7 @@ import Button from "../components/ui/button";
 export default function AdminArtistsPage() {
     const [filter, setFilter] = useState("Tous");
     const [currentPage, setCurrentPage] = useState(1);
-    const artistsPerPage = 4;
+    const artistsPerPage = 5;
 
     const artists = [
         { id: 1, name: "Claire Dubois", email: "claire@example.com", status: "En attente" },
@@ -28,11 +28,11 @@ export default function AdminArtistsPage() {
     const totalPages = Math.ceil(filteredArtists.length / artistsPerPage);
 
     return (
-        <div className="flex flex-col ml-64 pt-10 min-h-screen">
+        <div className="flex flex-col ml-64 min-h-screen">
             <div className="flex flex-1 w-full">
                 <Sidebar />
 
-                <main className="flex-1 pl-16 p-8 space-y-10">
+                <main className="flex-1 pl-16 p-8 py-20 space-y-10">
                     <Card className="rounded-2xl shadow-md">
                         <CardHeader className="px-8 pb-0 flex justify-between items-center">
                             <CardTitle className="text-2xl font-playfair text-gray-800">
