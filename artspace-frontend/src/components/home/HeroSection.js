@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight, Import, Play } from "lucide-react";
+import { ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import Button from "../ui/button";
 import heroImage from "../../assets/images/hero-art.png";
@@ -8,24 +8,24 @@ import FadeIn from "../ui/FadeIn";
 const HeroSection = () => {
     return (
         <section className="bg-gradient-to-r from-gray-50 to-white w-full">
-            <div className="max-w-[1280px] mx-auto px-20 py-20 pb-10 flex justify-between items-center">
+            <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-20 py-20 pb-10 flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
                 {/* Left Content */}
-                <div className="w-[592px] space-y-[70px]">
+                <div className="w-full lg:w-[592px] space-y-10 md:space-y-[70px] text-center lg:text-left">
                     <FadeIn>
-                        <h1 className="font-garamond text-4xl text-black leading-[60px]">
+                        <h1 className="font-garamond text-3xl md:text-4xl text-black leading-snug">
                             Experience Art in a New Dimension
                         </h1>
                     </FadeIn>
 
                     <FadeIn delay={0.2}>
-                        <p className="font-garamond text-xl text-gray-600 leading-5">
+                        <p className="font-garamond text-base md:text-xl text-gray-600 leading-6 md:leading-5">
                             Step into the future of art exploration with our immersive 3D
                             museum platform. Discover masterpieces from around the world in
                             stunning detail.
                         </p>
                     </FadeIn>
 
-                    <div className="flex space-x-3">
+                    <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4">
                         <FadeIn delay={0.4}>
                             <Button className="h-[50px] w-[186px] rounded-full bg-[#3a6b8f] text-white font-garamond text-base">
                                 <Link
@@ -51,7 +51,7 @@ const HeroSection = () => {
                 </div>
 
                 {/* Right Image */}
-                <div className="w-[500px] h-[500px]">
+                <div className="w-full max-w-[500px] h-[300px] sm:h-[400px] lg:h-[500px]">
                     <div
                         className="w-full h-full rounded-2xl bg-cover bg-center"
                         style={{
