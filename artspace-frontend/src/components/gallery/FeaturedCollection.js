@@ -32,27 +32,27 @@ const FeaturedCollection = () => {
 
     return (
         <section className="w-full py-10 bg-white">
-            <div className="max-w-7xl mx-auto px-5">
-                <h2 className="text-4xl text-center mb-24 font-garamond text-black leading-9">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl text-center mb-12 sm:mb-24 font-garamond text-black leading-snug">
                     Featured Collection
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                     {featuredArtworks.map((artwork, i) => (
-                        <FadeIn delay={0.3 * i}>
-                            <Card key={artwork.id} className="shadow-none p-4 transform transition duration-300 hover:scale-105 hover:shadow-[0_1rem_2rem_#00000030]">
+                        <FadeIn key={artwork.id} delay={0.3 * i}>
+                            <Card className="shadow-none p-4 transform transition duration-300 hover:scale-105 hover:shadow-[0_1rem_2rem_#00000030] text-center max-w-sm mx-auto">
                                 <CardContent className="p-0">
                                     <div className="flex flex-col gap-4">
                                         <img
                                             src={artwork.image}
                                             alt={artwork.title}
-                                            className="w-full h-[300px] object-cover rounded-xl"
+                                            className="w-full h-48 sm:h-60 md:h-64 object-cover rounded-xl"
                                         />
-                                        <div className="mt-4">
-                                            <h3 className="font-garamond text-black text-xl leading-5">
+                                        <div className="mt-2">
+                                            <h3 className="font-garamond text-black text-lg sm:text-xl">
                                                 {artwork.title}
                                             </h3>
-                                            <p className="font-garamond text-gray-600 text-base mt-2">
+                                            <p className="font-garamond text-gray-600 text-sm sm:text-base mt-1">
                                                 {artwork.artist}, {artwork.year}
                                             </p>
                                         </div>
