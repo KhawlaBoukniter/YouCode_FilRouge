@@ -30,47 +30,44 @@ const exhibitions = [
 const FeaturedExhibitions = () => {
     return (
         <section className="w-full py-20 bg-gray-50">
-            <div className="max-w-[1280px] mx-auto px-12">
+            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
                 <div className="text-center mb-16">
                     <FadeIn>
-                        <h2 className="font-normal text-3xl mb-6 font-garamond text-black leading-9">
+                        <h2 className="text-2xl sm:text-3xl font-garamond text-black mb-4">
                             Featured Exhibitions
                         </h2>
                     </FadeIn>
 
                     <FadeIn delay={0.2}>
-                        <p className="font-normal text-lg text-gray-600 font-garamond leading-5">
+                        <p className="text-sm sm:text-lg text-gray-600 font-garamond leading-6">
                             Explore our curated collection of digital exhibitions
                         </p>
                     </FadeIn>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                     {exhibitions.map((exhibition, i) => (
-                        <FadeIn delay={0.4 * i}>
-                            <div
-                                key={exhibition.id}
-                                className="rounded-xl overflow-hidden shadow-[0px_10px_15px_#0000001a,0px_4px_6px_#0000001a] border-0 bg-white transform transition duration-300 hover:scale-105 hover:shadow-[0px_15px_20px_#00000030]"
-                            >
+                        <FadeIn key={exhibition.id} delay={0.4 * i}>
+                            <div className="rounded-xl overflow-hidden shadow-md bg-white hover:bg-[#f9f9f9] transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
                                 <div
-                                    className="h-64 w-full bg-cover bg-center"
+                                    className="w-full h-48 sm:h-56 md:h-64 bg-cover bg-center"
                                     style={{ backgroundImage: `url(${exhibition.image})` }}
                                 />
-                                <div className="p-6">
-                                    <h3 className="font-playfair text-lg text-black mb-4 transition duration-300 hover:text-[#3a6b8f]">
+                                <div className="p-6 flex flex-col justify-between h-full">
+                                    <h3 className="font-playfair text-base sm:text-lg text-black mb-3 hover:text-[#3a6b8f] transition-colors duration-300">
                                         {exhibition.title}
                                     </h3>
-                                    <p className="font-playfair font-normal text-gray-600 text-sm leading-6 mb-6">
+                                    <p className="font-playfair text-sm sm:text-base text-gray-600 leading-6 mb-6">
                                         {exhibition.description}
                                     </p>
                                     <div className="flex justify-between items-center">
                                         <Link
                                             to={`/artworks/${exhibition.id}`}
-                                            className="font-playfair font-bold text-[#d3bb75] text-sm transition"
+                                            className="font-playfair font-semibold text-[#d3bb75] text-sm hover:underline"
                                         >
                                             {exhibition.status}
                                         </Link>
-                                        <ArrowRight className="w-3.5 h-4 text-[#d3bb75]" />
+                                        <ArrowRight className="w-4 h-4 text-[#d3bb75]" />
                                     </div>
                                 </div>
                             </div>
