@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Sidebar from "../components/admin/Sidebar";
 import StatsSection from "../components/admin/StatsSection";
@@ -10,10 +9,8 @@ import ManageEventsSection from "../components/admin/ManageEventsSection";
 
 export default function AdminDash() {
     return (
-        <div className="flex flex-col min-h-screen bg-[#f8f7f4]">
-            <Navbar />
-
-            <div className="flex-1 ml-64">
+        <div className="flex flex-col ml-64 bg-[#f8f7f4]">
+            <div className="flex-1 ">
                 <Sidebar />
 
                 <main className="flex-1 ">
