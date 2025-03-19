@@ -8,7 +8,7 @@ class ArtworkRepository
 {
     public function getAll()
     {
-        return Artwork::with('artist.user')->latest()->get();
+        return Artwork::with('artist.user')->latest()->paginate(6);
     }
 
     public function create(array $data)
