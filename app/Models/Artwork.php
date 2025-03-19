@@ -17,4 +17,9 @@ class Artwork extends Model
     {
         return $this->belongsTo(Artist::class);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
