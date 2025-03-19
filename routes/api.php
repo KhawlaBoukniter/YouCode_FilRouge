@@ -19,4 +19,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::post('/artworks', [ArtworkController::class, 'store']);
+    Route::put('/artworks/{artwork}', [ArtworkController::class, 'update']);
+    Route::delete('/artworks/{artwork}', [ArtworkController::class, 'destroy']);
 });
