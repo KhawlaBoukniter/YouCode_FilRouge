@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Artist;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -31,6 +32,12 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'role_id' => $request->role_id,
         ]);
+
+        if ($user->role_id == 2) {
+            Artist::create([
+                'user_id' => $user->id
+            ]);
+        }
 
         $token = $user->createToken('auth_token')->accessToken;
 
