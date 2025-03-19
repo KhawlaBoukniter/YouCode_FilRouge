@@ -19,7 +19,7 @@ class CommentController extends Controller
 
     public function index(Artwork $artwork)
     {
-        $comments = $artwork->comments()->with('user:id,name')->latest()->get();
+        $comments = $artwork->comments()->with('user:id,name')->latest()->paginate(6);
 
         return response()->json([
             'artwork_id' => $artwork->id,
