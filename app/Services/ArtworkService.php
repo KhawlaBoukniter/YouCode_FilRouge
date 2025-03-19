@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\ArtworkRepository;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Artist;
 use App\Models\Artwork;
@@ -27,6 +28,11 @@ class ArtworkService
 
         if (! $artist) {
             return null;
+        }
+
+        if (isset($data['image'])) {
+            $path = $data['image']->store('artworks', 'public');
+            $data['image'] = Storage::url($path);
         }
 
         $data['artist_id'] = $artist->id;
