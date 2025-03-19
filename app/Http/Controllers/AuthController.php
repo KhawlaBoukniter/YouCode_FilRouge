@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -16,7 +17,8 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|min:8|confirmed'
+            'password' => 'required|string|min:8|confirmed',
+            'role_id' => 'required|exists:roles,id'
         ]);
 
         if ($validator->fails()) {
@@ -27,10 +29,16 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role_id' => Role::where('name', 'visitor')->first()->id,
+            'role_id' => $request->role_id,
         ]);
 
-        return response()->json(['message' => 'user registred'], 201);
+        $token = $user->createToken('auth_token')->accessToken;
+
+        return response()->json([
+            'message' => 'user registred',
+            'token'   => $token,
+            'user'    => $user
+        ], 201);
     }
 
     public function login(Request $request)
@@ -40,17 +48,32 @@ class AuthController extends Controller
             'password' => 'string|required',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+        $user = User::where('email', $request->email)->first();
+
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['Les informations ne sont pas valides.'],
+            ]);
         }
 
-        if (!Auth::attempt($request->only('email', 'password'))) {
-            return response()->json(['error' => 'unauthorized'], 401);
-        }
-
-        $user = Auth::user();
         $token = $user->createToken('authToken')->accessToken;
 
-        return response()->json(['token' => $token, 'user' => $user], 200);
+        return response()->json([
+            'message' => 'connexion réussie',
+            'token' => $token,
+            'user' => $user
+        ]);
+    }
+
+    public function me(Request $request)
+    {
+        return response()->json($request->user());
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+
+        return response()->json(['message' => 'Déconnexion réussie.']);
     }
 }
