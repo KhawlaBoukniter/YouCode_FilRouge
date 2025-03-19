@@ -2,19 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Artist;
-use App\Models\Artwork;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Artwork\ArtworkRequest;
+use App\Services\ArtworkService;
+use Illuminate\Support\Facades\Gate;
 
 class ArtworkController extends Controller
 {
+    protected $artworkService;
+
+    public function __construct(ArtworkService $artworkService)
+    {
+        $this->artworkService = $artworkService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return response()->json([
+            'artworks' => $this->artworkService->list()
+        ]);
     }
 
     /**
@@ -28,31 +36,20 @@ class ArtworkController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ArtworkRequest $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'image' => 'required|url',
-        ]);
-
-        $artist = Artist::where('user_id', Auth::id())->first();
-
-        if (! $artist) {
-            return response()->json([
-                'message' => 'Cet utilisateur n\'est pas un artiste.'
-            ], 403);
+        if (! Gate::allows('create', \App\Models\Artwork::class)) {
+            return response()->json(['message' => 'Action non autorisée'], 403);
         }
 
-        $artwork = Artwork::create([
-            'title'       => $request->title,
-            'description' => $request->description,
-            'image'   => $request->image,
-            'artist_id'   => $artist->id
-        ]);
+        $artwork = $this->artworkService->create($request->validated());
+
+        if (! $artwork) {
+            return response()->json(['message' => 'Aucun artiste lié à cet utilisateur.'], 403);
+        }
 
         return response()->json([
-            'message' => 'Artwork crée avec succès.',
+            'message' => 'Œuvre créée avec succès',
             'artwork' => $artwork
         ], 201);
     }
@@ -76,7 +73,7 @@ class ArtworkController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ArtworkRequest $request, string $id)
     {
         //
     }
