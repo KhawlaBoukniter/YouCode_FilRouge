@@ -2,85 +2,60 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Artist;
-use App\Models\Role;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Services\AuthService;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    protected $authService;
+
+    public function __construct(AuthService $authService)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'role_id' => 'required|exists:roles,id'
-        ]);
+        $this->authService = $authService;
+    }
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role_id' => $request->role_id,
-        ]);
-
-        if ($user->role_id == 2) {
-            Artist::create([
-                'user_id' => $user->id
-            ]);
-        }
-
-        $token = $user->createToken('auth_token')->accessToken;
+    public function register(RegisterRequest $request)
+    {
+        $data = $this->authService->register($request->validated());
 
         return response()->json([
-            'message' => 'user registred',
-            'token'   => $token,
-            'user'    => $user
+            'message' => 'Inscription réussie',
+            'user' => $data['user'],
+            'token' => $data['token']
         ], 201);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'string|required|email',
-            'password' => 'string|required',
-        ]);
+        $data = $this->authService->login($request->validated());
 
-        $user = User::where('email', $request->email)->first();
-
-        if (! $user || ! Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['Les informations ne sont pas valides.'],
-            ]);
+        if (!$data) {
+            return response()->json([
+                'message' => 'Identifiants invalides'
+            ], 401);
         }
 
-        $token = $user->createToken('authToken')->accessToken;
-
         return response()->json([
-            'message' => 'connexion réussie',
-            'token' => $token,
-            'user' => $user
+            'message' => 'Connexion réussie',
+            'user' => $data['user'],
+            'token' => $data['token']
         ]);
     }
 
-    public function me(Request $request)
+    public function me()
     {
-        return response()->json($request->user());
+        return response()->json([
+            'user' => $this->authService->me()
+        ]);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        $request->user()->token()->revoke();
+        $this->authService->logout();
 
-        return response()->json(['message' => 'Déconnexion réussie.']);
+        return response()->json([
+            'message' => 'Déconnexion réussie'
+        ]);
     }
 }
