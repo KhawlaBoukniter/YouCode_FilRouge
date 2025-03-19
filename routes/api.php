@@ -14,6 +14,7 @@ Route::get('/user', function (Request $request) {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/artworks', [ArtworkController::class, 'index']);
+Route::get('/artworks/{artwork}', [ArtworkController::class, 'show']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
@@ -21,7 +22,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/artworks', [ArtworkController::class, 'store']);
     Route::put('/artworks/{artwork}', [ArtworkController::class, 'update']);
-    Route::delete('/artworks/{artwork}', [ArtworkController::class, 'destroy']);
+    Route::delete('/artworks/{artwork}', [ArtworkController::class, 'destroy'])->middleware('can:delete,artwork');;
+
 
     Route::post('/comments', [CommentController::class, 'store']);
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);

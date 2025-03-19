@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Repositories\ArtworkRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Artist;
+use App\Models\Artwork;
 
 class ArtworkService
 {
@@ -37,7 +38,7 @@ class ArtworkService
         return $this->artworkRepo->update($artwork, $data);
     }
 
-    public function delete($artwork)
+    public function delete(Artwork $artwork)
     {
         return $this->artworkRepo->delete($artwork);
     }

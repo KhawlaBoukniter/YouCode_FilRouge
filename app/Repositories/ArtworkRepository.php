@@ -22,8 +22,8 @@ class ArtworkRepository
         return $artwork;
     }
 
-    public function delete($artwork)
+    public function delete(Artwork $artwork)
     {
-        return $artwork->delete();
+        $artwork->delete();
     }
 }
