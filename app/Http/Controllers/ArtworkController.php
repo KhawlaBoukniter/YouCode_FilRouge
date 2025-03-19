@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Http\Requests\Artwork\ArtworkRequest;
+use App\Http\Requests\Artwork\ArtworkUpdateRequest;
+use App\Models\Artwork;
 use App\Services\ArtworkService;
 use Illuminate\Support\Facades\Gate;
 
 class ArtworkController extends Controller
 {
+    use AuthorizesRequests;
+
     protected $artworkService;
 
     public function __construct(ArtworkService $artworkService)
@@ -38,7 +43,7 @@ class ArtworkController extends Controller
      */
     public function store(ArtworkRequest $request)
     {
-        if (! Gate::allows('create', \App\Models\Artwork::class)) {
+        if (! Gate::allows('create', Artwork::class)) {
             return response()->json(['message' => 'Action non autorisée'], 403);
         }
 
@@ -73,16 +78,29 @@ class ArtworkController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ArtworkRequest $request, string $id)
+    public function update(ArtworkUpdateRequest $request, Artwork $artwork)
     {
-        //
+        $this->authorize('update', $artwork);
+
+        $updated = $this->artworkService->update($artwork, $request->validated());
+
+        return response()->json([
+            'message' => 'Œuvre mise à jour avec succès',
+            'artwork' => $updated
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Artwork $artwork)
     {
-        //
+        $this->authorize('delete', $artwork);
+
+        $this->artworkService->delete($artwork);
+
+        return response()->json([
+            'message' => 'Œuvre supprimée avec succès'
+        ]);
     }
 }

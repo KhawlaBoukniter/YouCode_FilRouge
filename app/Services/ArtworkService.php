@@ -31,4 +31,14 @@ class ArtworkService
         $data['artist_id'] = $artist->id;
         return $this->artworkRepo->create($data);
     }
+
+    public function update($artwork, array $data)
+    {
+        return $this->artworkRepo->update($artwork, $data);
+    }
+
+    public function delete($artwork)
+    {
+        return $this->artworkRepo->delete($artwork);
+    }
 }

@@ -15,4 +15,15 @@ class ArtworkRepository
     {
         return Artwork::create($data);
     }
+
+    public function update($artwork, array $data)
+    {
+        $artwork->update($data);
+        return $artwork;
+    }
+
+    public function delete($artwork)
+    {
+        return $artwork->delete();
+    }
 }

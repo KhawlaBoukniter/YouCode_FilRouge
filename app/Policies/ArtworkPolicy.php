@@ -11,4 +11,14 @@ class ArtworkPolicy
     {
         return $user->role_id === 2; // 2 = artiste
     }
+
+    public function update(User $user, Artwork $artwork)
+    {
+        return $user->id === $artwork->artist->user_id;
+    }
+
+    public function delete(User $user, Artwork $artwork)
+    {
+        return $user->id === $artwork->artist->user_id;
+    }
 }
