@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArtworkController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/artworks', [ArtworkController::class, 'store']);
     Route::put('/artworks/{artwork}', [ArtworkController::class, 'update']);
     Route::delete('/artworks/{artwork}', [ArtworkController::class, 'destroy']);
+
+    Route::post('/comments', [CommentController::class, 'store']);
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
 });
