@@ -39,4 +39,12 @@ class ArtworkRepository
     {
         $artwork->delete();
     }
+
+    public function findWithComments($artwork)
+    {
+        return [
+            'artwork' => $artwork->load('artist.user'),
+            'comments' => $artwork->comments()->latest()->paginate(5)
+        ];
+    }
 }

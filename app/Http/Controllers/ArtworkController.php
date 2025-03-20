@@ -67,7 +67,9 @@ class ArtworkController extends Controller
      */
     public function show(Artwork $artwork)
     {
-        return response()->json($artwork);
+        $result = $this->artworkService->findWithComments($artwork);
+
+        return response()->json($result);
     }
 
     /**

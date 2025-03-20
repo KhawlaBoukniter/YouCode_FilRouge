@@ -48,4 +48,9 @@ class ArtworkService
     {
         return $this->artworkRepo->delete($artwork);
     }
+
+    public function findWithComments($artwork)
+    {
+        return $this->artworkRepo->findWithComments($artwork);
+    }
 }
