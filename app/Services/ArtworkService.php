@@ -17,9 +17,9 @@ class ArtworkService
         $this->artworkRepo = $artworkRepo;
     }
 
-    public function list()
+    public function list(array $filters = [])
     {
-        return $this->artworkRepo->getAll();
+        return $this->artworkRepo->getAll($filters);
     }
 
     public function create(array $data)

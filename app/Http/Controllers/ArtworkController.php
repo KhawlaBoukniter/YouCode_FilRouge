@@ -7,6 +7,7 @@ use App\Http\Requests\Artwork\ArtworkRequest;
 use App\Http\Requests\Artwork\ArtworkUpdateRequest;
 use App\Models\Artwork;
 use App\Services\ArtworkService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class ArtworkController extends Controller
@@ -23,10 +24,12 @@ class ArtworkController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $filters = $request->only(['artist_id', 'search']);
+
         return response()->json([
-            'artworks' => $this->artworkService->list()
+            'artworks' => $this->artworkService->list($filters)
         ]);
     }
 

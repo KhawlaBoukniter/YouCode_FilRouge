@@ -6,9 +6,22 @@ use App\Models\Artwork;
 
 class ArtworkRepository
 {
-    public function getAll()
+    public function getAll(array $filters = [])
     {
-        return Artwork::with('artist.user')->latest()->paginate(6);
+        $query = Artwork::with('artist.user')->latest();
+
+        if (!empty($filters['artist_id'])) {
+            $query->where('artist_id', $filters['artist_id']);
+        }
+
+        if (!empty($filters['keyword'])) {
+            $query->where(function ($q) use ($filters) {
+                $q->where('title', 'ILIKE', '%' . $filters['keyword'] . '%')
+                    ->orWhere('description', 'ILIKE', '%' . $filters['keyword'] . '%');
+            });
+        }
+
+        return $query->paginate(6);
     }
 
     public function create(array $data)
