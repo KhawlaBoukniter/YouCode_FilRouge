@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ArtworkController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
@@ -26,6 +27,7 @@ Route::middleware('auth:api')->group(function () {
         Route::delete('/artworks/{artwork}', [ArtworkController::class, 'destroy']);
         Route::get('/my-artworks', [ArtworkController::class, 'myArtworks']);
         Route::get('/my-stats', [ArtworkController::class, 'myStats']);
+        Route::put('/my-profile', [ArtistController::class, 'updateProfile']);
     });
     Route::get('/artworks/{artwork}/comments', [CommentController::class, 'index']);
 
