@@ -23,8 +23,8 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('role:artist')->group(function () {
         Route::post('/artworks', [ArtworkController::class, 'store']);
         Route::put('/artworks/{artwork}', [ArtworkController::class, 'update']);
+        Route::delete('/artworks/{artwork}', [ArtworkController::class, 'destroy']);
     });
-    Route::delete('/artworks/{artwork}', [ArtworkController::class, 'destroy'])->middleware('can:delete,artwork');;
     Route::get('/artworks/{artwork}/comments', [CommentController::class, 'index']);
 
     Route::post('/comments', [CommentController::class, 'store']);
