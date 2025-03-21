@@ -24,6 +24,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/artworks', [ArtworkController::class, 'store']);
         Route::put('/artworks/{artwork}', [ArtworkController::class, 'update']);
         Route::delete('/artworks/{artwork}', [ArtworkController::class, 'destroy']);
+        Route::get('/my-artworks', [ArtworkController::class, 'myArtworks']);
     });
     Route::get('/artworks/{artwork}/comments', [CommentController::class, 'index']);
 

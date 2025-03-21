@@ -47,4 +47,11 @@ class ArtworkRepository
             'comments' => $artwork->comments()->latest()->paginate(5)
         ];
     }
+
+    public function getByArtistId($userId)
+    {
+        return Artwork::whereHas('artist', function ($q) use ($userId) {
+            $q->where('user_id', $userId);
+        })->with('artist.user')->latest()->paginate(6);
+    }
 }

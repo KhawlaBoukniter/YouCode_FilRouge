@@ -111,4 +111,10 @@ class ArtworkController extends Controller
             'message' => 'Œuvre supprimée avec succès'
         ]);
     }
+
+    public function myArtworks()
+    {
+        $artworks = $this->artworkService->getByArtist();
+        return response()->json(['artworks' => $artworks]);
+    }
 }

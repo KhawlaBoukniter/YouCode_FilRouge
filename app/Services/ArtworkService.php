@@ -53,4 +53,9 @@ class ArtworkService
     {
         return $this->artworkRepo->findWithComments($artwork);
     }
+
+    public function getByArtist()
+    {
+        return $this->artworkRepo->getByArtistId(Auth::id());
+    }
 }
