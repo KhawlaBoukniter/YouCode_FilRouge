@@ -117,4 +117,10 @@ class ArtworkController extends Controller
         $artworks = $this->artworkService->getByArtist();
         return response()->json(['artworks' => $artworks]);
     }
+
+    public function myStats()
+    {
+        $stats = $this->artworkService->getStatsForArtist();
+        return response()->json(['stats' => $stats]);
+    }
 }

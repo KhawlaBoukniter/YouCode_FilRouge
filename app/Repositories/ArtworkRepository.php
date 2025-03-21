@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Artist;
 use App\Models\Artwork;
 
 class ArtworkRepository
@@ -53,5 +54,26 @@ class ArtworkRepository
         return Artwork::whereHas('artist', function ($q) use ($userId) {
             $q->where('user_id', $userId);
         })->with('artist.user')->latest()->paginate(6);
+    }
+
+    public function getStatsByArtistId($userId)
+    {
+        $artist = Artist::where('user_id', $userId)->first();
+
+        if (! $artist) {
+            return [
+                'artworks_count' => 0,
+                'comments_count' => 0,
+                'latest_artwork' => null,
+            ];
+        }
+
+        $artworks = Artwork::where('artist_id', $artist->id)->get();
+
+        return [
+            'artworks_count' => $artworks->count(),
+            'comments_count' => $artworks->sum(fn($a) => $a->comments->count()),
+            'latest_artwork' => $artworks->sortByDesc('created_at')->first(),
+        ];
     }
 }

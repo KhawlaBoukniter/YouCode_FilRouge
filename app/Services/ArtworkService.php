@@ -58,4 +58,9 @@ class ArtworkService
     {
         return $this->artworkRepo->getByArtistId(Auth::id());
     }
+
+    public function getStatsForArtist()
+    {
+        return $this->artworkRepo->getStatsByArtistId(Auth::id());
+    }
 }
