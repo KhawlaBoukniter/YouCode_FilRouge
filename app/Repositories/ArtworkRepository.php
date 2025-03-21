@@ -68,11 +68,14 @@ class ArtworkRepository
             ];
         }
 
-        $artworks = Artwork::where('artist_id', $artist->id)->get();
+        $artworks = Artwork::withCount('comments')
+            ->where('artist_id', $artist->id)
+            ->orderByDesc('created_at')
+            ->get();
 
         return [
             'artworks_count' => $artworks->count(),
-            'comments_count' => $artworks->sum(fn($a) => $a->comments->count()),
+            'comments_count' => $artworks->sum('comments_count'),
             'latest_artwork' => $artworks->sortByDesc('created_at')->first(),
         ];
     }
