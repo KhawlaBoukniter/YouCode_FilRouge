@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const testimonials = [
     {
@@ -27,6 +28,19 @@ const testimonials = [
     },
 ];
 
+const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (i) => ({
+        opacity: 1,
+        y: 0,
+        transition: {
+            delay: i * 0.2,
+            duration: 0.6,
+            ease: "easeOut",
+        },
+    }),
+};
+
 const Testimonials = () => {
     return (
         <section className="w-full py-20 bg-white">
@@ -41,10 +55,15 @@ const Testimonials = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {testimonials.map((t) => (
-                        <div
+                    {testimonials.map((t, index) => (
+                        <motion.div
                             key={t.id}
-                            className="rounded-[20px] bg-white shadow-[0px_10px_15px_#0000000a] p-6"
+                            custom={index}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true }}
+                            variants={cardVariants}
+                            className="rounded-[20px] bg-white shadow-[0px_10px_15px_#0000000a] p-6 transition-transform transform hover:scale-105 hover:shadow-[0_12px_20px_#0000001f] duration-300"
                         >
                             <div className="flex items-center space-x-4 mb-4">
                                 <img
@@ -64,7 +83,7 @@ const Testimonials = () => {
                             <p className="font-garamond italic text-gray-700 text-base leading-relaxed">
                                 "{t.quote}"
                             </p>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>
