@@ -3,15 +3,15 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
+import RevolutionaryFeatures from "./components/RevolutionaryFeatures";
 
 function App() {
   return (
-    <Router>
+    <>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<HeroSection />} />
-      </Routes>
-    </Router>
+      <HeroSection />
+      <RevolutionaryFeatures />
+    </>
   );
 }
 
