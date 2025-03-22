@@ -7,6 +7,7 @@ import RevolutionaryFeatures from "./components/RevolutionaryFeatures";
 import FeaturedExhibitions from "./components/FeaturedExhibitions";
 import Testimonials from "./components/Testimonials";
 import CallToAction from "./components/CallToAction";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <FeaturedExhibitions />
       <Testimonials />
       <CallToAction />
+      <Footer />
     </>
   );
 }

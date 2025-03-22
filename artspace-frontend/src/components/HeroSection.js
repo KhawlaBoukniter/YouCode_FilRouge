@@ -7,7 +7,7 @@ import heroImage from "../assets/images/hero-art.png";
 const HeroSection = () => {
     return (
         <section className="bg-gradient-to-r from-gray-50 to-white w-full">
-            <div className="max-w-[1280px] mx-auto px-20 py-20 flex justify-between items-center">
+            <div className="max-w-[1280px] mx-auto px-20 py-20 pb-10 flex justify-between items-center">
                 {/* Left Content */}
                 <div className="w-[592px] space-y-[70px]">
                     <h1 className="font-garamond text-4xl text-black leading-[60px]">

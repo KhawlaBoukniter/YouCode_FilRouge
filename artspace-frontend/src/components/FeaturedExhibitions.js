@@ -1,5 +1,5 @@
 import React from "react";
-import { ChevronRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const exhibitions = [
@@ -59,11 +59,11 @@ const FeaturedExhibitions = () => {
                                 <div className="flex justify-between items-center">
                                     <Link
                                         to={`/artworks/${exhibition.id}`}
-                                        className="font-playfair font-bold text-[#d3bb75] text-base transition"
+                                        className="font-playfair font-bold text-[#d3bb75] text-sm transition"
                                     >
                                         {exhibition.status}
                                     </Link>
-                                    <ChevronRight className="w-3.5 h-4 text-black" />
+                                    <ArrowRight className="w-3.5 h-4 text-[#d3bb75]" />
                                 </div>
                             </div>
                         </div>
