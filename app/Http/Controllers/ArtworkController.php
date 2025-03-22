@@ -26,7 +26,10 @@ class ArtworkController extends Controller
      */
     public function index(Request $request)
     {
-        $filters = $request->only(['artist_id', 'search']);
+        $filters = [
+            'artist_id' => $request->query('artist_id'),
+            'keyword' => $request->query('keyword'),
+        ];
 
         return response()->json([
             'artworks' => $this->artworkService->list($filters)
