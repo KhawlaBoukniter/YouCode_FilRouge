@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import RevolutionaryFeatures from "./components/RevolutionaryFeatures";
 import FeaturedExhibitions from "./components/FeaturedExhibitions";
+import Testimonials from "./components/Testimonials";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <HeroSection />
       <RevolutionaryFeatures />
       <FeaturedExhibitions />
+      <Testimonials />
     </>
   );
 }

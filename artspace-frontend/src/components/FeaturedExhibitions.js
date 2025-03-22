@@ -31,10 +31,10 @@ const FeaturedExhibitions = () => {
         <section className="w-full py-20 bg-gray-50">
             <div className="max-w-[1280px] mx-auto px-12">
                 <div className="text-center mb-16">
-                    <h2 className="font-normal text-4xl mb-6 [font-family:'Cormorant_Garamond',Helvetica] text-black leading-9">
+                    <h2 className="font-normal text-3xl mb-6 [font-family:'Cormorant_Garamond',Helvetica] text-black leading-9">
                         Featured Exhibitions
                     </h2>
-                    <p className="font-normal text-xl text-gray-600 [font-family:'Cormorant_Garamond',Helvetica] leading-5">
+                    <p className="font-normal text-lg text-gray-600 [font-family:'Cormorant_Garamond',Helvetica] leading-5">
                         Explore our curated collection of digital exhibitions
                     </p>
                 </div>
