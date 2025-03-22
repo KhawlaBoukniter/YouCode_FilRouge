@@ -32,10 +32,10 @@ const Testimonials = () => {
         <section className="w-full py-20 bg-white">
             <div className="max-w-[1280px] mx-auto px-12">
                 <div className="text-center mb-16">
-                    <h2 className="[font-family:'Cormorant_Garamond',Helvetica] font-normal text-4xl mb-6 text-black leading-9">
+                    <h2 className="font-garamond font-normal text-4xl mb-6 text-black leading-9">
                         What Art Lovers Say
                     </h2>
-                    <p className="[font-family:'Cormorant_Garamond',Helvetica] font-normal text-xl text-gray-600 leading-5">
+                    <p className="font-garamond font-normal text-xl text-gray-600 leading-5">
                         Hear from our passionate community of art enthusiasts
                     </p>
                 </div>
@@ -53,15 +53,15 @@ const Testimonials = () => {
                                     className="w-12 h-12 rounded-full object-cover"
                                 />
                                 <div>
-                                    <h4 className="[font-family:'Playfair_Display',Helvetica] text-base text-black font-medium leading-4">
+                                    <h4 className="font-playfair text-base text-black font-medium leading-4">
                                         {t.name}
                                     </h4>
-                                    <p className="[font-family:'Cormorant_Garamond',Helvetica] text-sm text-gray-600">
+                                    <p className="font-garamond text-sm text-gray-600">
                                         {t.role}
                                     </p>
                                 </div>
                             </div>
-                            <p className="[font-family:'Cormorant_Garamond',Helvetica] italic text-gray-700 text-base leading-relaxed">
+                            <p className="font-garamond italic text-gray-700 text-base leading-relaxed">
                                 "{t.quote}"
                             </p>
                         </div>

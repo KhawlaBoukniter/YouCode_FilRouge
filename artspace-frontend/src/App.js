@@ -6,6 +6,7 @@ import HeroSection from "./components/HeroSection";
 import RevolutionaryFeatures from "./components/RevolutionaryFeatures";
 import FeaturedExhibitions from "./components/FeaturedExhibitions";
 import Testimonials from "./components/Testimonials";
+import CallToAction from "./components/CallToAction";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <RevolutionaryFeatures />
       <FeaturedExhibitions />
       <Testimonials />
+      <CallToAction />
     </>
   );
 }

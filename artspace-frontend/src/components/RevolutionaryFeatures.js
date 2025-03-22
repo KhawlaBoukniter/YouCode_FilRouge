@@ -26,10 +26,10 @@ const RevolutionaryFeatures = () => {
         <section className="py-20 ">
             <div className="container max-w-7xl mx-auto px-12">
                 <div className="text-center mb-16">
-                    <h2 className="font-normal text-3xl mb-6 [font-family:'Cormorant_Garamond',Helvetica] text-black leading-9">
+                    <h2 className="font-normal text-3xl mb-6 font-garamond text-black leading-9">
                         Revolutionary Features
                     </h2>
-                    <p className="font-normal text-lg text-gray-600 [font-family:'Cormorant_Garamond',Helvetica] leading-5">
+                    <p className="font-normal text-lg text-gray-600 font-garamond leading-5">
                         Experience art like never before with our cutting-edge technology
                     </p>
                 </div>
