@@ -7,6 +7,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 garamond: ['"Cormorant Garamond"', 'serif'],
+                playfair: ["Playfair Display", "serif"],
             },
         },
     },
