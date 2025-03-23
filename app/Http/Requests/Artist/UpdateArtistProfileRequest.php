@@ -17,16 +17,20 @@ class UpdateArtistProfileRequest extends FormRequest
             'bio' => 'nullable|string|max:1000',
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $this->user()->id,
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'website' => 'nullable|url',
+            'instagram' => 'nullable|url',
+            'twitter' => 'nullable|url',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'user.name.required' => 'Le nom est requis.',
-            'user.email.required' => 'L’email est requis.',
-            'user.email.email' => 'Le format de l’email est invalide.',
-            'user.email.unique' => 'Cet email est déjà utilisé.',
+            'name.required' => 'Le nom est requis.',
+            'email.required' => 'L’email est requis.',
+            'email.email' => 'Le format de l’email est invalide.',
+            'email.unique' => 'Cet email est déjà utilisé.',
         ];
     }
 }
