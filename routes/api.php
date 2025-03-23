@@ -29,6 +29,11 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/my-stats', [ArtworkController::class, 'myStats']);
         Route::put('/my-profile', [ArtistController::class, 'updateProfile']);
     });
+
+    Route::middleware('role:visitor')->group(function () {
+        Route::post('/artworks/{artwork}/save', [ArtworkController::class, 'toggleSave']);
+    });
+
     Route::get('/artworks/{artwork}/comments', [CommentController::class, 'index']);
 
     Route::post('/comments', [CommentController::class, 'store']);
