@@ -62,4 +62,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function savedArtworks()
+    {
+        return $this->belongsToMany(Artwork::class, 'saved_artworks')->withTimestamps();
+    }
 }
