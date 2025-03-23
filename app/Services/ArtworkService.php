@@ -69,4 +69,9 @@ class ArtworkService
         $user = Auth::user();
         return $this->artworkRepo->toggleSave($user, $artwork);
     }
+
+    public function getSavedArtworks()
+    {
+        return $this->artworkRepo->getSavedArtworks(Auth::user());
+    }
 }
