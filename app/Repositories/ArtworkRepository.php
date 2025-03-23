@@ -85,4 +85,9 @@ class ArtworkRepository
     {
         $user->savedArtworks()->toggle($artwork->id);
     }
+
+    public function getSavedArtworks(User $user)
+    {
+        return $user->savedArtworks()->with('artist.user')->latest()->paginate(6);
+    }
 }
