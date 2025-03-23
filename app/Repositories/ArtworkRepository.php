@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Artist;
 use App\Models\Artwork;
+use App\Models\User;
 
 class ArtworkRepository
 {
@@ -78,5 +79,10 @@ class ArtworkRepository
             'comments_count' => $artworks->sum('comments_count'),
             'latest_artwork' => $artworks->sortByDesc('created_at')->first(),
         ];
+    }
+
+    public function toggleSave(User $user, Artwork $artwork)
+    {
+        $user->savedArtworks()->toggle($artwork->id);
     }
 }
