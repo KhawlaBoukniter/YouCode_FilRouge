@@ -63,4 +63,10 @@ class ArtworkService
     {
         return $this->artworkRepo->getStatsByArtistId(Auth::id());
     }
+
+    public function toggleSave(Artwork $artwork)
+    {
+        $user = Auth::user();
+        return $this->artworkRepo->toggleSave($user, $artwork);
+    }
 }
