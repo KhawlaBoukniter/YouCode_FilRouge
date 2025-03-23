@@ -19,7 +19,12 @@ class ArtistController extends Controller
         }
 
         $user->update($request->only(['name', 'email']));
-        $artist->update($request->only(['bio']));
+        $artist->update($request->only([
+            'bio',
+            'website',
+            'instagram',
+            'twitter'
+        ]));
 
         return response()->json([
             'message' => 'Profil mis à jour avec succès.',
