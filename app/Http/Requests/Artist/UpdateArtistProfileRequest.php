@@ -15,8 +15,8 @@ class UpdateArtistProfileRequest extends FormRequest
     {
         return [
             'bio' => 'nullable|string|max:1000',
-            'user.name' => 'required|string|max:255',
-            'user.email' => 'required|email|unique:users,email,' . $this->user()->id,
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $this->user()->id,
         ];
     }
 
