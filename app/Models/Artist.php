@@ -8,7 +8,11 @@ class Artist extends Model
 {
     protected $fillable = [
         'user_id',
-        'bio'
+        'bio',
+        'avatar',
+        'website',
+        'instagram',
+        'twitter',
     ];
 
     public function user()
@@ -19,5 +23,10 @@ class Artist extends Model
     public function artworks()
     {
         return $this->hasMany(Artwork::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'user_id';
     }
 }
