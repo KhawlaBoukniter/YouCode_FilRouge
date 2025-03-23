@@ -123,4 +123,13 @@ class ArtworkController extends Controller
         $stats = $this->artworkService->getStatsForArtist();
         return response()->json(['stats' => $stats]);
     }
+
+    public function toggleSave(Artwork $artwork)
+    {
+        $this->artworkService->toggleSave($artwork);
+
+        return response()->json([
+            'message' => 'État de sauvegarde mis à jour avec succès.'
+        ]);
+    }
 }
