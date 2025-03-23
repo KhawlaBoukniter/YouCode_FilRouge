@@ -19,12 +19,20 @@ class ArtistController extends Controller
         }
 
         $user->update($request->only(['name', 'email']));
+
+        if ($request->hasFile('avatar')) {
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $artist->avatar = $path;
+        }
+
         $artist->update($request->only([
             'bio',
             'website',
             'instagram',
             'twitter'
         ]));
+
+        $artist->save();
 
         return response()->json([
             'message' => 'Profil mis à jour avec succès.',
