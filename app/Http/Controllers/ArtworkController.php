@@ -132,4 +132,13 @@ class ArtworkController extends Controller
             'message' => 'État de sauvegarde mis à jour avec succès.'
         ]);
     }
+
+    public function getSavedArtworks()
+    {
+        $artworks = $this->artworkService->getSavedArtworks();
+
+        return response()->json([
+            'saved_artworks' => $artworks
+        ]);
+    }
 }
