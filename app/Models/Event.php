@@ -8,6 +8,7 @@ use App\Models\Ticket;
 class Event extends Model
 {
     protected $fillable = [
+        'artist_id',
         'title',
         'description',
         'start_date',
