@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Artist;
+use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -61,5 +62,14 @@ class AuthService
         $user->token()->revoke();
 
         return true;
+    }
+
+    public function uploadAvatar(User $user, $avatarFile)
+    {
+        $path = $avatarFile->store('avatars', 'public');
+        $user->avatar = $path;
+        $user->save();
+
+        return asset('storage/' . $path);
     }
 }
