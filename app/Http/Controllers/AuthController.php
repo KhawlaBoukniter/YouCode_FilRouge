@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Services\AuthService;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -56,6 +57,17 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Déconnexion réussie'
+        ]);
+    }
+
+    public function uploadAvatar(UpdateAvatarRequest $request)
+    {
+        $user = Auth::user();
+        $avatarPath = $this->authService->uploadAvatar($user, $request->file('avatar'));
+
+        return response()->json([
+            'message' => 'Avatar mis à jour avec succès.',
+            'avatar_url' => $avatarPath
         ]);
     }
 }
