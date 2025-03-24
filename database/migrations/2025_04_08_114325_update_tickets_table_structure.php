@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::table('tickets', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
+            $table->dropColumn('status');
+            $table->enum('status', ['available', 'paid', 'cancelled'])->default('reserved');
             $table->decimal('price', 8, 2)->after('quantity')->nullable();
             $table->enum('type', ['vip', 'standard', 'free'])->default('standard');
             $table->text('description')->nullable();
