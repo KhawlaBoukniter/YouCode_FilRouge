@@ -35,6 +35,9 @@ Route::middleware('auth:api')->group(function () {
         Route::put('/events/{event}', [EventController::class, 'update']);
         Route::delete('/events/{event}', [EventController::class, 'destroy']);
 
+        Route::post('/tickets', [TicketController::class, 'store']);
+        Route::put('/tickets/{ticket}', [TicketController::class, 'update']);
+        Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy']);
         Route::get('/my-tickets', [TicketController::class, 'myTickets']);
     });
 
