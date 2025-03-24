@@ -33,6 +33,7 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('role:visitor')->group(function () {
         Route::post('/artworks/{artwork}/save', [ArtworkController::class, 'toggleSave']);
         Route::get('/artworks/saved', [ArtworkController::class, 'getSavedArtworks']);
+        Route::post('/artworks/{artwork}/like', [ArtworkController::class, 'toggleLike']);
     });
 
     Route::get('/artworks/{artwork}/comments', [CommentController::class, 'index']);
