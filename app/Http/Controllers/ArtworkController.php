@@ -76,6 +76,7 @@ class ArtworkController extends Controller
 
         $result['artwork']->load(['likes', 'artist.user'])->loadCount('likes');
         $isSaved = $user && $user->savedArtworks->contains($artwork->id);
+        $isMine = $user && $artwork->artist && $artwork->artist->user_id === $user->id;
 
         return response()->json([
             'artwork' => $result['artwork']->loadCount('likes'),
@@ -83,6 +84,7 @@ class ArtworkController extends Controller
             'liked_by_user' => $user ? $artwork->likes->contains($user->id) : false,
             'comments' => $result['comments'],
             'is_saved_by_user' => $isSaved,
+            'is_mine' => $isMine,
         ]);
     }
 
