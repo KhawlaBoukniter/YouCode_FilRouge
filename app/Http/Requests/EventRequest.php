@@ -11,7 +11,7 @@ class EventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,24 @@ class EventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'start_date' => 'required|date|after_or_equal:today',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'location' => 'nullable|string|max:255',
+            'is_online' => 'required|boolean',
+            'poster' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Le titre est requis.',
+            'start_date.required' => 'La date de début est requise.',
+            'end_date.required' => 'La date de fin est requise.',
+            'end_date.after_or_equal' => 'La date de fin doit être postérieure ou égale à la date de début.',
+            'poster.image' => 'Le fichier doit être une image valide.'
         ];
     }
 }
