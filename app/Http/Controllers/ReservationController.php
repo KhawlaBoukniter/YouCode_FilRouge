@@ -48,28 +48,20 @@ class ReservationController extends Controller
     {
         $updated = $this->reservationService->updateStatus($reservation, 'cancelled');
 
-        if ($reservation->user_id !== Auth::id()) {
-            return response()->json(['message' => 'Action non autorisée.'], 403);
-        } else {
-            return response()->json([
-                'message' => 'Réservation annulée avec succès.',
-                'reservation' => $updated
-            ]);
-        }
+        return response()->json([
+            'message' => 'Réservation annulée avec succès.',
+            'reservation' => $updated
+        ]);
     }
 
     public function pay(Reservation $reservation)
     {
         $updated = $this->reservationService->updateStatus($reservation, 'paid');
 
-        if ($reservation->user_id !== Auth::id()) {
-            return response()->json(['message' => 'Action non autorisée.'], 403);
-        } else {
-            return response()->json([
-                'message' => 'Réservation payée avec succès.',
-                'reservation' => $updated
-            ]);
-        }
+        return response()->json([
+            'message' => 'Réservation payée avec succès.',
+            'reservation' => $updated
+        ]);
     }
 
     public function destroy(Reservation $reservation)
