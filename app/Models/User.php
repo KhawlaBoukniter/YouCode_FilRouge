@@ -72,4 +72,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Artwork::class, 'likes')->withTimestamps();
     }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
 }
