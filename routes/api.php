@@ -39,6 +39,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/artworks/saved', [ArtworkController::class, 'getSavedArtworks']);
         Route::post('/artworks/{artwork}/save', [ArtworkController::class, 'toggleSave']);
         Route::post('/artworks/{artwork}/like', [ArtworkController::class, 'toggleLike']);
+
         Route::post('/reservations', [ReservationController::class, 'store']);
         Route::get('/my-reservations', [ReservationController::class, 'index']);
         Route::put('/reservations/{reservation}/pay', [ReservationController::class, 'pay']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TicketRequest;
+use App\Models\Event;
 use App\Models\Ticket;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
@@ -43,6 +44,15 @@ class TicketController extends Controller
 
         return response()->json([
             'message' => 'Ticket supprimé avec succès.'
+        ]);
+    }
+
+    public function getEventTickets(Event $event)
+    {
+        $tickets = $this->ticketService->getByEvent($event->id);
+
+        return response()->json([
+            'tickets' => $tickets
         ]);
     }
 }
