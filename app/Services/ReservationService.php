@@ -28,6 +28,12 @@ class ReservationService
             ]);
         }
 
+        if ($ticket->status !== 'available') {
+            throw ValidationException::withMessages([
+                'ticket_id' => 'Ce ticket n’est pas disponible à la réservation.'
+            ]);
+        }
+
         $ticket->decrement('quantity', $data['quantity']);
 
         return $this->reservationRepo->create($data);
@@ -57,5 +63,10 @@ class ReservationService
         if ($reservation->user_id !== Auth::id()) {
             abort(403, 'Action non autorisée.');
         }
+    }
+
+    protected function canReserve(Ticket $ticket, int $quantity): bool
+    {
+        return $ticket->status === 'available' && $ticket->quantity >= $quantity;
     }
 }
