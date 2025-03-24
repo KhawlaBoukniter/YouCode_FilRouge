@@ -40,4 +40,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/comments', [CommentController::class, 'store']);
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
+
+    Route::post('/me/avatar', [AuthController::class, 'uploadAvatar']);
 });
