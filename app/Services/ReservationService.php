@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\ValidationHelper;
 use App\Models\Reservation;
 use App\Models\Ticket;
 use App\Repositories\ReservationRepository;
@@ -60,9 +61,7 @@ class ReservationService
 
     private function authorizeUser(Reservation $reservation): void
     {
-        if ($reservation->user_id !== Auth::id()) {
-            abort(403, 'Action non autorisée.');
-        }
+        ValidationHelper::ensureUserIsOwner($reservation->user_id, 'réservation');
     }
 
     protected function canReserve(Ticket $ticket, int $quantity): bool
