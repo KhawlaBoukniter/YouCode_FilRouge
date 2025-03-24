@@ -51,6 +51,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/my-reservations', [ReservationController::class, 'index']);
         Route::put('/reservations/{reservation}/pay', [ReservationController::class, 'pay']);
         Route::put('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel']);
+        Route::get('/reservations/{reservation}/status', [ReservationController::class, 'getAvailableActions']);
         Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy']);
     });
 
