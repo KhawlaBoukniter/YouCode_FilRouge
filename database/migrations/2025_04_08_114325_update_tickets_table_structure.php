@@ -15,6 +15,8 @@ return new class extends Migration
             $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
             $table->decimal('price', 8, 2)->after('quantity')->nullable();
+            $table->enum('type', ['vip', 'standard', 'free'])->default('standard');
+            $table->text('description')->nullable();
         });
     }
 
