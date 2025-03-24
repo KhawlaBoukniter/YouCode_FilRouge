@@ -74,4 +74,10 @@ class ArtworkService
     {
         return $this->artworkRepo->getSavedArtworks(Auth::user());
     }
+
+    public function toggleLike(Artwork $artwork)
+    {
+        $user = Auth::user();
+        return $this->artworkRepo->toggleLike($user, $artwork);
+    }
 }
