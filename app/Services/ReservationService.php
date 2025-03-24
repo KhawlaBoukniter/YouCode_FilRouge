@@ -68,4 +68,22 @@ class ReservationService
     {
         return $ticket->status === 'available' && $ticket->quantity >= $quantity;
     }
+
+    public function getAvailableActions(Reservation $reservation): array
+    {
+        $this->authorizeUser($reservation);
+
+        $actions = [];
+
+        if ($reservation->status === 'reserved') {
+            $actions[] = 'pay';
+            $actions[] = 'cancel';
+        }
+
+        if (in_array($reservation->status, ['paid', 'cancelled'])) {
+            $actions[] = 'delete';
+        }
+
+        return $actions;
+    }
 }
