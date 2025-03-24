@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('ticket_id')->constrained()->onDelete('cascade');
             $table->unsignedInteger('quantity')->default(0);
             $table->enum('status', ['reserved', 'paid', 'cancelled'])->default('reserved');
+            $table->string('stripe_session_id')->nullable();
             $table->timestamps();
         });
     }
