@@ -5,6 +5,7 @@ use App\Http\Controllers\ArtworkController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,10 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/artworks/saved', [ArtworkController::class, 'getSavedArtworks']);
         Route::post('/artworks/{artwork}/save', [ArtworkController::class, 'toggleSave']);
         Route::post('/artworks/{artwork}/like', [ArtworkController::class, 'toggleLike']);
+        Route::post('/reservations', [ReservationController::class, 'store']);
+        Route::get('/my-reservations', [ReservationController::class, 'index']);
+        Route::put('/reservations/{reservation}/pay', [ReservationController::class, 'pay']);
+        Route::put('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel']);
     });
 
     Route::get('/artworks', [ArtworkController::class, 'index']);
