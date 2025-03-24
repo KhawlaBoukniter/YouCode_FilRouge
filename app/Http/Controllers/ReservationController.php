@@ -72,4 +72,13 @@ class ReservationController extends Controller
             'message' => 'Réservation supprimée avec succès.'
         ]);
     }
+
+    public function getAvailableActions(Reservation $reservation)
+    {
+        $actions = $this->reservationService->getAvailableActions($reservation);
+
+        return response()->json([
+            'actions' => $actions
+        ]);
+    }
 }
