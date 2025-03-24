@@ -8,6 +8,7 @@ use App\Http\Requests\Artwork\ArtworkUpdateRequest;
 use App\Models\Artwork;
 use App\Services\ArtworkService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class ArtworkController extends Controller
@@ -72,9 +73,11 @@ class ArtworkController extends Controller
     {
         $result = $this->artworkService->findWithComments($artwork);
 
+        $user = Auth::user();
         return response()->json([
             'artwork' => $result['artwork']->loadCount('likes'),
             'likes_count' => $artwork->likes_count,
+            'liked_by_user' => $user ? $artwork->likes->contains($user->id) : false,
             'comments' => $result['comments']
         ]);
     }
