@@ -141,4 +141,13 @@ class ArtworkController extends Controller
             'saved_artworks' => $artworks
         ]);
     }
+
+    public function toggleLike(Artwork $artwork)
+    {
+        $this->artworkService->toggleLike($artwork);
+
+        return response()->json([
+            'message' => 'État du like mis à jour avec succès.'
+        ]);
+    }
 }
