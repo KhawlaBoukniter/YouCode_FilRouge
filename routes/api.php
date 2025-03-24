@@ -59,4 +59,5 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/events/{event}', [EventController::class, 'show']);
 
     Route::post('/checkout/{reservation}', [PaymentController::class, 'checkout']);
+    Route::get('/checkout/success', [PaymentController::class, 'handleSuccess']);
 });
