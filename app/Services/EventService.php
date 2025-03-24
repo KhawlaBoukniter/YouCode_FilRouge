@@ -17,9 +17,9 @@ class EventService
         $this->eventRepo = $eventRepo;
     }
 
-    public function list()
+    public function list(array $filters = [])
     {
-        return $this->eventRepo->getAll();
+        return $this->eventRepo->getAll($filters);
     }
 
     public function show($id)

@@ -6,9 +6,22 @@ use App\Models\Event;
 
 class EventRepository
 {
-    public function getAll()
+    public function getAll(array $filters = [])
     {
-        return Event::latest()->paginate(6);
+        $query = Event::query()->latest();
+
+        if (!empty($filters['search'])) {
+            $query->where(function ($q) use ($filters) {
+                $q->where('title', 'ILIKE', '%' . $filters['search'] . '%')
+                    ->orWhere('description', 'ILIKE', '%' . $filters['search'] . '%');
+            });
+        }
+
+        if (isset($filters['is_online'])) {
+            $query->where('is_online', $filters['is_online']);
+        }
+
+        return $query->paginate(6);
     }
 
     public function findById($id)

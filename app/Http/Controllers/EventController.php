@@ -17,10 +17,15 @@ class EventController extends Controller
         $this->eventService = $eventService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $filters = [
+            'search' => $request->query('search'),
+            'is_online' => $request->query('is_online')
+        ];
+
         return response()->json([
-            'events' => $this->eventService->list(),
+            'events' => $this->eventService->list($filters),
         ]);
     }
 
