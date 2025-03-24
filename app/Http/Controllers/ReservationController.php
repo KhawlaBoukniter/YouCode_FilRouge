@@ -18,9 +18,9 @@ class ReservationController extends Controller
         $this->reservationService = $reservationService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $reservations = $this->reservationService->getForUser(Auth::id());
+        $reservations = $this->reservationService->getForUser($request->only(['status', 'date_min', 'date_max', 'event_title']));
 
         return response()->json([
             'reservations' => $reservations
