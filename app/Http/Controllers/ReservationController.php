@@ -20,7 +20,7 @@ class ReservationController extends Controller
 
     public function index()
     {
-        $reservations = $this->reservationService->getForUser(auth()->id());
+        $reservations = $this->reservationService->getForUser(Auth::id());
 
         return response()->json([
             'reservations' => $reservations
