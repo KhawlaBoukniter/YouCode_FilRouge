@@ -87,4 +87,17 @@ class ReservationService
 
         return $actions;
     }
+
+    public function getTotal(Reservation $reservation): float|int
+    {
+        $this->authorizeUser($reservation);
+
+        $ticket = $reservation->ticket;
+
+        if (!$ticket || !$ticket->price) {
+            return 0;
+        }
+
+        return $ticket->price * $reservation->quantity;
+    }
 }
