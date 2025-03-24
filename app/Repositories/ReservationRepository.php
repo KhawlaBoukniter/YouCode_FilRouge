@@ -11,7 +11,7 @@ class ReservationRepository
     {
         return Reservation::with('ticket.event')->where('user_id', $filters['user_id'])
             ->when(isset($filters['status']), function ($query) use ($filters) {
-                $query->where('status', $filters['sttatus']);
+                $query->where('status', $filters['status']);
             })
             ->when(isset($filters['date_min']), function ($query) use ($filters) {
                 $query->whereDate('created_at', '>=', $filters['date_min']);
