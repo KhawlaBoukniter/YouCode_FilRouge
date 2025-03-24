@@ -72,11 +72,13 @@ class ArtworkController extends Controller
     public function show(Artwork $artwork)
     {
         $result = $this->artworkService->findWithComments($artwork);
-
         $user = Auth::user();
+
+        $result['artwork']->load(['likes', 'artist.user'])->loadCount('likes');
+
         return response()->json([
             'artwork' => $result['artwork']->loadCount('likes'),
-            'likes_count' => $artwork->likes_count,
+            'likes_count' => $result['artwork']->likes_count,
             'liked_by_user' => $user ? $artwork->likes->contains($user->id) : false,
             'comments' => $result['comments']
         ]);
