@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\Artist;
 use App\Models\Ticket;
 use App\Repositories\TicketRepository;
+use Illuminate\Support\Facades\Auth;
 
 class TicketService
 {
@@ -32,5 +34,16 @@ class TicketService
     public function getByEvent(int $eventId)
     {
         return $this->ticketRepo->getByEventId($eventId);
+    }
+
+    public function getMyTickets()
+    {
+        $artist = Artist::where('user_id', Auth::id())->first();
+
+        if (! $artist) {
+            return [];
+        }
+
+        return $this->ticketRepo->getByArtistId($artist->id);
     }
 }
