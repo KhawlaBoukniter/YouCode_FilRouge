@@ -7,9 +7,9 @@ use App\Models\Reservation;
 class ReservationRepository
 {
 
-    public function filterForUser(int $userId, array $filters)
+    public function filterForUser(array $filters)
     {
-        return Reservation::with('ticket.event')->where('user_id', $userId)
+        return Reservation::with('ticket.event')->where('user_id', $filters['user_id'])
             ->when(isset($filters['status']), function ($query) use ($filters) {
                 $query->where('status', $filters['sttatus']);
             })

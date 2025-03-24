@@ -40,9 +40,10 @@ class ReservationService
         return $this->reservationRepo->create($data);
     }
 
-    public function getForUser(int $userId)
+    public function getForUser(array $filters = [])
     {
-        return $this->reservationRepo->getByUserId($userId);
+        $filters['user_id'] = Auth::id();
+        return $this->reservationRepo->filterForUser($filters);
     }
 
     public function updateStatus(Reservation $reservation, string $status): Reservation
