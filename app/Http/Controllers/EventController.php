@@ -6,6 +6,7 @@ use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use App\Services\EventService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class EventController extends Controller
 {
@@ -25,8 +26,13 @@ class EventController extends Controller
 
     public function store(EventRequest $request)
     {
-        $event = $this->eventService->create($request->validated());
+        Log::info('EventController@store triggered');
+        $data = $request->all();
 
+        Log::info('Données reçues dans la requête : ', $data);
+        $event = $this->eventService->create($data);
+
+        Log::info('Événement créé : ', ['event' => $event]);
         return response()->json([
             'message' => 'événement créé avec succès.',
             'event' => $event
@@ -39,7 +45,7 @@ class EventController extends Controller
 
         return response()->json([
             'message' => 'événement mis à jour avec succès.',
-            'event' => $event
+            'updated' => $updated
         ]);
     }
 

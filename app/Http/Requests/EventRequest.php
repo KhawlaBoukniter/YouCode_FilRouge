@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Log;
 
 class EventRequest extends FormRequest
 {
@@ -11,6 +14,7 @@ class EventRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        Log::info('EventRequest autorisé');
         return true;
     }
 
@@ -41,5 +45,19 @@ class EventRequest extends FormRequest
             'end_date.after_or_equal' => 'La date de fin doit être postérieure ou égale à la date de début.',
             'poster.image' => 'Le fichier doit être une image valide.'
         ];
+    }
+
+    protected function failedValidation(Validator $validator): void
+    {
+        Log::error('Validation failed', [
+            'errors' => $validator->errors()->toArray()
+        ]);
+
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422)
+        );
     }
 }
