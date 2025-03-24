@@ -58,7 +58,6 @@ class ReservationController extends Controller
         }
     }
 
-
     public function pay(Reservation $reservation)
     {
         $updated = $this->reservationService->updateStatus($reservation, 'paid');
@@ -71,5 +70,14 @@ class ReservationController extends Controller
                 'reservation' => $updated
             ]);
         }
+    }
+
+    public function destroy(Reservation $reservation)
+    {
+        $this->reservationService->delete($reservation);
+
+        return response()->json([
+            'message' => 'Réservation supprimée avec succès.'
+        ]);
     }
 }
