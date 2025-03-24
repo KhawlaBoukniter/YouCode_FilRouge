@@ -37,7 +37,11 @@ class TicketRequest extends FormRequest
             'event_id.required' => "L'événement est requis.",
             'event_id.exists' => "L'événement n'existe pas.",
             'quantity.required' => "La quantité doit etre un nombre entier",
-            'quantity.min' => 'Au moin 1 ticket doit etre entrée'
+            'quantity.min' => 'Au moin 1 ticket doit etre entrée',
+            'type.required' => "Le type de ticket est requis.",
+            'type.in' => "Le type de ticket doit être vip, standard ou free.",
+            'price.numeric' => "Le prix doit être un nombre.",
+            'status.in' => "Le statut doit être disponible, payé ou annulé.",
         ];
     }
 }
