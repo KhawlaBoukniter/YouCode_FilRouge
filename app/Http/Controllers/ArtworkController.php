@@ -75,12 +75,14 @@ class ArtworkController extends Controller
         $user = Auth::user();
 
         $result['artwork']->load(['likes', 'artist.user'])->loadCount('likes');
+        $isSaved = $user && $user->savedArtworks->contains($artwork->id);
 
         return response()->json([
             'artwork' => $result['artwork']->loadCount('likes'),
             'likes_count' => $result['artwork']->likes_count,
             'liked_by_user' => $user ? $artwork->likes->contains($user->id) : false,
-            'comments' => $result['comments']
+            'comments' => $result['comments'],
+            'is_saved_by_user' => $isSaved,
         ]);
     }
 
