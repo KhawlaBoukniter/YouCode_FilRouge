@@ -55,4 +55,13 @@ class TicketController extends Controller
             'tickets' => $tickets
         ]);
     }
+
+    public function myTickets()
+    {
+        $tickets = $this->ticketService->getMyTickets();
+
+        return response()->json([
+            'tickets' => $tickets
+        ]);
+    }
 }
