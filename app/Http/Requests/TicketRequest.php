@@ -23,7 +23,11 @@ class TicketRequest extends FormRequest
     {
         return [
             'event_id' => 'required|exists:events,id',
-            'quantity' => 'required|integer|min:1'
+            'quantity' => 'required|integer|min:1',
+            'type' => 'required|in:vip,standard,free',
+            'price' => 'nullable|numeric|min:0',
+            'description' => 'nullable|string',
+            'status' => 'required|in:available,paid,cancelled'
         ];
     }
 
