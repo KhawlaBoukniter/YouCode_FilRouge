@@ -4,6 +4,7 @@ use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ArtworkController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\EventController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,10 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/my-artworks', [ArtworkController::class, 'myArtworks']);
         Route::get('/my-stats', [ArtworkController::class, 'myStats']);
         Route::put('/my-profile', [ArtistController::class, 'updateProfile']);
+
+        Route::post('/events', [EventController::class, 'store']);
+        Route::put('/events/{event}', [EventController::class, 'update']);
+        Route::delete('/events/{event}', [EventController::class, 'destroy']);
     });
 
     Route::middleware('role:visitor')->group(function () {
@@ -43,4 +48,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
 
     Route::post('/me/avatar', [AuthController::class, 'uploadAvatar']);
+
+    Route::get('/events', [EventController::class, 'index']);
+    Route::get('/events/{event}', [EventController::class, 'show']);
 });
