@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Models\Reservation;
+use App\Models\Ticket;
 use App\Repositories\ReservationRepository;
+use Illuminate\Validation\ValidationException;
 
 class ReservationService
 {
@@ -14,8 +16,18 @@ class ReservationService
         $this->reservationRepo = $reservationRepo;
     }
 
-    public function create(array $data): Reservation
+    public function create(array $data)
     {
+        $ticket = Ticket::findOrFail($data['ticket_id']);
+
+        if ($ticket->quantity < $data['quantity']) {
+            throw ValidationException::withMessages([
+                'quantity' => 'La quantité demandée dépasse le stock disponible.'
+            ]);
+        }
+
+        $ticket->decrement('quantity', $data['quantity']);
+
         return $this->reservationRepo->create($data);
     }
 
