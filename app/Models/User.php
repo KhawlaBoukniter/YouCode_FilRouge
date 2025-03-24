@@ -67,4 +67,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Artwork::class, 'saved_artworks')->withTimestamps();
     }
+
+    public function likedArtworks()
+    {
+        return $this->belongsToMany(Artwork::class, 'likes')->withTimestamps();
+    }
 }
