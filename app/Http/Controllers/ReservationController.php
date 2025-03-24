@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Requests\ReservationRequest;
 use App\Models\Ticket;
@@ -15,6 +16,15 @@ class ReservationController extends Controller
     public function __construct(ReservationService $reservationService)
     {
         $this->reservationService = $reservationService;
+    }
+
+    public function index()
+    {
+        $reservations = $this->reservationService->getForUser(auth()->id());
+
+        return response()->json([
+            'reservations' => $reservations
+        ]);
     }
 
     public function store(ReservationRequest $request)
@@ -32,5 +42,26 @@ class ReservationController extends Controller
             'message' => 'Réservation enregistrée avec succès.',
             'reservation' => $reservation
         ], 201);
+    }
+
+    public function cancel(Reservation $reservation)
+    {
+        $updated = $this->reservationService->updateStatus($reservation, 'cancelled');
+
+        return response()->json([
+            'message' => 'Réservation annulée avec succès.',
+            'reservation' => $updated
+        ]);
+    }
+
+
+    public function pay(Reservation $reservation)
+    {
+        $updated = $this->reservationService->updateStatus($reservation, 'paid');
+
+        return response()->json([
+            'message' => 'Réservation payée avec succès.',
+            'reservation' => $updated
+        ]);
     }
 }
