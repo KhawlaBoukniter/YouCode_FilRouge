@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ValidationHelper;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,9 +14,7 @@ class PaymentController extends Controller
 {
     public function checkout(Reservation $reservation)
     {
-        if ($reservation->user_id !== Auth::id()) {
-            return response()->json(['message' => 'Action non autorisée.'], 403);
-        }
+        ValidationHelper::ensureUserIsOwner($reservation->user_id, 'réservation');
 
         $ticket = $reservation->ticket;
 
