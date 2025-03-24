@@ -77,6 +77,8 @@ class ArtworkController extends Controller
         $result['artwork']->load(['likes', 'artist.user'])->loadCount('likes');
         $isSaved = $user && $user->savedArtworks->contains($artwork->id);
         $isMine = $user && $artwork->artist && $artwork->artist->user_id === $user->id;
+        $canEdit = $user ? $user->can('update', $artwork) : false;
+        $canDelete = $user ? $user->can('delete', $artwork) : false;
 
         return response()->json([
             'artwork' => $result['artwork']->loadCount('likes'),
@@ -85,6 +87,8 @@ class ArtworkController extends Controller
             'comments' => $result['comments'],
             'is_saved_by_user' => $isSaved,
             'is_mine' => $isMine,
+            'can_edit' => $canEdit,
+            'can_delete' => $canDelete,
         ]);
     }
 
