@@ -53,6 +53,7 @@ Route::middleware('auth:api')->group(function () {
         Route::put('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel']);
         Route::get('/reservations/{reservation}/status', [ReservationController::class, 'getAvailableActions']);
         Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy']);
+        Route::get('/reservations/{reservation}/total', [ReservationController::class, 'getTotal']);
     });
 
     Route::get('/artworks', [ArtworkController::class, 'index']);

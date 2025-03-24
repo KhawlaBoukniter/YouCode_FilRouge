@@ -81,4 +81,13 @@ class ReservationController extends Controller
             'actions' => $actions
         ]);
     }
+
+    public function getTotal(Reservation $reservation)
+    {
+        $total = $this->reservationService->getTotal($reservation);
+
+        return response()->json([
+            'total_price' => $total,
+        ]);
+    }
 }
