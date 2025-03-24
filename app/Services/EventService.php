@@ -49,6 +49,11 @@ class EventService
 
     public function update(Event $event, array $data)
     {
+        if (request()->hasFile('poster') && request()->file('poster') instanceof UploadedFile) {
+            $path = request()->file('poster')->store('posters', 'public');
+            $data['poster'] = Storage::url($path);
+        }
+
         return $this->eventRepo->update($event, $data);
     }
 
