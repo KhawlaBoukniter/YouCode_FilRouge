@@ -24,6 +24,13 @@ class EventController extends Controller
         ]);
     }
 
+    public function show(Event $event)
+    {
+        return response()->json([
+            'event' => $event
+        ]);
+    }
+
     public function store(EventRequest $request)
     {
         Log::info('EventController@store triggered');
