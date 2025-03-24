@@ -90,4 +90,9 @@ class ArtworkRepository
     {
         return $user->savedArtworks()->with('artist.user')->latest()->paginate(6);
     }
+
+    public function toggleLike(User $user, Artwork $artwork)
+    {
+        $user->likedArtworks()->toggle($artwork->id);
+    }
 }
