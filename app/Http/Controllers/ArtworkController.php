@@ -72,7 +72,11 @@ class ArtworkController extends Controller
     {
         $result = $this->artworkService->findWithComments($artwork);
 
-        return response()->json($result);
+        return response()->json([
+            'artwork' => $result['artwork']->loadCount('likes'),
+            'likes_count' => $artwork->likes_count,
+            'comments' => $result['comments']
+        ]);
     }
 
     /**
