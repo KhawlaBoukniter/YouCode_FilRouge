@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Text } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
+import ClickToMove from './ClickToMove'
 
-export default function RoomStyle2({ position = [0, 0, 0], baseColor = "#ececec" }) {
+export default function RoomStyle2({ position = [0, 0, 0], baseColor = "#ececec", controlsRef }) {
+    const ceilingLights = useRef([])
+    const floorRef = useRef()
+
+    useFrame((state) => {
+        const pulse = (Math.sin(state.clock.elapsedTime * 2) + 1) / 2
+        ceilingLights.current.forEach((ref) => {
+            if (ref) ref.material.emissiveIntensity = 1.5 + pulse * 1.5
+        })
+    })
+
     return (
         <group position={position}>
             {/* Sol beige élégant */}
-            <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+            <mesh ref={floorRef} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
                 <planeGeometry args={[22, 22]} />
                 <meshStandardMaterial color="#f5f0e6" roughness={0.4} metalness={0.2} side={2} />
             </mesh>
@@ -56,6 +68,8 @@ export default function RoomStyle2({ position = [0, 0, 0], baseColor = "#ececec"
             >
                 ROOM STYLE 2
             </Text>
+
+            <ClickToMove floorRef={floorRef} controlsRef={controlsRef} />
         </group>
     )
 }
