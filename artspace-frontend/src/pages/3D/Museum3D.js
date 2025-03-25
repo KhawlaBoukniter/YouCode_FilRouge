@@ -18,9 +18,11 @@ function Controls() {
             enablePan={false}
             enableZoom={true}
             maxDistance={15}
-            minDistance={6}
+            minDistance={0.1}
             maxPolarAngle={Math.PI / 2.2}
             minPolarAngle={0}
+            enableDamping={true}
+            dampingFactor={0.1}
         />
     )
 }
