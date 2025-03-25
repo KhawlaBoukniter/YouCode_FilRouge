@@ -61,4 +61,18 @@ class EventService
     {
         return $this->eventRepo->delete($event);
     }
+
+    public function approve(Event $event)
+    {
+        $event->update(['is_approved' => true]);
+
+        return $event;
+    }
+
+    public function reject(Event $event)
+    {
+        $event->update(['is_approved' => false]);
+
+        return $event;
+    }
 }
