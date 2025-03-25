@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Text } from '@react-three/drei'
+import { Text, Environment } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import ClickToMove from './ClickToMove'
 
@@ -11,6 +11,17 @@ export default function RoomStyle3({ position = [0, 0, 0], controlsRef }) {
         const pulse = (Math.sin(state.clock.elapsedTime * 2) + 1) / 2
         ceilingLights.current.forEach((ref) => {
             if (ref) ref.material.emissiveIntensity = 1.5 + pulse * 1.5
+        })
+    })
+
+    const chandelierRefs = useRef([])
+
+    useFrame((state) => {
+        const t = state.clock.getElapsedTime()
+        chandelierRefs.current.forEach((ref, i) => {
+            if (ref?.material) {
+                ref.material.emissiveIntensity = 0.25 + Math.sin(t * 4 + i) * 0.05
+            }
         })
     })
 
@@ -30,37 +41,77 @@ export default function RoomStyle3({ position = [0, 0, 0], controlsRef }) {
                 [15, 2.5, 0]
             ].map(([x, y, z], i) => (
                 <mesh key={`wall-${i}`} position={[x, y, z]}>
-                    <boxGeometry args={z === 0 ? [0.2, 5, 30] : [30, 5, 0.2]} />
+                    <boxGeometry args={z === 0 ? [0.2, 7, 30] : [30, 7, 0.2]} />
                     <meshStandardMaterial color="#f0e8dd" roughness={0.25} metalness={0.2} />
                 </mesh>
             ))}
 
             {/* Plafond élégant avec luminaires encastrés en V */}
-            <mesh position={[0, 5.05, 0]}>
+            <mesh position={[0, 6.05, 0]}>
                 <boxGeometry args={[30, 0.1, 30]} />
                 <meshStandardMaterial color="#f5f2ec" />
             </mesh>
 
             {/* Lignes LED décoratives au plafond couleur chaude */}
-            {[[-12, 5.2, -10], [12, 5.2, -10], [-12, 5.2, 10], [12, 5.2, 10]].map(([x, y, z], i) => (
+            {[[-13, 6, -10], [13, 6, -10], [-13, 6, 10], [13, 6, 10]].map(([x, y, z], i) => (
                 <mesh key={`ceiling-light-${i}`} position={[x, y, z]}>
-                    <boxGeometry args={[6, 0.01, 0.15]} />
+                    <boxGeometry args={[6, 0.04, 0.15]} />
                     <meshStandardMaterial emissive="#ffdab9" emissiveIntensity={5} color="#fcebd9" />
                 </mesh>
             ))}
 
             {/* Lustres modernes suspendus au plafond couleur dorée douce */}
             {[
-                [-10, 5, -10],
-                [10, 5, -10],
-                [-10, 5, 10],
-                [10, 5, 10]
+                [-10, 5.7, -10],
+                [10, 5.7, -10],
+                [-10, 5.7, 10],
+                [10, 5.7, 10]
             ].map(([x, y, z], i) => (
-                <mesh key={`modern-chandelier-${i}`} position={[x, y - 0.5, z]}>
-                    <cylinderGeometry args={[0.15, 0.15, 1, 16]} />
-                    <meshStandardMaterial emissive="#ffe4b5" emissiveIntensity={4} color="#ffd89b" metalness={1} roughness={0.2} />
-                </mesh>
+                <group key={`lustre-${i}`} position={[x, y, z]}>
+                    {/* Câble d'accroche */}
+                    <mesh position={[0, 0.3, 0]}>
+                        <cylinderGeometry args={[0.02, 0.02, 0.6, 16]} />
+                        <meshStandardMaterial color="#ffd89b" metalness={1} roughness={0.4} />
+                    </mesh>
+
+                    {/* Corps du lustre */}
+                    <mesh
+                        ref={(el) => (chandelierRefs.current[i] = el)}
+                        position={[0, -0.5, 0]}
+                    >
+                        <cylinderGeometry args={[0.2, 0.2, 1.1, 32]} />
+                        <meshStandardMaterial
+                            color="#d4af37"
+                            emissive="#fff5cc"
+                            emissiveIntensity={0.3}
+                            metalness={1}
+                            roughness={0.1}
+                            clearcoat={1}
+                            clearcoatRoughness={0.05}
+                            reflectivity={1}
+                            envMapIntensity={2}
+                        />
+                    </mesh>
+
+                    {/* Lumière interne */}
+                    <pointLight position={[0, -0.5, 0]} intensity={2.5} distance={8} decay={2} color="#fff8e7" />
+
+                    {/* Spot lumineux de côté */}
+                    <spotLight position={[x, y + 1, z + 2]} angle={0.3} penumbra={0.4} intensity={1.5} castShadow />
+
+                    {/* Source de lumière interne */}
+                    {/* <pointLight
+                        position={[0, -0.5, 0]}
+                        intensity={2.5}
+                        distance={8}
+                        decay={2}
+                        color="#fff7e0"
+                    /> */}
+                </group>
             ))}
+
+            <Environment preset="warehouse" />
+
 
             {/* Bandes LED intégrées dans les coins du sol en doré clair */}
             {[
