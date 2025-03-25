@@ -27,6 +27,9 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('role:admin')->group(function () {
         Route::put('events/{event}/approve', [EventController::class, 'approve']);
         Route::put('events/{event}/reject', [EventController::class, 'reject']);
+
+        Route::put('events/{event}/archive', [EventController::class, 'archive']);
+        Route::put('events/{event}/restore', [EventController::class, 'restore']);
     });
 
     Route::middleware('role:artist')->group(function () {
