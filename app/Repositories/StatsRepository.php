@@ -53,4 +53,34 @@ class StatsRepository
             ->join('tickets', 'reservations.ticket_id', '=', 'tickets.id')
             ->sum(DB::raw('tickets.price * reservations.quantity'));
     }
+
+    public function getGlobalStatsWithFilters(array $filters): array
+    {
+        $query = Reservation::query()
+            ->join('tickets', 'reservations.ticket_id', '=', 'tickets.id')
+            ->join('events', 'tickets.event_id', '=', 'events.id')
+            ->where('reservations.status', 'paid');
+
+        if (isset($filters['artist_id'])) {
+            $query->where('events.artist_id', $filters['artist_id']);
+        }
+
+        if (isset($filters['event_id'])) {
+            $query->where('events.id', $filters['event_id']);
+        }
+
+        if (isset($filters['date_min'])) {
+            $query->whereDate('reservations.created_at', '>=', $filters['date_min']);
+        }
+
+        if (isset($filters['date_max'])) {
+            $query->whereDate('reservations.created_at', '<=', $filters['date_max']);
+        }
+
+        return [
+            'total_tickets_sold' => (clone $query)->sum('reservations.quantity'),
+            'total_revenue' => (clone $query)->sum(DB::raw('tickets.price * reservations.quantity')),
+            'total_reservations' => (clone $query)->count(),
+        ];
+    }
 }
