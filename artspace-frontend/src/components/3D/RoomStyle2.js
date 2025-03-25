@@ -1,9 +1,9 @@
 import React, { useRef } from 'react'
 import { Text } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
 import ClickToMove from './ClickToMove'
+import { useFrame } from '@react-three/fiber'
 
-export default function RoomStyle2({ position = [0, 0, 0], baseColor = "#ececec", controlsRef }) {
+export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
     const ceilingLights = useRef([])
     const floorRef = useRef()
 
@@ -16,57 +16,71 @@ export default function RoomStyle2({ position = [0, 0, 0], baseColor = "#ececec"
 
     return (
         <group position={position}>
-            {/* Sol beige élégant */}
+            {/* Sol blanc lumineux */}
             <mesh ref={floorRef} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-                <planeGeometry args={[22, 22]} />
-                <meshStandardMaterial color="#f5f0e6" roughness={0.4} metalness={0.2} side={2} />
+                <planeGeometry args={[30, 30]} />
+                <meshStandardMaterial color="#e4ded0" metalness={0.1} roughness={0.2} />
             </mesh>
 
-            {/* Murs crème texturés visibles des deux côtés */}
-            <mesh position={[0, 2.5, -11]}>
-                <boxGeometry args={[22, 5, 0.2]} />
-                <meshStandardMaterial color="#fff7ed" metalness={0.15} roughness={0.5} side={2} />
-            </mesh>
-            <mesh position={[0, 2.5, 11]}>
-                <boxGeometry args={[22, 5, 0.2]} />
-                <meshStandardMaterial color="#fff7ed" metalness={0.15} roughness={0.5} side={2} />
-            </mesh>
-            <mesh position={[-11, 2.5, 0]}>
-                <boxGeometry args={[0.2, 5, 22]} />
-                <meshStandardMaterial color="#fff7ed" metalness={0.15} roughness={0.5} side={2} />
-            </mesh>
-            <mesh position={[11, 2.5, 0]}>
-                <boxGeometry args={[0.2, 5, 22]} />
-                <meshStandardMaterial color="#fff7ed" metalness={0.15} roughness={0.5} side={2} />
-            </mesh>
-
-            {/* Toit flottant doux */}
-            <mesh position={[0, 5, 0]}>
-                <boxGeometry args={[22, 0.1, 22]} />
-                <meshStandardMaterial color="#f2efe9" side={2} />
-            </mesh>
-
-            {/* Luminaires design suspendus plus doux */}
-            {[[-7, -7], [7, -7], [-7, 7], [7, 7]].map(([x, z], i) => (
-                <mesh key={i} position={[x, 4.8, z]}>
-                    <cylinderGeometry args={[0.06, 0.06, 1.5, 20]} />
-                    <meshStandardMaterial color={'#fdf5e6'} emissive={'#f8e6c1'} emissiveIntensity={1.2} side={2} />
+            {/* Murs blanc cassé */}
+            {[
+                [0, 2.5, -15],
+                [0, 2.5, 15],
+                [-15, 2.5, 0],
+                [15, 2.5, 0],
+            ].map(([x, y, z], i) => (
+                <mesh key={i} position={[x, y, z]}>
+                    <boxGeometry args={z === 0 ? [0.2, 7, 30] : [30, 7, 0.2]} />
+                    <meshStandardMaterial color="#f5f4ef" />
                 </mesh>
             ))}
 
-            {/* Éclairage doux ambré */}
-            <pointLight position={[0, 4, 0]} intensity={1.1} color={'#fff0dd'} />
+            {/* Plafond blanc pur */}
+            <mesh position={[0, 6.05, 0]}>
+                <boxGeometry args={[30, 0.1, 30]} />
+                <meshStandardMaterial color="#bfb8b3" />
+            </mesh>
 
-            {/* Titre mural épuré */}
+            {/* Lumières encastrées modernes */}
+            {[-10, 0, 10].map((x, i) => (
+                <group key={i} position={[x, 6.05, 0]}>
+                    {/* Encastrement physique */}
+                    <mesh position={[0, -0.05, 0]}>
+                        <cylinderGeometry args={[0.6, 0.6, 0.3, 32]} />
+                        <meshStandardMaterial color="#cfcfcf" metalness={0.2} roughness={0.3} />
+                    </mesh>
+
+                    {/* Source de lumière réelle */}
+                    <pointLight
+                        position={[0, -0.02, 0]}
+                        intensity={2.5}
+                        distance={8}
+                        decay={2}
+                        color="#ffffff"
+                    />
+
+                    {/* Effet lumineux émissif visuel */}
+                    <mesh ref={(el) => (ceilingLights.current[i] = el)} position={[0, -0.01, 0]}>
+                        <cylinderGeometry args={[0.4, 0.4, 0.4, 32]} />
+                        <meshStandardMaterial emissive="#ffffff" emissiveIntensity={1.5} color="#fefefe" />
+                    </mesh>
+                </group>
+            ))}
+
+            {/* Éclairage ambiant et spot */}
+            <ambientLight intensity={1} color="#ebe7e5" />
+            <pointLight position={[0, 5, 0]} intensity={1.2} color="#fefefe" />
+
+            {/* Titre mural sobre */}
             <Text
-                position={[0, 4.5, -10.9]}
+                position={[0, 4.5, -14.8]}
                 fontSize={0.5}
-                color="#F8F7F7"
+                color="#3a3a3a"
                 anchorX="center"
                 anchorY="middle"
-                maxWidth={16}
+                maxWidth={20}
             >
-                ROOM STYLE 2
+                Light Gallery
             </Text>
 
             <ClickToMove floorRef={floorRef} controlsRef={controlsRef} />
