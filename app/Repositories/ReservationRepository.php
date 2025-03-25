@@ -25,6 +25,7 @@ class ReservationRepository
                 });
             })->latest()->paginate(6);
     }
+
     public function create(array $data): Reservation
     {
         return Reservation::create($data);
@@ -44,5 +45,12 @@ class ReservationRepository
     public function delete(Reservation $reservation): bool
     {
         return $reservation->delete();
+    }
+
+    public function getforArtist($artistId)
+    {
+        return Reservation::whereHas('ticket.event', function ($query) use ($artistId) {
+            $query->where('artist_id', $artistId);
+        })->with(['ticket.event'])->latest()->paginate(6);
     }
 }
