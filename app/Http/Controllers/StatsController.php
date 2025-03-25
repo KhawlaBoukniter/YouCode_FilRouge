@@ -37,4 +37,13 @@ class StatsController extends Controller
 
         return response()->json(['top_events' => $events]);
     }
+
+    public function totalReservations()
+    {
+        $total = $this->statsService->getTotalCount();
+
+        return response()->json([
+            'total_reservations' => $total
+        ]);
+    }
 }

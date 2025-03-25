@@ -31,6 +31,8 @@ Route::middleware('auth:api')->group(function () {
 
         Route::put('events/{event}/archive', [EventController::class, 'archive']);
         Route::put('events/{event}/restore', [EventController::class, 'restore']);
+
+        Route::get('/stats/total-reservations', [StatsController::class, 'totalReservations']);
     });
 
     Route::middleware('role:artist')->group(function () {
