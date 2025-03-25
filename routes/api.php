@@ -24,6 +24,11 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
+    Route::middleware('role:admin')->group(function () {
+        Route::put('events/{event}/approve', [EventController::class, 'approve']);
+        Route::put('events/{event}/reject', [EventController::class, 'reject']);
+    });
+
     Route::middleware('role:artist')->group(function () {
         Route::post('/artworks', [ArtworkController::class, 'store']);
         Route::put('/artworks/{artwork}', [ArtworkController::class, 'update']);
