@@ -24,7 +24,7 @@ class StatsRepository
 
     public function getTopEvents($artistId)
     {
-        return Reservation::select('tickets.event_id', DB::raw('SUM(reservations.quantity) as totalsold'))
+        return Reservation::select('tickets.event_id', DB::raw('SUM(reservations.quantity) as total_sold'))
             ->join('tickets', 'reservations.ticket_id', '=', 'tickets.id')
             ->whereHas('ticket.event', function ($query) use ($artistId) {
                 $query->where('artist_id', $artistId);
