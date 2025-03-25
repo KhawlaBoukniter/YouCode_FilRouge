@@ -1,7 +1,9 @@
 import React, { useRef } from 'react'
-import { Text, Environment } from '@react-three/drei'
+import { Text, Environment, MeshReflectorMaterial } from '@react-three/drei'
 import ClickToMove from './ClickToMove'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useLoader } from '@react-three/fiber'
+import { TextureLoader } from 'three'
+import * as THREE from 'three'
 
 export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
     const ceilingLights = useRef([])
@@ -14,12 +16,23 @@ export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
         })
     })
 
+    const texture = useLoader(TextureLoader, '/textures/19.jpg')
+
     return (
         <group position={position}>
             {/* Sol blanc lumineux */}
             <mesh ref={floorRef} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
                 <planeGeometry args={[30, 30]} />
-                <meshStandardMaterial color="#e4ded0" metalness={0.1} roughness={0.2} />
+                <MeshReflectorMaterial
+                    color="#e4ded0"
+                    metalness={0.8}
+                    roughness={0.2}
+                    blur={[300, 300]}
+                    resolution={1024}
+                    mixBlur={2}
+                    depthScale={1.2}
+                    minDepthThreshold={0.9}
+                    maxDepthThreshold={2} />
             </mesh>
 
             {/* Murs blanc cassé */}
@@ -31,14 +44,14 @@ export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
             ].map(([x, y, z], i) => (
                 <mesh key={i} position={[x, y, z]} receiveShadow>
                     <boxGeometry args={z === 0 ? [0.2, 7, 30] : [30, 7, 0.2]} />
-                    <meshStandardMaterial color="#f5f4ef" />
+                    <meshStandardMaterial color="#f5f4ef" metalness={0.2} roughness={0.2} />
                 </mesh>
             ))}
 
             {/* Plafond blanc pur */}
             <mesh position={[0, 6.05, 0]} receiveShadow>
                 <boxGeometry args={[30, 0.1, 30]} />
-                <meshStandardMaterial color="#bfb8b3" />
+                <meshStandardMaterial map={texture} side={THREE.DoubleSide} />
             </mesh>
 
             {/* Lumières encastrées modernes */}
@@ -67,11 +80,15 @@ export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
                 </group>
             ))}
 
-            <Environment preset="warehouse" />
+            <Environment preset="dawn" />
+
+            <ambientLight intensity={0.2} color="#eae5dc" />
+            <spotLight position={[0, 6, 5]} angle={0.3} penumbra={0.3} intensity={0.7} castShadow />
+            <spotLight position={[0, 6, -5]} angle={0.3} penumbra={0.3} intensity={0.7} castShadow />
 
             {/* Éclairage ambiant et spot */}
-            <ambientLight intensity={1} color="#ebe7e5" />
-            <pointLight position={[0, 5, 0]} intensity={1.2} color="#fefefe" />
+            {/* <ambientLight intensity={1} color="#ebe7e5" />
+            <pointLight position={[0, 5, 0]} intensity={1.2} color="#fefefe" /> */}
 
             {/* Titre mural sobre */}
             <Text
