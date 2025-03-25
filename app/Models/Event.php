@@ -16,7 +16,8 @@ class Event extends Model
         'location',
         'is_online',
         'poster',
-        'is_approved'
+        'is_approved',
+        'is_archived'
     ];
 
     public function tickets()
