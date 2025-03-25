@@ -1,7 +1,9 @@
 import React, { useRef } from 'react'
 import { Text, Environment } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useLoader } from '@react-three/fiber'
 import ClickToMove from './ClickToMove'
+import { TextureLoader } from 'three'
+import * as THREE from 'three'
 
 export default function RoomStyle3({ position = [0, 0, 0], controlsRef }) {
     const ceilingLights = useRef([])
@@ -25,12 +27,14 @@ export default function RoomStyle3({ position = [0, 0, 0], controlsRef }) {
         })
     })
 
+    const texture = useLoader(TextureLoader, '/textures/8.jpg')
+
     return (
         <group position={position}>
             {/* Sol effet marbre clair brillant avec réflexions */}
             <mesh ref={floorRef} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
                 <planeGeometry args={[30, 30]} />
-                <meshStandardMaterial color="#eae4dc" metalness={0.1} roughness={0.2} />
+                <meshStandardMaterial map={texture} side={THREE.DoubleSide} metalness={0.1} roughness={0.2} />
             </mesh>
 
             {/* Murs beiges lumineux texturés satinés */}
@@ -102,7 +106,7 @@ export default function RoomStyle3({ position = [0, 0, 0], controlsRef }) {
                 </group>
             ))}
 
-            <Environment preset="warehouse" />
+            <Environment preset="city" />
 
             {/* Bandes LED intégrées dans les coins du sol en doré clair */}
             {[
