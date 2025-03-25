@@ -49,14 +49,14 @@ export default function RoomStyle3({ position = [0, 0, 0], controlsRef }) {
             {/* Plafond élégant avec luminaires encastrés en V */}
             <mesh position={[0, 6.05, 0]} receiveShadow>
                 <boxGeometry args={[30, 0.1, 30]} />
-                <meshStandardMaterial color="#e5dcd2" />
+                <meshStandardMaterial color="#e5dcd2" roughness={1} metalness={0.2} />
             </mesh>
 
             {/* Lignes LED décoratives au plafond couleur chaude */}
             {[[-13, 6, -10], [13, 6, -10], [-13, 6, 10], [13, 6, 10]].map(([x, y, z], i) => (
                 <mesh key={`ceiling-light-${i}`} position={[x, y, z]}>
-                    <boxGeometry args={[6, 0.04, 0.15]} />
-                    <meshStandardMaterial emissive="#ffdab9" emissiveIntensity={5} color="#fcebd9" />
+                    <boxGeometry args={[6, 0.04, 0.1]} />
+                    <meshStandardMaterial color="#ffd89b" metalness={0.5} roughness={0.4} />
                 </mesh>
             ))}
 
@@ -70,7 +70,7 @@ export default function RoomStyle3({ position = [0, 0, 0], controlsRef }) {
                 <group key={`lustre-${i}`} position={[x, y, z]}>
                     {/* Câble d'accroche */}
                     <mesh position={[0, 0.3, 0]}>
-                        <cylinderGeometry args={[0.02, 0.02, 0.6, 16]} />
+                        <cylinderGeometry args={[0.02, 0.06, 0.6, 16]} />
                         <meshStandardMaterial color="#ffd89b" metalness={1} roughness={0.4} />
                     </mesh>
 
@@ -99,19 +99,10 @@ export default function RoomStyle3({ position = [0, 0, 0], controlsRef }) {
                     {/* Spot lumineux de côté */}
                     <spotLight position={[x, y + 1, z + 2]} angle={0.3} penumbra={0.4} intensity={1.5} castShadow />
 
-                    {/* Source de lumière interne */}
-                    {/* <pointLight
-                        position={[0, -0.5, 0]}
-                        intensity={2.5}
-                        distance={8}
-                        decay={2}
-                        color="#fff7e0"
-                    /> */}
                 </group>
             ))}
 
             <Environment preset="warehouse" />
-
 
             {/* Bandes LED intégrées dans les coins du sol en doré clair */}
             {[
