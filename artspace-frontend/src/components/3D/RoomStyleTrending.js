@@ -1,11 +1,16 @@
 import React, { useRef } from 'react'
-import { Text } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { Text, MeshReflectorMaterial, useGLTF } from '@react-three/drei'
+import { useFrame, useLoader } from '@react-three/fiber'
 import ClickToMove from './ClickToMove'
+import { TextureLoader } from 'three'
+import * as THREE from 'three'
 
 export default function RoomStyleTrending({ position = [0, 0, 0], controlsRef }) {
     const ceilingLights = useRef([])
     const floorRef = useRef()
+    const { scene: sculpture } = useGLTF('/models/horse_sculpture.glb')
+    const { scene: sculpture1 } = useGLTF('/models/sheep_sculpture.glb')
+    const { scene: barrier } = useGLTF('/models/vip_rope_barrier.glb')
 
     useFrame((state) => {
         const pulse = (Math.sin(state.clock.elapsedTime * 2) + 1) / 2
@@ -14,84 +19,134 @@ export default function RoomStyleTrending({ position = [0, 0, 0], controlsRef })
         })
     })
 
+    const texture = useLoader(TextureLoader, '/textures/45.jpg')
+    const glb_horse = useLoader(TextureLoader, '/textures/glb_horse7.jpg')
+    const glb_horse1 = useLoader(TextureLoader, '/textures/glb_horse8.jpg')
+
     return (
         <group position={position}>
-            {/* Sol clair chaleureux effet terrazzo pastel */}
+            {/* Sol marbré lumineux effet miroir réaliste */}
             <mesh ref={floorRef} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-                <planeGeometry args={[30, 30]} />
-                <meshStandardMaterial color="#fff1e6" metalness={0.1} roughness={0.2} />
+                <planeGeometry args={[40, 40]} />
+                <MeshReflectorMaterial
+                    blur={[400, 100]}
+                    resolution={1024}
+                    mixBlur={2}
+                    mixStrength={20}
+                    roughness={0.1}
+                    depthScale={1.2}
+                    minDepthThreshold={0.4}
+                    maxDepthThreshold={1.5}
+                    color="#fefefe"
+                    metalness={0.5}
+                />
             </mesh>
 
-            {/* Murs pastel vifs et joyeux */}
-            {[[-15, 2.5, 0], [15, 2.5, 0]].map(([x, y, z], i) => (
-                <mesh key={`wall-${i}`} position={[x, y, z]}>
-                    <boxGeometry args={[0.2, 5, 30]} />
-                    <meshStandardMaterial color={i === 0 ? "#ffd6d6" : "#d0eaff"} />
-                </mesh>
-            ))}
-            {[[-0, 2.5, -15], [0, 2.5, 15]].map(([x, y, z], i) => (
-                <mesh key={`wall-${i + 2}`} position={[x, y, z]}>
-                    <boxGeometry args={[30, 5, 0.2]} />
-                    <meshStandardMaterial color={i === 0 ? "#fff9dc" : "#e0ffd8"} />
+            {/* Murs extérieurs espacés */}
+            {[[0, 2.5, 20], [0, 2.5, -20]].map(([x, y, z], i) => (
+                <mesh key={`outer-wall-${i}`} position={[x, y, z]}>
+                    <boxGeometry args={[z === 0 ? 0.2 : 40, 7, z === 0 ? 40 : 0.2]} />
+                    <meshStandardMaterial map={texture} side={THREE.DoubleSide} />
                 </mesh>
             ))}
 
-            {/* Plafond blanc lumineux avec LED colorées en halo doux */}
-            <mesh position={[0, 5.05, 0]}>
-                <boxGeometry args={[30, 0.1, 30]} />
-                <meshStandardMaterial color="#fdf5ff" />
+            {[[20, 2.5, 0], [-20, 2.5, 0]].map(([x, y, z], i) => (
+                <mesh key={`outer-wall-${i}`} position={[x, y, z]}>
+                    <boxGeometry args={[z === 0 ? 0.2 : 40, 7, z === 0 ? 40 : 0.2]} />
+                    <meshStandardMaterial color="#b1bfb1" />
+                </mesh>
+            ))}
+
+            {/* Sculpture centrale */}
+
+            <primitive
+                object={sculpture}
+                scale={2}
+                position={[-2, 0, 0]}
+                rotation={[0, Math.PI / 2, 0]}
+                onUpdate={(self) => {
+                    self.traverse((child) => {
+                        if (child.isMesh) {
+                            child.material = new THREE.MeshStandardMaterial({
+                                map: glb_horse,
+                                metalness: 0.5,
+                                roughness: 0.3,
+                            })
+                            child.castShadow = true
+                            child.receiveShadow = true
+                        }
+                    })
+                }}
+            />
+
+            <primitive
+                object={sculpture1}
+                scale={2}
+                position={[2, 0, 0]}
+                rotation={[0, Math.PI / 2, 0]}
+                onUpdate={(self) => {
+                    self.traverse((child) => {
+                        if (child.isMesh) {
+                            child.material = new THREE.MeshStandardMaterial({
+                                map: glb_horse1,
+                                metalness: 0.5,
+                                roughness: 0.3,
+                            })
+                            child.castShadow = true
+                            child.receiveShadow = true
+                        }
+                    })
+                }}
+            />
+
+            {/* Barrières autour de la première sculpture */}
+            <primitive object={barrier} position={[-0, -0.1, 1.2]} scale={0.02} />
+            <primitive object={barrier.clone()} scale={0.02} position={[8, -0.1, 0.5]} rotation={[0, -Math.PI / 2, 0]} />
+            <primitive object={barrier.clone()} scale={0.02} position={[-1, -0.1, 0.5]} rotation={[0, -Math.PI / 2, 0]} />
+            <primitive object={barrier.clone()} position={[-0, -0.1, -8]} scale={0.02} />
+
+
+            {/* Plafond épuré */}
+            <mesh position={[0, 6.05, 0]}>
+                <boxGeometry args={[40, 0.1, 40]} />
+                <meshStandardMaterial color="#fefefe" />
             </mesh>
 
-            {[[-10, 5.2, 0], [10, 5.2, 0], [0, 5.2, -10], [0, 5.2, 10]].map(([x, y, z], i) => (
-                <mesh
-                    key={`ceiling-light-${i}`}
-                    ref={(el) => (ceilingLights.current[i] = el)}
-                    position={[x, y, z]}
-                >
-                    <ringGeometry args={[1.2, 1.6, 32]} />
-                    <meshStandardMaterial
-                        emissive={['#ffb347', '#99e2b4', '#ffec99', '#b9fbc0'][i]}
-                        emissiveIntensity={2.5}
-                        color="#eeeeee"
-                    />
-                </mesh>
-            ))}
-
-            {/* Cadres pastel rétroéclairés */}
-            {[[-8, 2.5, -14.9], [-2.5, 2.5, -14.9], [3, 2.5, -14.9], [8, 2.5, -14.9]].map(([x, y, z], i) => (
-                <group key={`frame-${i}`} position={[x, y, z]}>
-                    <mesh position={[0, 0, 0.01]}>
-                        <planeGeometry args={[4, 2.8]} />
+            {/* Lustres élégants et sculpturaux */}
+            {[[-8, 5.4, -8], [8, 5.3, -8], [0, 5.4, 8]].map(([x, y, z], i) => (
+                <group key={`light-${i}`} position={[x, y, z]}>
+                    <mesh ref={(el) => (ceilingLights.current[i] = el)}>
+                        <torusKnotGeometry args={[0.3, 0.1, 64, 8]} />
                         <meshStandardMaterial
-                            emissive={["#ffccd5", "#cce5ff", "#fff3bf", "#d8f3dc"][i]}
-                            emissiveIntensity={1.8}
-                            color="#fafafa"
+                            color="#fff6e0"
+                            emissive="#fcd2a0"
+                            emissiveIntensity={2.5}
+                            metalness={0.9}
+                            roughness={0.1}
                         />
                     </mesh>
-                    <mesh>
-                        <planeGeometry args={[3.7, 2.5]} />
-                        <meshStandardMaterial color="#3a3a3a" />
-                    </mesh>
+                    <pointLight position={[0, 0, 0]} intensity={3} distance={10} decay={2} color="#fcd2a0" />
                 </group>
             ))}
 
-            {/* Éclairage chaleureux immersif */}
-            <ambientLight intensity={0.85} color="#fff2e6" />
-            <pointLight position={[0, 6, 0]} intensity={1.4} color="#ffd6d6" />
-
-            {/* Titre mural joyeux */}
+            {/* Titre mural */}
             <Text
-                position={[0, 4.7, -14.7]}
-                fontSize={0.55}
-                color="#fa4a7c"
+                position={[0, 4.6, -19.5]}
+                fontSize={0.6}
                 anchorX="center"
                 anchorY="middle"
-                maxWidth={22}
+                maxWidth={30}
             >
-                ✨ ART TRENDS — COLORFUL EDITION ✨
+                TRENDING ROOM
             </Text>
+
+            <ambientLight intensity={0.8} color="#fff2e6" />
+            <pointLight position={[0, 6, 0]} intensity={1.4} color="#ffd6d6" />
 
             <ClickToMove floorRef={floorRef} controlsRef={controlsRef} />
         </group>
     )
 }
+
+useGLTF.preload('/models/horse_sculpture.glb')
+useGLTF.preload('/models/vip_rope_barrier.glb')
