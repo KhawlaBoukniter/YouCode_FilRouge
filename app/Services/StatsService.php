@@ -47,4 +47,9 @@ class StatsService
     {
         return $this->statsRepo->getGlobalRevenue();
     }
+
+    public function getGlobalStats(array $filters = []): array
+    {
+        return $this->statsRepo->getGlobalStatsWithFilters($filters);
+    }
 }
