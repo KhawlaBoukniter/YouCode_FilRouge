@@ -75,4 +75,18 @@ class EventService
 
         return $event;
     }
+
+    public function archive(Event $event)
+    {
+        $event->update(['is_archived' => true]);
+
+        return $event;
+    }
+
+    public function restore(Event $event)
+    {
+        $event->update(['is_archived' => false]);
+
+        return $event;
+    }
 }
