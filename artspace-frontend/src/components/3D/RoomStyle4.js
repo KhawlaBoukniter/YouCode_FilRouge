@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Text } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
+import ClickToMove from './ClickToMove'
 
-export default function RoomStyle4({ position = [0, 0, 0] }) {
+export default function RoomStyle4({ position = [0, 0, 0], controlsRef }) {
+    const ceilingLights = useRef([])
+    const floorRef = useRef()
+
+    useFrame((state) => {
+        const pulse = (Math.sin(state.clock.elapsedTime * 2) + 1) / 2
+        ceilingLights.current.forEach((ref) => {
+            if (ref) ref.material.emissiveIntensity = 1.5 + pulse * 1.5
+        })
+    })
+
     return (
         <group position={position}>
             {/* Sol effet miroir clair */}
-            <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+            <mesh ref={floorRef} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
                 <planeGeometry args={[30, 30]} />
                 <meshStandardMaterial color="#f8f8f8" metalness={0.8} roughness={0.05} side={2} />
             </mesh>
@@ -77,6 +89,8 @@ export default function RoomStyle4({ position = [0, 0, 0] }) {
             >
                 MODERN ROOM STYLE 4
             </Text>
+
+            <ClickToMove floorRef={floorRef} controlsRef={controlsRef} />
         </group>
     )
 }
