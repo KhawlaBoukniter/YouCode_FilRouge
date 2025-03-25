@@ -90,4 +90,11 @@ class ReservationController extends Controller
             'total_price' => $total,
         ]);
     }
+
+    public function forArtist()
+    {
+        $reservations = $this->reservationService->getForArtist();
+
+        return response()->json(['reservations' => $reservations]);
+    }
 }
