@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Text } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
+import ClickToMove from './ClickToMove'
 
-export default function RoomStyle1({ position = [0, 0, 0], color = "#f5f5f5" }) {
+export default function RoomStyle1({ position = [0, 0, 0], color = "#f5f5f5", controlsRef }) {
+    const ceilingLights = useRef([])
+    const floorRef = useRef()
+
+    useFrame((state) => {
+        const pulse = (Math.sin(state.clock.elapsedTime * 2) + 1) / 2
+        ceilingLights.current.forEach((ref) => {
+            if (ref) ref.material.emissiveIntensity = 1.5 + pulse * 1.5
+        })
+    })
+
     return (
         <group position={position}>
             {/* Sol en marbre clair */}
-            <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+            <mesh ref={floorRef} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
                 <planeGeometry args={[20, 20]} />
                 <meshStandardMaterial color={color} roughness={0.3} metalness={0.1} />
             </mesh>
@@ -74,6 +86,8 @@ export default function RoomStyle1({ position = [0, 0, 0], color = "#f5f5f5" }) 
             >
                 ARTSPACE GALLERY
             </Text>
+
+            <ClickToMove floorRef={floorRef} controlsRef={controlsRef} />
         </group>
     )
 }
