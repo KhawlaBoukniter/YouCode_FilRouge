@@ -27,4 +27,9 @@ class StatsService
     {
         return $this->statsRepo->getTopEvents($artistId);
     }
+
+    public function getTotalCount(): int
+    {
+        return $this->statsRepo->getTotalCount();
+    }
 }
