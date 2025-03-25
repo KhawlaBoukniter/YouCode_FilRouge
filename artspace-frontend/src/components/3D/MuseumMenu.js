@@ -8,10 +8,10 @@ const MuseumMenu = () => {
 
     const links = [
         { name: 'Trends', to: 'trending' },
-        { name: 'Room', to: 'room1' },
-        { name: 'Room', to: 'room2' },
-        { name: 'Room', to: 'room3' },
-        { name: 'Room', to: 'room4' }
+        { name: 'Room 1', to: 'room1' },
+        { name: 'Room 2', to: 'room2' },
+        { name: 'Room 3', to: 'room3' },
+        { name: 'Room 4', to: 'room4' }
     ]
 
     return (
