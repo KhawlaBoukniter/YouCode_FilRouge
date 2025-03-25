@@ -18,7 +18,7 @@ class StatsRepository
     {
         return Reservation::whereHas('ticket.event', function ($query) use ($artistId) {
             $query->where('artist_id', $artistId);
-        })->where('status', 'paid')->where('tickets', 'reservations.ticket_id', '=', 'tickets.id')
+        })->where('reservations.status', 'paid')->join('tickets', 'reservations.ticket_id', '=', 'tickets.id')
             ->sum(DB::raw('tickets.price * reservations.quantity'));
     }
 
