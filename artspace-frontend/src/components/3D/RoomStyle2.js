@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Text } from '@react-three/drei'
+import { Text, Environment } from '@react-three/drei'
 import ClickToMove from './ClickToMove'
 import { useFrame } from '@react-three/fiber'
 
@@ -29,14 +29,14 @@ export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
                 [-15, 2.5, 0],
                 [15, 2.5, 0],
             ].map(([x, y, z], i) => (
-                <mesh key={i} position={[x, y, z]}>
+                <mesh key={i} position={[x, y, z]} receiveShadow>
                     <boxGeometry args={z === 0 ? [0.2, 7, 30] : [30, 7, 0.2]} />
                     <meshStandardMaterial color="#f5f4ef" />
                 </mesh>
             ))}
 
             {/* Plafond blanc pur */}
-            <mesh position={[0, 6.05, 0]}>
+            <mesh position={[0, 6.05, 0]} receiveShadow>
                 <boxGeometry args={[30, 0.1, 30]} />
                 <meshStandardMaterial color="#bfb8b3" />
             </mesh>
@@ -47,7 +47,7 @@ export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
                     {/* Encastrement physique */}
                     <mesh position={[0, -0.05, 0]}>
                         <cylinderGeometry args={[0.6, 0.6, 0.3, 32]} />
-                        <meshStandardMaterial color="#5a5958" metalness={0.2} roughness={0.3} />
+                        <meshStandardMaterial color="#5a5958" metalness={1} roughness={0.1} clearcoat={1} clearcoatRoughness={0.05} reflectivity={1} emissive="#fff5cc" emissiveIntensity={0.3} envMapIntensity={2} />
                     </mesh>
 
                     {/* Source de lumière réelle */}
@@ -66,6 +66,8 @@ export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
                     </mesh>
                 </group>
             ))}
+
+            <Environment preset="warehouse" />
 
             {/* Éclairage ambiant et spot */}
             <ambientLight intensity={1} color="#ebe7e5" />
