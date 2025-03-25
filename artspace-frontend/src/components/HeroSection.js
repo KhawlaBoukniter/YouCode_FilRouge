@@ -20,14 +20,19 @@ const HeroSection = () => {
                     </p>
                     <div className="flex space-x-3">
                         <Button className="h-[50px] w-[186px] rounded-full bg-[#3a6b8f] text-white font-garamond text-base">
-                            Start Exploring
-                            <ArrowRight className="ml-2 h-4 w-3.5" />
+                            <Link
+                                to='/museum/trending'
+                                className="flex items-center gap-2"
+                            >
+                                Start Exploring
+                                <ArrowRight className="h-4 w-3.5" aria-hidden="true" />
+                            </Link>
                         </Button>
                         <Button
                             variant="outline"
-                            className="h-[50px] w-[171px] rounded-full border-gray-300 text-black font-garamond text-base"
+                            className="h-[50px] w-[171px] rounded-full border-gray-300 text-black font-garamond text-base flex items-center gap-2"
                         >
-                            <Play className="mr-2 h-4 w-3" />
+                            <Play className="h-4 w-3" aria-hidden="true" />
                             Watch Demo
                         </Button>
                     </div>
