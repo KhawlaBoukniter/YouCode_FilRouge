@@ -67,4 +67,14 @@ class StatsController extends Controller
 
         return response()->json(['global_revenue' => $revenue]);
     }
+
+    public function globalStats(Request $request)
+    {
+        $filters = $request->only(['artist_id', 'event_id', 'date_min', 'date_max']);
+        $stats = $this->statsService->getGlobalStats($filters);
+
+        return response()->json([
+            'global_stats' => $stats
+        ]);
+    }
 }
