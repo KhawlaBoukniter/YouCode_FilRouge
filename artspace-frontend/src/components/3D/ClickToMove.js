@@ -2,7 +2,7 @@ import { useThree, useFrame } from '@react-three/fiber'
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
-export default function ClickToMove({ floorRef }) {
+export default function ClickToMove({ floorRef, controlsRef }) {
     const { camera, gl } = useThree()
     const [target, setTarget] = useState(null)
     const markerRef = useRef()
@@ -26,7 +26,9 @@ export default function ClickToMove({ floorRef }) {
                 const destination = new THREE.Vector3(point.x, 5, point.z + 10)
                 setTarget(destination)
 
-                lookTarget.current = new THREE.Vector3(point.x, 2.5, point.z)
+                const direction = new THREE.Vector3().subVectors(point, camera.position).normalize()
+                const lookAtPoint = point.clone().add(direction.multiplyScalar(2))
+                lookTarget.current = new THREE.Vector3(lookAtPoint.x, 2.5, lookAtPoint.z)
 
                 if (markerRef.current) {
                     markerRef.current.position.set(point.x, 0.1, point.z)
@@ -54,6 +56,9 @@ export default function ClickToMove({ floorRef }) {
 
         if (lookTarget.current) {
             camera.lookAt(lookTarget.current)
+            if (controlsRef?.current) {
+                controlsRef.current.target.copy(lookTarget.current)
+            }
         }
     })
 

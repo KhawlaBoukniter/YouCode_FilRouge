@@ -127,8 +127,8 @@ export default function Museum3D() {
                 <Room position={[0, 0, 0]} color="#ffffff" withLeftDoor withRightDoor floorRef={floorRef} />
                 <Room position={[20, 0, 0]} color="#e3f2fd" withLeftDoor />
 
-                <ClickToMove floorRef={floorRef} />
-                <ClickToMove floorRef={secondFloorRef} />
+                <ClickToMove floorRef={floorRef} controlsRef={controlsRef} />
+                <ClickToMove floorRef={secondFloorRef} controlsRef={controlsRef} />
 
                 <Controls controlsRef={controlsRef} />
             </Canvas>
