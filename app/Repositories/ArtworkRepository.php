@@ -65,11 +65,12 @@ class ArtworkRepository
             return [
                 'artworks_count' => 0,
                 'comments_count' => 0,
+                'likes_count' => 0,
                 'latest_artwork' => null,
             ];
         }
 
-        $artworks = Artwork::withCount('comments')
+        $artworks = Artwork::withCount(['comments', 'likes'])
             ->where('artist_id', $artist->id)
             ->orderByDesc('created_at')
             ->get();
@@ -77,6 +78,7 @@ class ArtworkRepository
         return [
             'artworks_count' => $artworks->count(),
             'comments_count' => $artworks->sum('comments_count'),
+            'likes_count' => $artworks->sum('likes_count'),
             'latest_artwork' => $artworks->sortByDesc('created_at')->first(),
         ];
     }
