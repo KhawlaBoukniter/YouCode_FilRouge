@@ -30,4 +30,9 @@ class StatsRepository
                 $query->where('artist_id', $artistId);
             })->groupBy('tickets.event_id')->orderByDesc('total_sold')->take(5)->get();
     }
+
+    public function getTotalCount(): int
+    {
+        return Reservation::count();
+    }
 }
