@@ -1,14 +1,13 @@
 import React, { useRef, useEffect } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
-import PlayerControls from '../../components/3D/PlayerControls'
+import ClickToMove from '../../components/3D/ClickToMove'
 
 function Controls() {
     const controls = useRef()
     const { camera } = useThree()
 
     useEffect(() => {
-        // Centrer la rotation sur la salle du milieu
         controls.current.target.set(0, 2.5, 0)
         controls.current.update()
     }, [])
@@ -26,11 +25,15 @@ function Controls() {
     )
 }
 
-function Room({ position = [0, 0, 0], color = "#ffffff", floorColor = "#e0e0e0", withLeftDoor = false, withRightDoor = false }) {
+function Room({ position = [0, 0, 0], color = "#ffffff", floorColor = "#e0e0e0", withLeftDoor = false, withRightDoor = false, floorRef = null }) {
     return (
         <group position={position}>
             {/* Sol */}
-            <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+            <mesh
+                ref={floorRef}
+                rotation={[-Math.PI / 2, 0, 0]}
+                receiveShadow
+            >
                 <planeGeometry args={[20, 20]} />
                 <meshStandardMaterial color={floorColor} />
             </mesh>
@@ -89,19 +92,20 @@ function Room({ position = [0, 0, 0], color = "#ffffff", floorColor = "#e0e0e0",
 }
 
 export default function Museum3D() {
+    const floorRef = useRef()
+
     return (
         <div style={{ height: '100vh', width: '100%' }}>
             <Canvas shadows camera={{ position: [0, 5, 15], fov: 60 }}>
-                <PlayerControls />
                 <ambientLight intensity={0.3} />
                 <spotLight position={[5, 10, 5]} angle={0.4} penumbra={0.2} intensity={1.5} castShadow />
 
                 {/* Salles alignées et connectées */}
                 <Room position={[-20, 0, 0]} color="#fce4ec" withRightDoor />
-                <Room position={[0, 0, 0]} color="#ffffff" withLeftDoor withRightDoor />
+                <Room position={[0, 0, 0]} color="#ffffff" withLeftDoor withRightDoor floorRef={floorRef} />
                 <Room position={[20, 0, 0]} color="#e3f2fd" withLeftDoor />
 
-                {/* Caméra contrôlée */}
+                <ClickToMove floorRef={floorRef} />
                 <Controls />
             </Canvas>
         </div>
