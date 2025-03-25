@@ -4,18 +4,17 @@ import { OrbitControls } from '@react-three/drei'
 import ClickToMove from '../../components/3D/ClickToMove'
 import ClickableDoorZone from '../../components/3D/ClickableDoorZone'
 
-function Controls() {
-    const controls = useRef()
+function Controls({ controlsRef }) {
     const { camera } = useThree()
 
     useEffect(() => {
-        controls.current.target.set(0, 2.5, 0)
-        controls.current.update()
+        controlsRef.current.target.set(0, 2.5, 0)
+        controlsRef.current.update()
     }, [])
 
     return (
         <OrbitControls
-            ref={controls}
+            ref={controlsRef}
             enablePan={false}
             enableZoom={true}
             maxDistance={15}
@@ -94,8 +93,26 @@ function Room({ position = [0, 0, 0], color = "#ffffff", floorColor = "#e0e0e0",
     )
 }
 
+function DoorHandler({ controlsRef }) {
+    const { camera } = useThree()
+
+    return (
+        <ClickableDoorZone
+            position={[-10, 2.5, 0]}
+            onClick={() => {
+                console.log("Activation salle 2")
+                camera.position.set(-20, 5, 15)
+                controlsRef.current.target.set(20, 2.5, 0)
+                controlsRef.current.update()
+            }}
+        />
+    )
+}
+
 export default function Museum3D() {
     const floorRef = useRef()
+    const secondFloorRef = useRef()
+    const controlsRef = useRef()
 
     return (
         <div style={{ height: '100vh', width: '100%' }}>
@@ -104,16 +121,16 @@ export default function Museum3D() {
                 <spotLight position={[5, 10, 5]} angle={0.4} penumbra={0.2} intensity={1.5} castShadow />
 
                 {/* Salles alignées et connectées */}
-                <Room position={[-20, 0, 0]} color="#fce4ec" withRightDoor />
-                <ClickableDoorZone
-                    position={[-10, 2.5, 0]}
-                    onClick={() => console.log("Entrée dans la salle 2")}
-                />
+                <Room position={[-20, 0, 0]} color="#fce4ec" withRightDoor floorRef={secondFloorRef} />
+                <DoorHandler controlsRef={controlsRef} />
+
                 <Room position={[0, 0, 0]} color="#ffffff" withLeftDoor withRightDoor floorRef={floorRef} />
                 <Room position={[20, 0, 0]} color="#e3f2fd" withLeftDoor />
 
                 <ClickToMove floorRef={floorRef} />
-                <Controls />
+                <ClickToMove floorRef={secondFloorRef} />
+
+                <Controls controlsRef={controlsRef} />
             </Canvas>
         </div>
     )
