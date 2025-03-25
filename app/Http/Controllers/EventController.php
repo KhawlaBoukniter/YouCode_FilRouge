@@ -69,4 +69,18 @@ class EventController extends Controller
             'message' => 'événement supprimé avec succès.'
         ]);
     }
+
+    public function approve(Event $event)
+    {
+        $this->eventService->approve($event);
+
+        return response()->json(['message' => 'Evenement validé avec succès.']);
+    }
+
+    public function reject(Event $event)
+    {
+        $this->eventService->reject($event);
+
+        return response()->json(['message' => 'Evenement rejeté avec succès.']);
+    }
 }
