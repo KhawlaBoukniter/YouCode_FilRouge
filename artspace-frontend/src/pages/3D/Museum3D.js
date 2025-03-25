@@ -36,6 +36,16 @@ export default function Museum3D() {
                     <meshStandardMaterial color="royalblue" />
                 </mesh>
 
+                <ambientLight intensity={0.3} />
+
+                <spotLight
+                    position={[5, 10, 5]}
+                    angle={0.4}
+                    penumbra={0.2}
+                    intensity={1.5}
+                    castShadow
+                />
+
                 <OrbitControls />
             </Canvas>
         </div>
