@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import ClickToMove from '../../components/3D/ClickToMove'
+import ClickableDoorZone from '../../components/3D/ClickableDoorZone'
 
 function Controls() {
     const controls = useRef()
@@ -104,6 +105,10 @@ export default function Museum3D() {
 
                 {/* Salles alignées et connectées */}
                 <Room position={[-20, 0, 0]} color="#fce4ec" withRightDoor />
+                <ClickableDoorZone
+                    position={[-10, 2.5, 0]}
+                    onClick={() => console.log("Entrée dans la salle 2")}
+                />
                 <Room position={[0, 0, 0]} color="#ffffff" withLeftDoor withRightDoor floorRef={floorRef} />
                 <Room position={[20, 0, 0]} color="#e3f2fd" withLeftDoor />
 
