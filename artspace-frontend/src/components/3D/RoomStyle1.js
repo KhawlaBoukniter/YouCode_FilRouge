@@ -1,7 +1,9 @@
 import React, { useRef } from 'react'
 import { Text, Environment } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useLoader } from '@react-three/fiber'
 import ClickToMove from './ClickToMove'
+import { TextureLoader } from 'three'
+import * as THREE from 'three'
 
 export default function RoomStyle1({ position = [0, 0, 0], controlsRef }) {
     const ceilingLights = useRef([])
@@ -13,6 +15,9 @@ export default function RoomStyle1({ position = [0, 0, 0], controlsRef }) {
             if (ref) ref.material.emissiveIntensity = 1.5 + pulse * 1.5
         })
     })
+
+    const texture1 = useLoader(TextureLoader, '/textures/2.jpg')
+    const texture2 = useLoader(TextureLoader, '/textures/zecca.jpg')
 
     return (
         <group position={position}>
@@ -26,13 +31,17 @@ export default function RoomStyle1({ position = [0, 0, 0], controlsRef }) {
             {[[-15, 2.5, 0], [15, 2.5, 0]].map(([x, y, z], i) => (
                 <mesh key={`wall-side-${i}`} position={[x, y, z]}>
                     <boxGeometry args={[0.2, 7, 30]} />
-                    <meshStandardMaterial color="#dcd6cc" roughness={0.4} metalness={0.2} />
+                    <meshStandardMaterial map={texture1} side={THREE.DoubleSide} roughness={0.4} metalness={0.2} />
                 </mesh>
             ))}
-            {[[-0, 2.5, -15], [0, 2.5, 15]].map(([x, y, z], i) => (
+            <mesh position={[0, 2.5, -15]} rotation={[0, 0, 0]}>
+                <planeGeometry args={[30, 7]} />
+                <meshStandardMaterial map={texture1} roughness={0.9} metalness={0.5} />
+            </mesh>
+            {[[0, 2.5, 15]].map(([x, y, z], i) => (
                 <mesh key={`wall-front-${i}`} position={[x, y, z]}>
                     <boxGeometry args={[30, 7, 0.2]} />
-                    <meshStandardMaterial color="#dcd6cc" roughness={0.4} metalness={0.2} />
+                    <meshStandardMaterial map={texture2} side={THREE.DoubleSide} roughness={0.4} metalness={0.2} />
                 </mesh>
             ))}
 
@@ -73,7 +82,7 @@ export default function RoomStyle1({ position = [0, 0, 0], controlsRef }) {
                 <meshStandardMaterial color={'#fffbe6'} emissive={'#ffe'} emissiveIntensity={1.5} />
             </mesh>
 
-            <Environment preset="warehouse" />
+            <Environment preset="city" />
 
             {/* Éclairage global */}
             <ambientLight intensity={0.8} color="#eae5dc" />
