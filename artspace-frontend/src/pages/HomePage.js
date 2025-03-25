@@ -1,12 +1,22 @@
 import React from 'react';
+import Navbar from "../components/Navbar";
+import HeroSection from "../components/HeroSection";
+import RevolutionaryFeatures from "../components/RevolutionaryFeatures";
+import FeaturedExhibitions from "../components/FeaturedExhibitions";
+import Testimonials from "../components/Testimonials";
+import CallToAction from "../components/CallToAction";
+import Footer from "../components/Footer";
 
-const HomePage = () => {
+export default function HomePage() {
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-white">
-            <h1 className="text-4xl font-bold mb-4">Welcome to ArtSpace</h1>
-            <p className="text-lg text-gray-600">Explore, Discover and Exhibit Digital Art</p>
-        </div>
+        <>
+            <Navbar />
+            <HeroSection />
+            <RevolutionaryFeatures />
+            <FeaturedExhibitions />
+            <Testimonials />
+            <CallToAction />
+            <Footer />
+        </>
     );
-};
-
-export default HomePage;
+}
