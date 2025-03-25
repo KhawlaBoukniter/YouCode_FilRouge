@@ -100,4 +100,11 @@ class ReservationService
 
         return $ticket->price * $reservation->quantity;
     }
+
+    public function getForArtist()
+    {
+        $artistId = Auth::user()->artist->id;
+
+        return $this->reservationRepo->getforArtist($artistId);
+    }
 }
