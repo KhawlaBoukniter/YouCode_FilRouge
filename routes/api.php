@@ -48,6 +48,8 @@ Route::middleware('auth:api')->group(function () {
         Route::put('/tickets/{ticket}', [TicketController::class, 'update']);
         Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy']);
         Route::get('/my-tickets', [TicketController::class, 'myTickets']);
+
+        Route::get('/artist/reservations', [ReservationController::class, 'forArtist']);
     });
 
     Route::middleware('role:visitor')->group(function () {
