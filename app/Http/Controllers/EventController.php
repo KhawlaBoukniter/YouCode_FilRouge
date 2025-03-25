@@ -72,15 +72,41 @@ class EventController extends Controller
 
     public function approve(Event $event)
     {
-        $this->eventService->approve($event);
+        $event = $this->eventService->approve($event);
 
-        return response()->json(['message' => 'Evenement validé avec succès.']);
+        return response()->json([
+            'message' => 'Evenement validé avec succès.',
+            'event' => $event
+        ]);
     }
 
     public function reject(Event $event)
     {
-        $this->eventService->reject($event);
+        $event = $this->eventService->reject($event);
 
-        return response()->json(['message' => 'Evenement rejeté avec succès.']);
+        return response()->json([
+            'message' => 'Evenement rejeté avec succès.',
+            'event' => $event
+        ]);
+    }
+
+    public function archive(Event $event)
+    {
+        $event = $this->eventService->archive($event);
+
+        return response()->json([
+            'message' => 'Evenement archivé avec succès.',
+            'event' => $event
+        ]);
+    }
+
+    public function restore(Event $event)
+    {
+        $event = $this->eventService->restore($event);
+
+        return response()->json([
+            'message' => 'Evenement restoré avec succès.',
+            'event' => $event
+        ]);
     }
 }
