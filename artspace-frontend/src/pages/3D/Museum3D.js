@@ -101,8 +101,8 @@ function DoorHandler({ controlsRef }) {
             position={[-10, 2.5, 0]}
             onClick={() => {
                 console.log("Activation salle 2")
-                camera.position.set(-20, 5, 15)
-                controlsRef.current.target.set(20, 2.5, 0)
+                camera.position.set(-10, 5, 0)
+                controlsRef.current.target.set(-20, 2.5, 0)
                 controlsRef.current.update()
             }}
         />
