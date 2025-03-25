@@ -28,7 +28,14 @@ export default function ClickToMove({ floorRef, controlsRef }) {
 
                 const direction = new THREE.Vector3().subVectors(point, camera.position).normalize()
                 const lookAtPoint = point.clone().add(direction.multiplyScalar(2))
-                lookTarget.current = new THREE.Vector3(lookAtPoint.x, 2.5, lookAtPoint.z)
+                const stableLook = lookAtPoint.clone()
+                stableLook.y = 2.5
+
+                if (camera.position.distanceTo(stableLook) < 0.5) {
+                    stableLook.z += 1
+                }
+
+                lookTarget.current = stableLook
 
                 if (markerRef.current) {
                     markerRef.current.position.set(point.x, 0.1, point.z)
@@ -51,15 +58,16 @@ export default function ClickToMove({ floorRef, controlsRef }) {
                 if (markerRef.current) markerRef.current.visible = false
             } else {
                 camera.position.lerp(target, 0.05)
+
+                if (lookTarget.current) {
+                    camera.lookAt(lookTarget.current)
+                    if (controlsRef?.current) {
+                        controlsRef.current.target.copy(lookTarget.current)
+                    }
+                }
             }
         }
 
-        if (lookTarget.current) {
-            camera.lookAt(lookTarget.current)
-            if (controlsRef?.current) {
-                controlsRef.current.target.copy(lookTarget.current)
-            }
-        }
     })
 
     return (
