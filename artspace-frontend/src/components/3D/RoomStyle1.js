@@ -1,9 +1,9 @@
 import React, { useRef } from 'react'
-import { Text } from '@react-three/drei'
+import { Text, Environment } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import ClickToMove from './ClickToMove'
 
-export default function RoomStyle1({ position = [0, 0, 0], color = "#f5f5f5", controlsRef }) {
+export default function RoomStyle1({ position = [0, 0, 0], controlsRef }) {
     const ceilingLights = useRef([])
     const floorRef = useRef()
 
@@ -18,66 +18,71 @@ export default function RoomStyle1({ position = [0, 0, 0], color = "#f5f5f5", co
         <group position={position}>
             {/* Sol en marbre clair */}
             <mesh ref={floorRef} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-                <planeGeometry args={[20, 20]} />
-                <meshStandardMaterial color={color} roughness={0.3} metalness={0.1} />
+                <planeGeometry args={[30, 30]} />
+                <meshStandardMaterial color="#cfc9bd" roughness={0.3} metalness={0.1} />
             </mesh>
 
             {/* Murs satinés */}
-            <mesh position={[0, 2.5, -10]}>
-                <boxGeometry args={[20, 5, 0.2]} />
-                <meshStandardMaterial color={color} roughness={0.5} metalness={0.2} />
-            </mesh>
-            <mesh position={[0, 2.5, 10]}>
-                <boxGeometry args={[20, 5, 0.2]} />
-                <meshStandardMaterial color={color} roughness={0.5} metalness={0.2} />
-            </mesh>
-            <mesh position={[-10, 2.5, 0]}>
-                <boxGeometry args={[0.2, 5, 20]} />
-                <meshStandardMaterial color={color} roughness={0.5} metalness={0.2} />
-            </mesh>
-            <mesh position={[10, 2.5, 0]}>
-                <boxGeometry args={[0.2, 5, 20]} />
-                <meshStandardMaterial color={color} roughness={0.5} metalness={0.2} />
-            </mesh>
+            {[[-15, 2.5, 0], [15, 2.5, 0]].map(([x, y, z], i) => (
+                <mesh key={`wall-side-${i}`} position={[x, y, z]}>
+                    <boxGeometry args={[0.2, 7, 30]} />
+                    <meshStandardMaterial color="#dcd6cc" roughness={0.4} metalness={0.2} />
+                </mesh>
+            ))}
+            {[[-0, 2.5, -15], [0, 2.5, 15]].map(([x, y, z], i) => (
+                <mesh key={`wall-front-${i}`} position={[x, y, z]}>
+                    <boxGeometry args={[30, 7, 0.2]} />
+                    <meshStandardMaterial color="#dcd6cc" roughness={0.4} metalness={0.2} />
+                </mesh>
+            ))}
 
             {/* Toit de la salle */}
-            <mesh position={[0, 5, 0]} rotation={[0, 0, 0]} receiveShadow>
-                <boxGeometry args={[20, 0.2, 20]} />
-                <meshStandardMaterial color={color} />
+            <mesh position={[0, 6.05, 0]} receiveShadow>
+                <boxGeometry args={[30, 0.1, 30]} />
+                <meshStandardMaterial color="#b8b3a9" />
             </mesh>
 
             {/* Lustres dans les 4 coins */}
-            <mesh position={[-9, 4.8, -9]}>
-                <sphereGeometry args={[0.25, 32, 32]} />
-                <meshStandardMaterial color={'#fffbe6'} emissive={'#ffd'} emissiveIntensity={1.5} />
-            </mesh>
-            <mesh position={[9, 4.8, -9]}>
-                <sphereGeometry args={[0.25, 32, 32]} />
-                <meshStandardMaterial color={'#fffbe6'} emissive={'#ffd'} emissiveIntensity={1.5} />
-            </mesh>
-            <mesh position={[-9, 4.8, 9]}>
-                <sphereGeometry args={[0.25, 32, 32]} />
-                <meshStandardMaterial color={'#fffbe6'} emissive={'#ffd'} emissiveIntensity={1.5} />
-            </mesh>
-            <mesh position={[9, 4.8, 9]}>
-                <sphereGeometry args={[0.25, 32, 32]} />
-                <meshStandardMaterial color={'#fffbe6'} emissive={'#ffd'} emissiveIntensity={1.5} />
-            </mesh>
+            {[[-11, 5.5, -11], [11, 5.5, -11], [-11, 5.5, 11], [11, 5.5, 11]].map(([x, y, z], i) => (
+                <group key={`chandelier-${i}`} position={[x, y, z]}>
+                    {/* Suspension */}
+                    <mesh position={[0, 0.3, 0]}>
+                        <cylinderGeometry args={[0.02, 0.02, 0.6, 16]} />
+                        <meshStandardMaterial color="#d8b98c" metalness={1} roughness={0.3} />
+                    </mesh>
 
-            {/* Éclairage doux */}
-            <pointLight position={[0, 4, 0]} intensity={0.9} color={'#fff9f2'} />
-            <spotLight position={[0, 6, 5]} angle={0.3} penumbra={0.3} intensity={1} castShadow />
-            <spotLight position={[0, 6, -5]} angle={0.3} penumbra={0.3} intensity={1} castShadow />
+                    {/* Corps lumineux */}
+                    <mesh ref={(el) => (ceilingLights.current[i] = el)} position={[0, -0.2, 0]}>
+                        <sphereGeometry args={[0.25, 32, 32]} />
+                        <meshStandardMaterial
+                            color="#fffbe6"
+                            emissive="#fff8e1"
+                            emissiveIntensity={1.5}
+                            metalness={0.4}
+                            roughness={0.2}
+                        />
+                    </mesh>
+
+                    <pointLight position={[0, -0.5, 0]} intensity={1.8} color="#fff9f2" distance={6} decay={2} />
+                </group>
+            ))}
 
             {/* Bande lumineuse au plafond */}
-            <mesh position={[0, 4.9, 0]} rotation={[0, 0, 0]}>
-                <boxGeometry args={[18, 0.1, 0.5]} />
+            <mesh position={[0, 5.9, 0]}>
+                <boxGeometry args={[14, 0.1, 0.5]} />
                 <meshStandardMaterial color={'#fffbe6'} emissive={'#ffe'} emissiveIntensity={1.5} />
             </mesh>
 
+            <Environment preset="warehouse" />
+
+            {/* Éclairage global */}
+            <ambientLight intensity={0.8} color="#eae5dc" />
+            <spotLight position={[0, 6, 5]} angle={0.3} penumbra={0.3} intensity={1} castShadow />
+            <spotLight position={[0, 6, -5]} angle={0.3} penumbra={0.3} intensity={1} castShadow />
+
             {/* Petit texte stylé sur le mur */}
             <Text
-                position={[0, 4.5, -9.9]}
+                position={[0, 5.5, -14.5]}
                 fontSize={0.5}
                 color="#333"
                 anchorX="center"
