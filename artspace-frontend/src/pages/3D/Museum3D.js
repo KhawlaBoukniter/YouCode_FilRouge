@@ -5,13 +5,20 @@ import { OrbitControls } from '@react-three/drei'
 export default function Museum3D() {
     return (
         <div style={{ height: '100vh', width: '100%' }}>
-            <Canvas>
+            <Canvas shadows camera={{ position: [0, 2, 5], fov: 60 }}>
                 <ambientLight intensity={0.5} />
-                <directionalLight position={[5, 5, 5]} />
-                <mesh>
+                <directionalLight position={[5, 5, 5]} intensity={1} castShadow />
+
+                <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+                    <planeGeometry args={[20, 20]} />
+                    <meshStandardMaterial color="#e0e0e0" />
+                </mesh>
+
+                <mesh position={[0, 0.5, 0]} castShadow>
                     <boxGeometry />
                     <meshStandardMaterial color="royalblue" />
                 </mesh>
+
                 <OrbitControls />
             </Canvas>
         </div>
