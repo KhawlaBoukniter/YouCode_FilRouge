@@ -8,6 +8,7 @@ export default function ClickToMove({ floorRef }) {
     const markerRef = useRef()
     const raycaster = useRef(new THREE.Raycaster())
     const mouse = useRef(new THREE.Vector2())
+    const lookTarget = useRef(null)
 
     useEffect(() => {
         const onClick = (event) => {
@@ -21,8 +22,11 @@ export default function ClickToMove({ floorRef }) {
             const intersects = raycaster.current.intersectObject(floorRef.current)
             if (intersects.length > 0) {
                 const point = intersects[0].point
+
                 const destination = new THREE.Vector3(point.x, 5, point.z + 10)
                 setTarget(destination)
+
+                lookTarget.current = new THREE.Vector3(point.x, 2.5, point.z)
 
                 if (markerRef.current) {
                     markerRef.current.position.set(point.x, 0.1, point.z)
@@ -43,12 +47,13 @@ export default function ClickToMove({ floorRef }) {
             if (dist < 0.1) {
                 setTarget(null)
                 if (markerRef.current) markerRef.current.visible = false
-                return
+            } else {
+                camera.position.lerp(target, 0.05)
             }
+        }
 
-            camera.position.lerp(target, 0.05)
-
-            camera.lookAt(target.x, 2.5, target.z - 10)
+        if (lookTarget.current) {
+            camera.lookAt(lookTarget.current)
         }
     })
 
