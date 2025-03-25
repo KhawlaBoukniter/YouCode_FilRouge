@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
+import PlayerControls from '../../components/3D/PlayerControls'
 
 function Controls() {
     const controls = useRef()
@@ -91,6 +92,7 @@ export default function Museum3D() {
     return (
         <div style={{ height: '100vh', width: '100%' }}>
             <Canvas shadows camera={{ position: [0, 5, 15], fov: 60 }}>
+                <PlayerControls />
                 <ambientLight intensity={0.3} />
                 <spotLight position={[5, 10, 5]} angle={0.4} penumbra={0.2} intensity={1.5} castShadow />
 
