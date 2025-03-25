@@ -14,6 +14,23 @@ export default function Museum3D() {
                     <meshStandardMaterial color="#e0e0e0" />
                 </mesh>
 
+                <mesh position={[0, 2.5, -10]} receiveShadow>
+                    <boxGeometry args={[20, 5, 0.2]} />
+                    <meshStandardMaterial color="#ffffff" />
+                </mesh>
+                <mesh position={[0, 2.5, 10]} receiveShadow>
+                    <boxGeometry args={[20, 5, 0.2]} />
+                    <meshStandardMaterial color="#ffffff" />
+                </mesh>
+                <mesh position={[-10, 2.5, 0]} receiveShadow>
+                    <boxGeometry args={[0.2, 5, 20]} />
+                    <meshStandardMaterial color="#ffffff" />
+                </mesh>
+                <mesh position={[10, 2.5, 0]} receiveShadow>
+                    <boxGeometry args={[0.2, 5, 20]} />
+                    <meshStandardMaterial color="#ffffff" />
+                </mesh>
+
                 <mesh position={[0, 0.5, 0]} castShadow>
                     <boxGeometry />
                     <meshStandardMaterial color="royalblue" />
