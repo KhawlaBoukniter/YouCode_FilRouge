@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Text } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
+import ClickToMove from './ClickToMove'
 
-export default function RoomStyle5({ position = [0, 0, 0] }) {
+export default function RoomStyle3({ position = [0, 0, 0], controlsRef }) {
+    const ceilingLights = useRef([])
+    const floorRef = useRef()
+
+    useFrame((state) => {
+        const pulse = (Math.sin(state.clock.elapsedTime * 2) + 1) / 2
+        ceilingLights.current.forEach((ref) => {
+            if (ref) ref.material.emissiveIntensity = 1.5 + pulse * 1.5
+        })
+    })
+
     return (
         <group position={position}>
             {/* Sol effet marbre clair brillant avec réflexions */}
-            <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+            <mesh ref={floorRef} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
                 <planeGeometry args={[30, 30]} />
                 <meshStandardMaterial color="#eae4dc" metalness={0.3} roughness={0.05} />
             </mesh>
@@ -92,6 +104,8 @@ export default function RoomStyle5({ position = [0, 0, 0] }) {
             >
                 GOLDEN ROOM — MODERN STYLE
             </Text>
+
+            <ClickToMove floorRef={floorRef} controlsRef={controlsRef} />
         </group>
     )
 }
