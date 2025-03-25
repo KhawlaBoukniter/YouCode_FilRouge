@@ -30,7 +30,7 @@ export default function RoomStyle3({ position = [0, 0, 0], controlsRef }) {
             {/* Sol effet marbre clair brillant avec réflexions */}
             <mesh ref={floorRef} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
                 <planeGeometry args={[30, 30]} />
-                <meshStandardMaterial color="#eae4dc" metalness={0.3} roughness={0.05} />
+                <meshStandardMaterial color="#eae4dc" metalness={0.1} roughness={0.2} />
             </mesh>
 
             {/* Murs beiges lumineux texturés satinés */}
@@ -40,16 +40,16 @@ export default function RoomStyle3({ position = [0, 0, 0], controlsRef }) {
                 [-15, 2.5, 0],
                 [15, 2.5, 0]
             ].map(([x, y, z], i) => (
-                <mesh key={`wall-${i}`} position={[x, y, z]}>
+                <mesh key={`wall-${i}`} position={[x, y, z]} receiveShadow>
                     <boxGeometry args={z === 0 ? [0.2, 7, 30] : [30, 7, 0.2]} />
                     <meshStandardMaterial color="#f0e8dd" roughness={0.25} metalness={0.2} />
                 </mesh>
             ))}
 
             {/* Plafond élégant avec luminaires encastrés en V */}
-            <mesh position={[0, 6.05, 0]}>
+            <mesh position={[0, 6.05, 0]} receiveShadow>
                 <boxGeometry args={[30, 0.1, 30]} />
-                <meshStandardMaterial color="#f5f2ec" />
+                <meshStandardMaterial color="#e5dcd2" />
             </mesh>
 
             {/* Lignes LED décoratives au plafond couleur chaude */}
