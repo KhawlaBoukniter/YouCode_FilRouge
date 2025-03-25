@@ -1,79 +1,74 @@
 import { useThree, useFrame } from '@react-three/fiber'
-import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
+import { useRef, useEffect, useState } from 'react'
 
-export default function ClickToMove({ floorRef, controlsRef }) {
-    const { camera, gl } = useThree()
+export default function ClickToMove({ floorRef, controlsRef, isActive = true }) {
+    const { camera, raycaster, mouse, gl } = useThree()
     const [target, setTarget] = useState(null)
     const markerRef = useRef()
-    const raycaster = useRef(new THREE.Raycaster())
-    const mouse = useRef(new THREE.Vector2())
-    const lookTarget = useRef(null)
+    const velocity = 0.2
 
-    useEffect(() => {
-        const onClick = (event) => {
-            const rect = gl.domElement.getBoundingClientRect()
-            mouse.current.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
-            mouse.current.y = -((event.clientY - rect.top) / rect.height) * 2 + 1
+    const handleClick = (e) => {
+        if (!isActive || !floorRef.current || !gl?.domElement) return
 
-            raycaster.current.setFromCamera(mouse.current, camera)
-            if (!floorRef.current) return
+        const rect = gl.domElement.getBoundingClientRect()
+        mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1
+        mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1
 
-            const intersects = raycaster.current.intersectObject(floorRef.current)
-            if (intersects.length > 0) {
-                const point = intersects[0].point
+        raycaster.setFromCamera(mouse, camera)
+        const intersects = raycaster.intersectObject(floorRef.current)
 
-                const destination = new THREE.Vector3(point.x, 5, point.z + 10)
-                setTarget(destination)
+        if (intersects.length > 0) {
+            const point = intersects[0].point.clone()
+            point.y = 3
+            setTarget(point)
 
-                const direction = new THREE.Vector3().subVectors(point, camera.position).normalize()
-                const lookAtPoint = point.clone().add(direction.multiplyScalar(2))
-                const stableLook = lookAtPoint.clone()
-                stableLook.y = 2.5
-
-                if (camera.position.distanceTo(stableLook) < 0.5) {
-                    stableLook.z += 1
-                }
-
-                lookTarget.current = stableLook
-
-                if (markerRef.current) {
-                    markerRef.current.position.set(point.x, 0.1, point.z)
-                    markerRef.current.visible = true
-                }
+            if (markerRef.current) {
+                markerRef.current.visible = true
+                markerRef.current.position.set(point.x, 0.01, point.z)
             }
         }
+    }
 
-        gl.domElement.addEventListener('click', onClick)
-        return () => gl.domElement.removeEventListener('click', onClick)
-    }, [camera, gl, floorRef])
+    useEffect(() => {
+        window.addEventListener('click', handleClick)
+        return () => window.removeEventListener('click', handleClick)
+    }, [isActive])
 
     useFrame(() => {
         if (target) {
-            const currentPos = camera.position
-            const dist = currentPos.distanceTo(target)
+            const direction = new THREE.Vector3().subVectors(target, camera.position)
+            const distance = direction.length()
 
-            if (dist < 0.1) {
+            if (distance > 0.1) {
+                direction.normalize().multiplyScalar(velocity)
+                camera.position.add(direction)
+                camera.position.y = 3
+
+                if (controlsRef?.current) {
+                    controlsRef.current.target.lerp(new THREE.Vector3(target.x, 3, target.z), 0.1)
+                    controlsRef.current.update()
+                    camera.lookAt(new THREE.Vector3(target.x, 3, target.z))
+                }
+            } else {
+                camera.position.y = 3
+                if (controlsRef?.current) {
+                    const finalTarget = new THREE.Vector3(target.x, 3, target.z)
+                    controlsRef.current.target.copy(finalTarget)
+                    controlsRef.current.update()
+                    camera.lookAt(finalTarget)
+                }
+
                 setTarget(null)
                 if (markerRef.current) markerRef.current.visible = false
-            } else {
-                camera.position.lerp(target, 0.05)
-
-                if (lookTarget.current) {
-                    camera.lookAt(lookTarget.current)
-                    if (controlsRef?.current) {
-                        controlsRef.current.target.copy(lookTarget.current)
-                    }
-                }
             }
         }
-
     })
 
     return (
         <mesh ref={markerRef} visible={false} rotation={[-Math.PI / 2, 0, 0]}>
-            <circleGeometry args={[0.5, 32]} />
-            <meshStandardMaterial color="skyblue" transparent opacity={0.6} />
+            <ringGeometry args={[0.3, 0.35, 32]} />
+            <meshBasicMaterial color="#fa4a7c" side={THREE.DoubleSide} />
         </mesh>
     )
 }
