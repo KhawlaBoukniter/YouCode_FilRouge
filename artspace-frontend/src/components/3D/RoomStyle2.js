@@ -47,7 +47,7 @@ export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
                     {/* Encastrement physique */}
                     <mesh position={[0, -0.05, 0]}>
                         <cylinderGeometry args={[0.6, 0.6, 0.3, 32]} />
-                        <meshStandardMaterial color="#cfcfcf" metalness={0.2} roughness={0.3} />
+                        <meshStandardMaterial color="#5a5958" metalness={0.2} roughness={0.3} />
                     </mesh>
 
                     {/* Source de lumière réelle */}
