@@ -49,7 +49,7 @@ class StatsRepository
 
     public function getGlobalRevenue(): float
     {
-        return Reservation::where('status', 'paid')
+        return Reservation::where('reservations.status', 'paid')
             ->join('tickets', 'reservations.ticket_id', '=', 'tickets.id')
             ->sum(DB::raw('tickets.price * reservations.quantity'));
     }
