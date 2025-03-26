@@ -30,8 +30,8 @@ class Artist extends Model
         return 'user_id';
     }
 
-    public function room()
+    public function rooms()
     {
-        return $this->hasOne(Room::class);
+        return $this->hasMany(Room::class);
     }
 }
