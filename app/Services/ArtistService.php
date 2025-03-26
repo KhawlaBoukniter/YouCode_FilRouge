@@ -5,15 +5,18 @@ namespace App\Services;
 use App\Models\Artist;
 use App\Models\User;
 use App\Repositories\ArtistRepository;
+use App\Repositories\RoomRepository;
 use Illuminate\Support\Facades\Auth;
 
 class ArtistService
 {
     protected $artistRepository;
+    protected $roomRepository;
 
-    public function __construct(ArtistRepository $artistRepository)
+    public function __construct(ArtistRepository $artistRepository, RoomRepository $roomRepository)
     {
         $this->artistRepository = $artistRepository;
+        $this->roomRepository = $roomRepository;
     }
 
     public function updateProfile(array $userData, array $artistData, $avatar = null): array
@@ -47,6 +50,9 @@ class ArtistService
 
     public function validateArtist(int $id)
     {
-        return $this->artistRepository->validate($id);
+        $this->artistRepository->validate($id);
+
+        $artist = $this->artistRepository->findByUserId($id);
+        $this->roomRepository->createForArtist($artist);
     }
 }

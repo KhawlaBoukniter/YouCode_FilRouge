@@ -27,4 +27,9 @@ class ArtistRepository
     {
         return Artist::where('id', $id)->update(['is_validated' => true]);
     }
+
+    public function getById(int $id)
+    {
+        return Artist::with('user')->findOrFail($id);
+    }
 }
