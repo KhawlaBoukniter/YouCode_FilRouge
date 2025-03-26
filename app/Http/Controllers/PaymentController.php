@@ -7,7 +7,10 @@ use App\Models\Reservation;
 use App\Notifications\PaymentSuccessNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 
@@ -70,6 +73,13 @@ class PaymentController extends Controller
 
         if ($reservation->status !== 'paid') {
             $reservation->status = 'paid';
+
+            $qrContent = route('ticket.verify', ['id' => $reservation->id]);
+            $qrName = 'qr_codes/' . Str::uuid() . '.png';
+
+            Storage::disk('public')->put($qrName, QrCode::format('png')->size(300)->generate($qrContent));
+
+            $reservation->qr_code_path = $qrName;
             $reservation->save();
 
             $reservation->user->notify(new PaymentSuccessNotification($reservation));
