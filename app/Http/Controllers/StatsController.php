@@ -46,4 +46,25 @@ class StatsController extends Controller
             'total_reservations' => $total
         ]);
     }
+
+    public function totalEvents()
+    {
+        $total = $this->statsService->getTotalEvents();
+
+        return response()->json(['total_events' => $total]);
+    }
+
+    public function globalTicketsSold()
+    {
+        $total = $this->statsService->getGlobalTicketsSold();
+
+        return response()->json(['global_tickets_sold' => $total]);
+    }
+
+    public function globalRevenue()
+    {
+        $revenue = $this->statsService->getGlobalRevenue();
+
+        return response()->json(['global_revenue' => $revenue]);
+    }
 }
