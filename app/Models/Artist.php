@@ -29,4 +29,9 @@ class Artist extends Model
     {
         return 'user_id';
     }
+
+    public function room()
+    {
+        return $this->hasOne(Room::class);
+    }
 }
