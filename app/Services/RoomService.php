@@ -17,4 +17,9 @@ class RoomService
     {
         return $this->roomRepository->create($data);
     }
+
+    public function getPublicRooms()
+    {
+        return $this->roomRepository->getPublicRooms();
+    }
 }
