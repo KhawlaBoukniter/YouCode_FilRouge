@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ValidationHelper;
 use App\Models\Reservation;
+use App\Notifications\PaymentSuccessNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
@@ -70,6 +71,8 @@ class PaymentController extends Controller
         if ($reservation->status !== 'paid') {
             $reservation->status = 'paid';
             $reservation->save();
+
+            $reservation->user->notify(new PaymentSuccessNotification($reservation));
         }
 
         return response()->json([
