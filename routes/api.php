@@ -33,6 +33,12 @@ Route::middleware('auth:api')->group(function () {
         Route::put('events/{event}/restore', [EventController::class, 'restore']);
 
         Route::get('/stats/total-reservations', [StatsController::class, 'totalReservations']);
+
+        Route::prefix('stats')->group(function () {
+            Route::get('/events', [StatsController::class, 'totalEvents']);
+            Route::get('/tickets-sold', [StatsController::class, 'globalTicketsSold']);
+            Route::get('/revenue', [StatsController::class, 'globalRevenue']);
+        });
     });
 
     Route::middleware('role:artist')->group(function () {
