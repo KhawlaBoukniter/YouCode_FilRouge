@@ -17,4 +17,14 @@ class ArtistRepository
         $artist->update($data);
         return $artist;
     }
+
+    public function getPending()
+    {
+        return Artist::where('is_validated', false)->with('user')->get();
+    }
+
+    public function validate(int $id)
+    {
+        return Artist::where('id', $id)->update(['is_validated' => true]);
+    }
 }
