@@ -10,4 +10,9 @@ class RoomRepository
     {
         return Room::create($data);
     }
+
+    public function getPublicRooms()
+    {
+        return Room::where('is_public', true)->with(['style', 'artist.user'])->get();
+    }
 }
