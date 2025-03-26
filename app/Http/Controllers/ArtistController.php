@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Artist\UpdateArtistProfileRequest;
+use App\Models\Artist;
 use App\Services\ArtistService;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,5 +35,18 @@ class ArtistController extends Controller
                 'message' => $e->getMessage()
             ], 404);
         }
+    }
+
+    public function getPendingArtists()
+    {
+        return response()->json($this->artistService->getPendingArtists());
+    }
+
+    public function validateArtist($id)
+    {
+        $artist = Artist::findOrFail($id);
+        $this->artistService->validateArtist($id);
+
+        return response()->json(['message' => 'Artist validated successfully']);
     }
 }
