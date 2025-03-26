@@ -52,7 +52,7 @@ class ArtistService
     {
         $this->artistRepository->validate($id);
 
-        $artist = $this->artistRepository->findByUserId($id);
+        $artist = $this->artistRepository->getById($id);
         $this->roomRepository->createForArtist($artist);
     }
 }
