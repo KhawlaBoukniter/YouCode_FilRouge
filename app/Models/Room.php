@@ -12,11 +12,17 @@ class Room extends Model
     protected $fillable = [
         'artist_id',
         'name',
-        'style'
+        'style_id',
+        'is_public'
     ];
 
     public function artist()
     {
         return $this->belongsTo(Artist::class);
+    }
+
+    public function style()
+    {
+        return $this->belongsTo(Style::class);
     }
 }
