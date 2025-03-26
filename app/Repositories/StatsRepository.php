@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Event;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\DB;
 
@@ -34,5 +35,22 @@ class StatsRepository
     public function getTotalCount(): int
     {
         return Reservation::count();
+    }
+
+    public function getTotalEvents(): int
+    {
+        return Event::count();
+    }
+
+    public function getGlobalTicketsSold(): int
+    {
+        return Reservation::where('status', 'paid')->sum('quantity');
+    }
+
+    public function getGlobalRevenue(): float
+    {
+        return Reservation::where('status', 'paid')
+            ->join('tickets', 'reservations.ticket_id', '=', 'tickets.id')
+            ->sum(DB::raw('tickets.price * reservations.quantity'));
     }
 }
