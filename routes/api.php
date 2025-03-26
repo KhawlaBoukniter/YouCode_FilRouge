@@ -7,6 +7,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Http\Request;
@@ -66,6 +67,8 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/my-stats/tickets', [StatsController::class, 'totalTickets']);
         Route::get('/my-stats/revenue', [StatsController::class, 'totalRevenue']);
         Route::get('/my-stats/top-events', [StatsController::class, 'topEvents']);
+
+        Route::post('/rooms', [RoomController::class, 'store']);
     });
 
     Route::middleware('role:visitor')->group(function () {
