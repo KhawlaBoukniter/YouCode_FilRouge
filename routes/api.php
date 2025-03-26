@@ -21,6 +21,7 @@ Route::get('/user', function (Request $request) {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/events/{event}/tickets', [TicketController::class, 'getEventTickets']);
+Route::get('/rooms/public', [RoomController::class, 'getPublicRooms']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
