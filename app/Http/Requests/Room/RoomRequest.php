@@ -12,7 +12,7 @@ class RoomRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check() && Auth::user()->role === 'artist';
+        return true;
     }
 
     /**
