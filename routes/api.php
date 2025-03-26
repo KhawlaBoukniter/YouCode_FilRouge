@@ -39,6 +39,9 @@ Route::middleware('auth:api')->group(function () {
             Route::get('/tickets-sold', [StatsController::class, 'globalTicketsSold']);
             Route::get('/revenue', [StatsController::class, 'globalRevenue']);
         });
+
+        Route::get('/pending', [ArtistController::class, 'getPendingArtists']);
+        Route::patch('/{id}/validate', [ArtistController::class, 'validateArtist']);
     });
 
     Route::middleware('role:artist')->group(function () {
