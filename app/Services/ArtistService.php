@@ -39,4 +39,14 @@ class ArtistService
             'artist' => $artist,
         ];
     }
+
+    public function getPendingArtists()
+    {
+        return $this->artistRepository->getPending();
+    }
+
+    public function validateArtist(int $id)
+    {
+        return $this->artistRepository->validate($id);
+    }
 }
