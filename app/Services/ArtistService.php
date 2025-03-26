@@ -51,8 +51,5 @@ class ArtistService
     public function validateArtist(int $id)
     {
         $this->artistRepository->validate($id);
-
-        $artist = $this->artistRepository->getById($id);
-        $this->roomRepository->createForArtist($artist);
     }
 }
