@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Storage;
 
 class PaymentSuccessNotification extends Notification
 {
@@ -38,14 +39,25 @@ class PaymentSuccessNotification extends Notification
     {
         $ticket = $this->reservation->ticket;
         $event = $ticket->event;
+        $qrPath = $this->reservation->qr_code_path;
 
-        return (new MailMessage)
+        $qrData = $qrPath && Storage::disk('public')->exists($qrPath) ? base64_encode(Storage::disk('public')->get($qrPath)) : null;
+
+        $mail =  (new MailMessage)
             ->subject('Confirmation de paiement')
             ->greeting('Bonjour ' . $notifiable->name)
             ->line("Votre paiement pour l'événement **{$event->title}** a été confirmé.")
             ->line("Nombre de tickets : {$this->reservation->quantity}")
             ->line("Prix total : " . ($ticket->price * $this->reservation->quantity) . " €")
-            ->line('Merci pour votre réservation et à bientôt sur ArtSpace !');
+            ->line('Veuillez présenter le QR code ci-dessous à l’entrée de l’événement :');
+
+        if ($qrData) {
+            $mail->line('<img src="data:image/png;base64,' . $qrData . '" style="max-width: 300px;">');
+        }
+
+        $mail->line('Merci pour votre réservation et à bientôt sur ArtSpace !');
+
+        return $mail->markdown('mail::message', ['slot' => $mail->introLines]);
     }
 
     /**
