@@ -35,4 +35,13 @@ class RoomController extends Controller
             'room' => $room->load('style'),
         ]);
     }
+
+    public function getPublicRooms()
+    {
+        $rooms = $this->roomService->getPublicRooms();
+
+        return response()->json([
+            'rooms' => $rooms
+        ]);
+    }
 }
