@@ -6,7 +6,7 @@ export default function Register() {
         <div className="flex flex-col md:flex-row w-full bg-cover bg-center bg-gradient-to-r from-black/60 to-transparent"
             style={{ backgroundImage: `url(${museum})` }}>
             {/* partie gauche */}
-            <div className="relative w-full md:w-2/3 md:h-full ">
+            <div className="relative w-full md:w-3/5 md:h-full ">
                 <div className="absolute top-11 left-12">
                     <h1 className="font-playfair text-4xl font-bold text-[#2f5b7b]">ArtSpace</h1>
                     <p className="mt-8 font-playfair text-lg font-bold text-[#36688d]">
@@ -16,7 +16,7 @@ export default function Register() {
             </div>
 
             {/* formulaire */}
-            <div className="w-full md:w-1/3 h-full bg-[#c6c0b0e8]">
+            <div className="w-full md:w-2/5 h-full bg-[#c6c0b0e8]">
                 <div className="bg-[#0707077e] px-6 py-10 flex flex-col justify-center">
                     <div className="top-[30px] left-[27px] flex items-center">
                         <svg width="42" height="42" fill="none" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
@@ -127,6 +127,38 @@ export default function Register() {
                             >
                                 Créer un compte
                             </button>
+
+                            <div className="flex items-center my-6">
+                                <div className="flex-grow h-px bg-gray-600" />
+                                <span className="px-3 text-sm text-gray-400 font-playfair">Ou continuer avec</span>
+                                <div className="flex-grow h-px bg-gray-600" />
+                            </div>
+
+                            {/* Boutons sociaux */}
+                            <div className="flex justify-center gap-6">
+                                <button
+                                    type="button"
+                                    className="flex items-center justify-center gap-2 w-[140px] h-[38px] rounded-md border border-gray-700 bg-transparent hover:bg-white/10 transition text-white"
+                                >
+                                    <img
+                                        src="https://c.animaapp.com/m94tpkob79QlTu/img/frame-2.svg"
+                                        alt="Google icon"
+                                        className="w-[16px] h-[16px]"
+                                    />
+                                    <span className="font-playfair text-sm">Google</span>
+                                </button>
+                                <button
+                                    type="button"
+                                    className="flex items-center justify-center gap-2 w-[140px] h-[38px] rounded-md border border-gray-700 bg-transparent hover:bg-white/10 transition text-white"
+                                >
+                                    <img
+                                        src="https://c.animaapp.com/m94tpkob79QlTu/img/frame-5.svg"
+                                        alt="Facebook icon"
+                                        className="w-[16px] h-[16px]"
+                                    />
+                                    <span className="font-playfair text-sm">Facebook</span>
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
