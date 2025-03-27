@@ -3,21 +3,34 @@ import museum from "../assets/images/museum.webp";
 
 export default function Register() {
     return (
-        <div className="flex flex-col md:flex-row w-full bg-cover bg-center bg-gradient-to-r from-black/60 to-transparent"
+
+        <div className="flex flex-col md:flex-row w-full bg-cover bg-center bg-gradient-to-r relative from-black/60 to-transparent"
             style={{ backgroundImage: `url(${museum})` }}>
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/30 bg-cover  bg-center" style={{ background: 'linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6))' }}></div>
             {/* partie gauche */}
-            <div className="relative w-full md:w-3/5 md:h-full ">
-                <div className="absolute top-11 left-12">
-                    <h1 className="font-playfair text-4xl font-bold text-white">ArtSpace</h1>
-                    <p className="mt-8 font-playfair text-lg font-bold text-white">
-                        L'art à portée de clic, en immersion totale
-                    </p>
-                </div>
+            <div className="relative w-full md:w-3/5 md:h-full h-screen bg-cover inset-0 bg-center pl-20 overflow-x-hidden ">
+
+                <h1 className="font-playfair text-7xl font-bold mt-48"
+                    style={
+
+                        {
+                            background: 'linear-gradient(90deg, #DEBB21, #FAFAFA)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text',
+                            display: 'inline-block',
+
+                        }
+
+                    }>ArtSpace</h1>
+                <p className="mt-8 font-playfair text-lg font-bold text-white">
+                    L'art à portée de clic, en immersion totale
+                </p>
             </div>
 
             {/* formulaire */}
-            <div className="w-full md:w-1/3 my-8 bg-[#c6c0b0e8] rounded-xl">
-                <div className="bg-[#0707076c] px-8 py-2 flex flex-col justify-center">
+            <div className="w-full md:w-1/3 my-8 z-20 bg-[#bdb6a0e8] rounded-xl">
+                <div className="bg-[#0707076c] px-8 py-2 flex flex-col justify-center rounded-xl">
                     <div className="flex items-center mb-4">
                         <svg width="30" height="30" fill="none" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
                             <path d="M11.48 25.585L6.99998 21.105L11.48 16.625" stroke="#D3BB75" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -32,7 +45,7 @@ export default function Register() {
                     <div className="w-full mx-auto">
                         <div className="text-center mb-4">
                             <h2 className="font-garamond text-2xl text-gray-200">Rejoindre ArtSpace 3D</h2>
-                            <p className="font-garamond text-base text-[#8f9aa9]">
+                            <p className="font-garamond text-base text-[#3f3f3e]">
                                 Créez votre compte pour explorer les galeries virtuelles
                             </p>
                         </div>
@@ -164,5 +177,7 @@ export default function Register() {
                 </div>
             </div>
         </div>
+
+
     );
 }
