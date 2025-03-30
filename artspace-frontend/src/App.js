@@ -22,6 +22,7 @@ import AdminDash from './pages/AdminDash';
 import AdminUsersPage from './pages/AdminUsersPage';
 import AdminArtistsPage from './pages/AdminArtistsPage';
 import AdminEvents from './pages/AdminEvents';
+import AdminStats from './pages/AdminStats';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
       <Route path='/admin/users' element={<AdminUsersPage />} />
       <Route path='/admin/artists' element={<AdminArtistsPage />} />
       <Route path='/admin/events' element={<AdminEvents />} />
+      <Route path='/admin/stats' element={<AdminStats />} />
 
     </Routes>
   );
