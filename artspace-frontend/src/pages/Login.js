@@ -4,6 +4,38 @@ import AuthLayout from "../components/AuthLayout";
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch("http://localhost:8000/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+            });
+
+            const data = await response.json();
+            console.log(data);
+
+            if (!response.ok) {
+                throw new Error(data.message || "Identifiants incorrects");
+            }
+
+            alert("Connexion réussie!");
+
+        } catch (error) {
+            alert("Erreur : " + error.message);
+        }
+    };
+
+
     return (
         <AuthLayout
             title="Welcome to ArtSpace"
