@@ -1,7 +1,14 @@
 import React from "react";
 import AuthLayout from "../components/AuthLayout";
+import React, { useState } from "react";
 
 export default function Register() {
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [role, setRole] = useState("");
+
     return (
         <AuthLayout
             title="Rejoindre ArtSpace 3D"
@@ -14,6 +21,8 @@ export default function Register() {
                         <input
                             type="text"
                             placeholder="Prénom"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
                             className="h-10 w-full rounded-lg pl-10 pr-4 bg-[#1f293780] border border-gray-700 text-[#adaebc] placeholder:text-[#adaebc] font-playfair text-sm"
                         />
                         <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="18" height="21" fill="none" viewBox="0 0 21 21">
@@ -25,6 +34,8 @@ export default function Register() {
                         <input
                             type="text"
                             placeholder="Nom"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
                             className="h-10 w-full rounded-lg pl-10 pr-4 bg-[#1f293780] border border-gray-700 text-[#adaebc] placeholder:text-[#adaebc] font-playfair text-sm"
                         />
                         <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="18" height="21" fill="none" viewBox="0 0 21 21">
@@ -38,6 +49,8 @@ export default function Register() {
                     <input
                         type="email"
                         placeholder="Adresse e-mail"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="h-10 w-full rounded-lg pl-10 pr-4 bg-[#1f293780] border border-gray-700 text-[#adaebc] placeholder:text-[#adaebc] font-playfair text-sm"
                     />
                     <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -50,6 +63,8 @@ export default function Register() {
                     <input
                         type="password"
                         placeholder="Mot de passe"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         className="h-10 w-full rounded-lg pl-10 pr-4 bg-[#1f293780] border border-gray-700 text-[#adaebc] placeholder:text-[#adaebc] font-playfair text-sm"
                     />
                     <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="16" height="16" fill="none" viewBox="0 0 16 16">
@@ -60,6 +75,8 @@ export default function Register() {
 
                 <div className="relative w-full">
                     <select
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
                         className="h-10 w-full rounded-lg pl-10 pr-10 bg-[#1f293780] border border-gray-700 text-[#adaebc] font-playfair text-sm appearance-none"
                     >
                         <option value="" className="text-black">Choisissez votre rôle</option>
