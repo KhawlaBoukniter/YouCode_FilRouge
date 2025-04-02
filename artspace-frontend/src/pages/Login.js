@@ -6,6 +6,7 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
 
     const navigate = useNavigate();
 
@@ -30,14 +31,15 @@ export default function Login() {
 
             if (!response.ok) {
                 setErrorMessage(data.message || "Identifiants incorrects");
+                setSuccessMessage("");
                 return;
             }
 
-            localStorage.setItem("token", data.token);
-
             setErrorMessage("");
 
-            alert("Connexion réussie!");
+            setSuccessMessage("Connexion réussie!");
+
+            localStorage.setItem("token", data.token);
 
             navigate('/dashboard');
 
@@ -57,6 +59,11 @@ export default function Login() {
                 {errorMessage &&
                     <div className="text-red-400 font-playfair text-sm text-center mt-4">
                         {errorMessage}
+                    </div>
+                }
+                {successMessage &&
+                    <div className="text-green-400 font-playfair text-sm text-center mt-4">
+                        {successMessage}
                     </div>
                 }
                 <div className="relative w-full">
