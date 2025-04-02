@@ -1,5 +1,6 @@
 import AuthLayout from "../components/AuthLayout";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
     const [firstName, setFirstName] = useState("");
@@ -7,6 +8,10 @@ export default function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [role_id, setRole] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,12 +38,21 @@ export default function Register() {
 
 
             if (!response.ok) {
-                throw new Error(data.message || "Erreur lors de l'inscription");
+                setErrorMessage(data.message || "Erreur lors de l'inscription");
+                setSuccessMessage("");
+                return;
             }
 
-            alert("Inscription réussie !");
+            setErrorMessage("");
+            setSuccessMessage("Inscription réussie ! Redirection...s");
+
+            localStorage.setItem("token", data.token);
+
+            setTimeout(() => {
+                navigate('/login');
+            }, 2000);
         } catch (error) {
-            alert("Erreur : " + error.message);
+            setErrorMessage("Erreur : " + error.message);
         }
     };
 
@@ -49,6 +63,16 @@ export default function Register() {
             activeTab="register"
         >
             <form className="space-y-6 pb-6" onSubmit={handleSubmit}>
+                {successMessage && (
+                    <div className="text-green-400 font-playfair text-sm text-center mt-4">
+                        {successMessage}
+                    </div>
+                )}
+                {errorMessage && (
+                    <div className="text-red-400 font-playfair text-sm text-center mt-4">
+                        {errorMessage}
+                    </div>
+                )}
                 <div className="flex flex-col sm:flex-row gap-4">
                     <div className="relative w-full">
                         <input

@@ -46,7 +46,7 @@ export default function Login() {
             }, 2000);
 
         } catch (error) {
-            alert("Erreur : " + error.message);
+            setErrorMessage("Erreur : " + error.message);
         }
     };
 
