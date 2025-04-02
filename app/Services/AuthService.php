@@ -59,7 +59,7 @@ class AuthService
     public function logout()
     {
         $user = Auth::user();
-        $user->token()->revoke();
+        $user->tokens()->delete();
 
         return true;
     }
