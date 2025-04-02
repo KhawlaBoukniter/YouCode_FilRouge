@@ -18,8 +18,11 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::middeleware('guest')->group(function () {
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+});
+
 Route::get('/events/{event}/tickets', [TicketController::class, 'getEventTickets']);
 Route::get('/rooms/public', [RoomController::class, 'getPublicRooms']);
 
