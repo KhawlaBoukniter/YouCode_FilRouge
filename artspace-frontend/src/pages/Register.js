@@ -1,4 +1,3 @@
-import React from "react";
 import AuthLayout from "../components/AuthLayout";
 import React, { useState } from "react";
 
@@ -9,13 +8,44 @@ export default function Register() {
     const [password, setPassword] = useState("");
     const [role, setRole] = useState("");
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const payload = {
+            name: `${firstName} ${lastName}`.trim(),
+            email,
+            password,
+            role,
+        };
+
+        try {
+            const response = await fetch('https://localhost:8000/api/register', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Erreur lors de l'inscription");
+            }
+
+            alert("Inscription réussie !");
+        } catch (error) {
+            alert("Erreur : " + error.message);
+        }
+    };
+
     return (
         <AuthLayout
             title="Rejoindre ArtSpace 3D"
             subtitle="Créez votre compte pour explorer les galeries virtuelles"
             activeTab="register"
         >
-            <form className="space-y-6 pb-6">
+            <form className="space-y-6 pb-6" onSubmit={handleSubmit}>
                 <div className="flex flex-col sm:flex-row gap-4">
                     <div className="relative w-full">
                         <input
@@ -92,7 +122,7 @@ export default function Register() {
                 </div>
 
                 <button
-                    type="button"
+                    type="submit"
                     className="w-full h-10 bg-[#3a6b8f] rounded-lg hover:bg-[#2f5b7b] font-garamond text-white text-base transition mt-8"
                 >
                     Créer un compte
