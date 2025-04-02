@@ -4,6 +4,7 @@ import AuthLayout from "../components/AuthLayout";
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,8 +26,10 @@ export default function Login() {
             console.log(data);
 
             if (!response.ok) {
-                throw new Error(data.message || "Identifiants incorrects");
+                setErrorMessage(data.message || "Identifiants incorrects");
+                return;
             }
+            setErrorMessage("");
 
             alert("Connexion réussie!");
 
@@ -43,7 +46,11 @@ export default function Login() {
             activeTab="login"
         >
             <form className="space-y-6 pb-6" onSubmit={handleSubmit}>
-
+                {errorMessage &&
+                    <div className="text-red-400 font-playfair text-sm text-center mt-4">
+                        {errorMessage}
+                    </div>
+                }
                 <div className="relative w-full">
                     <input
                         type="email"
