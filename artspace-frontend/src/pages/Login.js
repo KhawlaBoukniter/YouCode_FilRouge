@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AuthLayout from "../components/AuthLayout";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +9,14 @@ export default function Login() {
     const [successMessage, setSuccessMessage] = useState("");
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+
+        if (token) {
+            navigate('/dashboard');
+        }
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
