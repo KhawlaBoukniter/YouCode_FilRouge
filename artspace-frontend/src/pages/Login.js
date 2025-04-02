@@ -37,11 +37,13 @@ export default function Login() {
 
             setErrorMessage("");
 
-            setSuccessMessage("Connexion réussie!");
+            setSuccessMessage("Connexion réussie! Redirection...");
 
             localStorage.setItem("token", data.token);
 
-            navigate('/dashboard');
+            setTimeout(() => {
+                navigate('/dashboard');
+            }, 2000);
 
         } catch (error) {
             alert("Erreur : " + error.message);
