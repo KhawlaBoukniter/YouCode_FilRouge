@@ -6,28 +6,31 @@ export default function Register() {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [role, setRole] = useState("");
+    const [role_id, setRole] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const payload = {
-            name: `${firstName} ${lastName}`.trim(),
-            email,
-            password,
-            role,
-        };
-
         try {
-            const response = await fetch('https://localhost:8000/api/register', {
+            const response = await fetch('http://localhost:8000/api/register', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Accept": "application/json",
                 },
-                body: JSON.stringify(payload),
+                body: JSON.stringify({
+                    name: `${firstName} ${lastName}`.trim(),
+                    email,
+                    password,
+                    role_id,
+                }),
             });
 
+            console.log("RAW RESPONSE:", response);
+
             const data = await response.json();
+            console.log(data);
+
 
             if (!response.ok) {
                 throw new Error(data.message || "Erreur lors de l'inscription");
@@ -105,13 +108,13 @@ export default function Register() {
 
                 <div className="relative w-full">
                     <select
-                        value={role}
+                        value={role_id}
                         onChange={(e) => setRole(e.target.value)}
                         className="h-10 w-full rounded-lg pl-10 pr-10 bg-[#1f293780] border border-gray-700 text-[#adaebc] font-playfair text-sm appearance-none"
                     >
                         <option value="" className="text-black">Choisissez votre rôle</option>
-                        <option value="artist" className="text-black">Artiste</option>
-                        <option value="visitor" className="text-black">Visiteur / Amateur d’art</option>
+                        <option value="2" className="text-black">Artiste</option>
+                        <option value="3" className="text-black">Visiteur / Amateur d’art</option>
                     </select>
                     <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="20" height="20" fill="none" viewBox="0 0 24 24">
                         <path fill="#BDBABA" d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4Zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4Z" />
