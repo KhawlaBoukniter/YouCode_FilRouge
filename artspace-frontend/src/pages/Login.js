@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import AuthLayout from "../components/AuthLayout";
 
 export default function Login() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     return (
         <AuthLayout
             title="Welcome to ArtSpace"
             subtitle="Your Gateway to Digital Art Excellence"
             activeTab="login"
         >
-            <form className="space-y-6 pb-6">
+            <form className="space-y-6 pb-6" onSubmit={handleSubmit}>
 
                 <div className="relative w-full">
                     <input
                         type="email"
                         placeholder="Adresse e-mail"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="h-10 w-full rounded-lg pl-10 pr-4 bg-[#1f293780] border border-gray-700 text-[#adaebc] placeholder:text-[#adaebc] font-playfair text-sm"
                     />
                     <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -26,6 +30,8 @@ export default function Login() {
                     <input
                         type="password"
                         placeholder="Mot de passe"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         className="h-10 w-full rounded-lg pl-10 pr-4 bg-[#1f293780] border border-gray-700 text-[#adaebc] placeholder:text-[#adaebc] font-playfair text-sm"
                     />
                     <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="16" height="16" fill="none" viewBox="0 0 16 16">
@@ -36,7 +42,7 @@ export default function Login() {
 
 
                 <button
-                    type="button"
+                    type="submit"
                     className="w-full h-10 bg-[#3a6b8f] rounded-lg hover:bg-[#2f5b7b] font-garamond text-white text-base transition mt-8"
                 >
                     Se connecter
