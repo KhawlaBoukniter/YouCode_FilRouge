@@ -51,7 +51,7 @@ const CuratorsSection = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {curators.map((curator, i) => (
                         <FadeIn delay={0.4 * i}>
-                            <Card key={curator.id} className="border-0 bg-transparent">
+                            <Card key={curator.id} className="border-0 bg-transparent transform transition duration-300 hover:scale-105 hover:shadow-[0px_15px_20px_#00000030]">
                                 <CardContent className="flex flex-col items-center py-6">
                                     <Avatar className="rounded-full">
                                         <AvatarImage
