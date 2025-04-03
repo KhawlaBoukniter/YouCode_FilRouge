@@ -83,7 +83,7 @@ const ExperienceSection = () => {
                         <FadeIn delay={0.4 * i}>
                             <Card
                                 key={card.id}
-                                className="rounded-2xl border border-solid border-gray-100"
+                                className="rounded-2xl border border-solid border-gray-100 transform transition duration-300 hover:scale-105 hover:shadow-[0px_15px_20px_#00000030]"
                             >
                                 <CardContent className="p-8">
                                     <div className="flex flex-col space-y-4">
