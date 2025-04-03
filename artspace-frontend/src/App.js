@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import Museum3D from './pages/3D/Museum3D';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import About from './pages/About';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route path="/museum/:roomId" element={<Museum3D />} />
       <Route path='/register' element={<Register />} />
       <Route path='/login' element={<Login />} />
+      <Route path='/about' element={<About />} />
     </Routes>
   );
 }
