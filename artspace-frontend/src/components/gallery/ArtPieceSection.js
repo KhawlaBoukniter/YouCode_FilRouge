@@ -101,7 +101,7 @@ const ArtPieceSection = () => {
 
             <Button
                 variant="outline"
-                className="mt-16 h-12 rounded-full bg-[#d3bb7538] hover:bg-[#d3bb7560] border-0 text-[#020000] font-garamond"
+                className="mt-16 h-12 rounded-full bg-[#fff5d8] hover:bg-[#d3bb7560] border-0 text-[#020000] font-garamond transform transition duration-300 hover:scale-105 hover:shadow-[0_0_2rem_#00000030]"
             >
                 <span className="font-normal text-base">Voir Plus</span>
                 <ChevronRightIcon className="ml-2 h-4 w-3" />
