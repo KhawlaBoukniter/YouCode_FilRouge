@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "../ui/button";
 import heroImage from "../../assets/images/about-section.png";
+import FadeIn from "../ui/FadeIn";
 
 const Section = () => {
     return (
@@ -16,27 +17,33 @@ const Section = () => {
                 <div className="relative h-full flex items-center">
                     <div className="container px-20">
                         <div className="max-w-[768px]">
-                            <h1 className="text-6xl text-white font-normal [font-family:'Cormorant_Garamond',Helvetica] leading-[60px]">
-                                Where Art Meets Innovation
-                            </h1>
+                            <FadeIn delay={0.3}>
+                                <h1 className="text-6xl text-white font-normal [font-family:'Cormorant_Garamond',Helvetica] leading-[60px]">
+                                    Where Art Meets Innovation
+                                </h1>
+                            </FadeIn>
 
-                            <p className="mt-8 text-xl text-white font-normal [font-family:'Cormorant_Garamond',Helvetica] leading-5 max-w-[683px]">
-                                Experience art like never before in our revolutionary 3D virtual
-                                museum, where tradition meets technology.
-                            </p>
+                            <FadeIn delay={0.5}>
+                                <p className="mt-8 text-xl text-white font-normal [font-family:'Cormorant_Garamond',Helvetica] leading-5 max-w-[683px]">
+                                    Experience art like never before in our revolutionary 3D virtual
+                                    museum, where tradition meets technology.
+                                </p>
+                            </FadeIn>
 
-                            <div className="mt-10 flex space-x-4">
-                                <Button className="h-[52px] w-44 rounded-full bg-white !text-black hover:bg-white/90">
-                                    Take Virtual Tour
-                                </Button>
+                            <FadeIn delay={0.7}>
+                                <div className="mt-10 flex space-x-4">
+                                    <Button className="h-[52px] w-44 rounded-full bg-white !text-black hover:bg-white/90">
+                                        Take Virtual Tour
+                                    </Button>
 
-                                <Button
-                                    variant="outline"
-                                    className="h-[52px] w-[126px] rounded-full border-2 border-white text-black hover:bg-white/10 hover:text-white"
-                                >
-                                    Learn More
-                                </Button>
-                            </div>
+                                    <Button
+                                        variant="outline"
+                                        className="h-[52px] w-[126px] rounded-full border-2 border-white text-black hover:bg-white/10 hover:text-white"
+                                    >
+                                        Learn More
+                                    </Button>
+                                </div>
+                            </FadeIn>
                         </div>
                     </div>
                 </div>
