@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../ui/button";
+import heroImage from "../../assets/images/about-section.png";
 
 const Section = () => {
     return (
@@ -7,8 +8,7 @@ const Section = () => {
             <div
                 className="relative h-full w-full bg-cover bg-center"
                 style={{
-                    backgroundImage:
-                        "url(https://c.animaapp.com/m94ra950i1wJy8/img/img.png)",
+                    backgroundImage: `url(${heroImage})`,
                 }}
             >
                 <div className="absolute inset-0 bg-[#00000066]" />
