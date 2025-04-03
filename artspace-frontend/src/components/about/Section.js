@@ -1,0 +1,48 @@
+import React from "react";
+import Button from "../ui/button";
+
+const Section = () => {
+    return (
+        <section className="relative w-full h-[800px] overflow-hidden">
+            <div
+                className="relative h-full w-full bg-cover bg-center"
+                style={{
+                    backgroundImage:
+                        "url(https://c.animaapp.com/m94ra950i1wJy8/img/img.png)",
+                }}
+            >
+                <div className="absolute inset-0 bg-[#00000066]" />
+
+                <div className="relative h-full flex items-center">
+                    <div className="container px-20">
+                        <div className="max-w-[768px]">
+                            <h1 className="text-6xl text-white font-normal [font-family:'Cormorant_Garamond',Helvetica] leading-[60px]">
+                                Where Art Meets Innovation
+                            </h1>
+
+                            <p className="mt-8 text-xl text-white font-normal [font-family:'Cormorant_Garamond',Helvetica] leading-5 max-w-[683px]">
+                                Experience art like never before in our revolutionary 3D virtual
+                                museum, where tradition meets technology.
+                            </p>
+
+                            <div className="mt-10 flex space-x-4">
+                                <Button className="h-[52px] w-44 rounded-full bg-white !text-black hover:bg-white/90">
+                                    Take Virtual Tour
+                                </Button>
+
+                                <Button
+                                    variant="outline"
+                                    className="h-[52px] w-[126px] rounded-full border-2 border-white text-black hover:bg-white/10 hover:text-white"
+                                >
+                                    Learn More
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export default Section;
