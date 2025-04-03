@@ -46,7 +46,7 @@ const RevolutionaryFeatures = () => {
                         <FadeIn delay={0.4 * i}>
                             <Card
                                 key={feature.id}
-                                className="p-6 rounded-2xl shadow-md text-center hover:shadow-lg transition-shadow"
+                                className="p-6 rounded-2xl shadow-md text-center transform transition duration-300 hover:scale-105 hover:shadow-[0px_15px_20px_#00000030]"
                             >
                                 <CardContent className="p-8">
                                     <div className="flex flex-col space-y-4">
