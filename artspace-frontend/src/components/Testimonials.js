@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import FadeIn from "./ui/FadeIn";
 
 const testimonials = [
     {
@@ -46,45 +46,45 @@ const Testimonials = () => {
         <section className="w-full py-20 bg-white">
             <div className="max-w-[1280px] mx-auto px-12">
                 <div className="text-center mb-16">
-                    <h2 className="font-garamond font-normal text-4xl mb-6 text-black leading-9">
-                        What Art Lovers Say
-                    </h2>
-                    <p className="font-garamond font-normal text-xl text-gray-600 leading-5">
-                        Hear from our passionate community of art enthusiasts
-                    </p>
+                    <FadeIn>
+                        <h2 className="font-garamond font-normal text-4xl mb-6 text-black leading-9">
+                            What Art Lovers Say
+                        </h2>
+                    </FadeIn>
+
+                    <FadeIn delay={0.2}>
+                        <p className="font-garamond font-normal text-xl text-gray-600 leading-5">
+                            Hear from our passionate community of art enthusiasts
+                        </p>
+                    </FadeIn>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {testimonials.map((t, index) => (
-                        <motion.div
-                            key={t.id}
-                            custom={index}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            variants={cardVariants}
-                            className="rounded-[20px] bg-white shadow-[0px_10px_15px_#0000000a] p-6 transition-transform transform hover:scale-105 hover:shadow-[0_12px_20px_#0000001f] duration-300"
-                        >
-                            <div className="flex items-center space-x-4 mb-4">
-                                <img
-                                    src={t.image}
-                                    alt={t.name}
-                                    className="w-12 h-12 rounded-full object-cover"
-                                />
-                                <div>
-                                    <h4 className="font-playfair text-base text-black font-medium leading-4">
-                                        {t.name}
-                                    </h4>
-                                    <p className="font-garamond text-sm text-gray-600">
-                                        {t.role}
-                                    </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
+                    {testimonials.map((t, i) => (
+                        <FadeIn delay={0.4 * i}>
+                            <div className="rounded-xl shadow-lg p-4 transform transition duration-300 hover:scale-105 hover:shadow-[0px_15px_20px_#00000030]">
+                                <div className="flex items-center space-x-4 mb-4 ">
+                                    <img
+                                        src={t.image}
+                                        alt={t.name}
+                                        className="w-12 h-12 rounded-full object-cover"
+                                    />
+                                    <div>
+                                        <h4 className="font-playfair text-base text-black font-medium leading-4 mb-2">
+                                            {t.name}
+                                        </h4>
+                                        <p className="font-garamond text-sm text-gray-600">
+                                            {t.role}
+                                        </p>
+                                    </div>
                                 </div>
+                                <p className="font-garamond italic text-gray-700 text-base leading-relaxed">
+                                    "{t.quote}"
+                                </p>
                             </div>
-                            <p className="font-garamond italic text-gray-700 text-base leading-relaxed">
-                                "{t.quote}"
-                            </p>
-                        </motion.div>
+                        </FadeIn>
                     ))}
+
                 </div>
             </div>
         </section>
