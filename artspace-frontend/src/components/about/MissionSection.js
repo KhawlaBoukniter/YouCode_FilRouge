@@ -1,5 +1,6 @@
 import React from "react";
 import image from '../../assets/images/mission-section.png'
+import FadeIn from "../ui/FadeIn";
 
 const MissionSection = () => {
     const stats = [
@@ -14,33 +15,41 @@ const MissionSection = () => {
                 <div className="flex flex-col lg:flex-row justify-around items-center">
                     <div className="w-full lg:w-1/2 space-y-8">
                         <div className="space-y-4">
-                            <h2 className="text-3xl text-black font-garamond mb-6 leading-9">
-                                Notre mission
-                            </h2>
+                            <FadeIn>
+                                <h2 className="text-3xl text-black font-garamond mb-6 leading-9">
+                                    Notre mission
+                                </h2>
+                            </FadeIn>
 
-                            <h3 className="text-2xl text-slate-900 leading-9 font-garamond">
-                                Créer un pont entre l’art traditionnel et numérique
-                            </h3>
+                            <FadeIn delay={0.2}>
+                                <h3 className="text-2xl text-slate-900 leading-9 font-garamond">
+                                    Créer un pont entre l’art traditionnel et numérique
+                                </h3>
+                            </FadeIn>
 
-                            <p className="text-base text-gray-600 leading-relaxed mt-6 font-garamond">
-                                ArtSpace a été fondé avec la volonté de rendre l'art accessible à tous,
-                                partout dans le monde. Notre musée 3D offre une expérience immersive
-                                qui dépasse les frontières géographiques et donne vie aux chefs-d'œuvre.
-                            </p>
+                            <FadeIn delay={0.4}>
+                                <p className="text-base text-gray-600 leading-relaxed mt-6 font-garamond">
+                                    ArtSpace a été fondé avec la volonté de rendre l'art accessible à tous,
+                                    partout dans le monde. Notre musée 3D offre une expérience immersive
+                                    qui dépasse les frontières géographiques et donne vie aux chefs-d'œuvre.
+                                </p>
+                            </FadeIn>
                         </div>
 
-                        <div className="flex flex-wrap gap-8 ">
-                            {stats.map((stat, index) => (
-                                <div key={index} className="text-center">
-                                    <p className="text-4xl text-[#3a6b8f] font-garamond">
-                                        {stat.value}
-                                    </p>
-                                    <p className="text-base text-gray-600 font-garamond">
-                                        {stat.label}
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
+                        <FadeIn delay={0.6}>
+                            <div className="flex flex-wrap gap-8 ">
+                                {stats.map((stat, index) => (
+                                    <div key={index} className="text-center">
+                                        <p className="text-4xl text-[#3a6b8f] font-garamond">
+                                            {stat.value}
+                                        </p>
+                                        <p className="text-base text-gray-600 font-garamond">
+                                            {stat.label}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </FadeIn>
                     </div>
 
                     <div className="w-[500px] h-[500px] shadow-2xl rounded-2xl">
