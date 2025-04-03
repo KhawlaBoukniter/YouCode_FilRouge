@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Button from "./ui/button";
 import logo from "../assets/logos/logo_artspace.png";
 
@@ -11,29 +11,39 @@ const navItems = [
 ];
 
 const Navbar = () => {
+    const location = useLocation();
+
     return (
-        <div className="w-full h-[73px] bg-[#ffffffe6] border-b border-gray-100">
-            <div className="max-w-[1280px] h-[72px] mx-auto px-20">
-                <div className="relative h-[57px] py-[7px]">
-                    <div className="flex items-center justify-between h-10 mt-[9px]">
+        <div className=" bg-[#ffffff8f] border-b border-gray-100">
+            <div className=" mx-auto px-20">
+                <div className="relative py-2">
+                    <div className="flex items-center justify-between">
                         {/* Logo */}
                         <img
-                            className="w-[57px] h-[57px] object-cover"
+                            className="w-14 h-14 object-cover"
                             alt="ArtSpace Logo"
                             src={logo}
                         />
 
                         {/* Navigation Links */}
                         <nav className="flex space-x-7">
-                            {navItems.map((item) => (
-                                <Link
-                                    key={item.name}
-                                    to={item.path}
-                                    className="font-garamond text-base leading-4 font-normal text-black hover:text-[#d3bb75] hover:[text-shadow:0px_4px_4px_#5f5e5e94] transition-all duration-300"
-                                >
-                                    {item.name}
-                                </Link>
-                            ))}
+                            {navItems.map((item) => {
+                                const isActive = location.pathname === item.path;
+
+                                return (
+                                    <Link
+                                        key={item.name}
+                                        to={item.path}
+                                        className={`font-garamond text-base leading-4 font-normal transition-all duration-300
+                      ${isActive
+                                                ? "text-[#d3bb75] [text-shadow:0px_4px_4px_#5f5e5e94]"
+                                                : "text-black hover:text-[#d3bb75] hover:[text-shadow:0px_4px_4px_#5f5e5e94]"
+                                            }`}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                );
+                            })}
                         </nav>
 
                         {/* Auth Buttons */}
@@ -41,7 +51,7 @@ const Navbar = () => {
                             <Link to="/login">
                                 <Button
                                     variant="outline"
-                                    className="h-[42px] rounded-full border-[#3a6b8f] font-garamond font-normal text-[#3a6b8f] text-base"
+                                    className="h-10 rounded-full border-[#3a6b8f] font-garamond font-normal text-[#3a6b8f] text-base"
                                 >
                                     Se connecter
                                 </Button>
