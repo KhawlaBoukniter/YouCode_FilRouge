@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent } from "../ui/card";
+import image from '../../assets/images/mission-section.png'
 
 const MissionSection = () => {
     const stats = [
@@ -42,15 +42,16 @@ const MissionSection = () => {
                             ))}
                         </div>
                     </div>
-                    <Card className=" border-0 rounded-2xl overflow-hidden">
-                        <CardContent className="p-0">
-                            <img
-                                src="https://c.animaapp.com/m94ra950i1wJy8/img/img-1.png"
-                                alt="Galerie"
-                                className="h-[500px] object-cover"
-                            />
-                        </CardContent>
-                    </Card>
+
+                    <div className="w-[500px] h-[500px] shadow-2xl rounded-2xl">
+                        <div
+                            className="w-full h-full rounded-2xl bg-cover bg-center"
+                            style={{
+                                backgroundImage: `url(${image})`,
+                            }}
+                        />
+                    </div>
+
 
                 </div>
             </div>
