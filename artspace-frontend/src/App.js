@@ -11,6 +11,7 @@ import UserDash from './pages/UserDash';
 import Artwork from './pages/Artwork';
 import UserFavoriteArtworksPage from './pages/UserFavoriteArtworksPage';
 import UserPurchaseHistoryPage from './pages/PurchaseHistoryPage';
+import Events from './pages/Events';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <Route path='/artworks/{artwork}' element={<Artwork />} />
       <Route path='/artworks/saved' element={<UserFavoriteArtworksPage />} />
       <Route path='/artworks/purshased' element={<UserPurchaseHistoryPage />} />
+      <Route path='/events' element={<Events />} />
     </Routes>
   );
 }
