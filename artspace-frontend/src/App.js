@@ -12,6 +12,7 @@ import Artwork from './pages/Artwork';
 import UserFavoriteArtworksPage from './pages/UserFavoriteArtworksPage';
 import UserPurchaseHistoryPage from './pages/PurchaseHistoryPage';
 import Events from './pages/Events';
+import EventDetails from './pages/EventDetails';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <Route path='/artworks/saved' element={<UserFavoriteArtworksPage />} />
       <Route path='/artworks/purshased' element={<UserPurchaseHistoryPage />} />
       <Route path='/events' element={<Events />} />
+      <Route path='/events/{id}' element={<EventDetails />} />
     </Routes>
   );
 }
