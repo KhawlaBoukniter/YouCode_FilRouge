@@ -13,9 +13,9 @@ export default function UserDash() {
             <main className="flex-1 w-full py-24 px-5 md:px-20">
                 <div className="max-w-[1280px] mx-auto space-y-8">
                     <Profile />
-                    {/* <Stats />
+                    <Stats />
                     <FavoriteArtworks />
-                    <PurchaseHistory /> */}
+                    <PurchaseHistory />
                 </div>
             </main>
             <Footer />

@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import About from './pages/About';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
+import UserDash from './pages/UserDash';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path='/about' element={<About />} />
       <Route path='/gallery' element={<Gallery />} />
       <Route path='/contact' element={<Contact />} />
+      <Route path='/user-dash' element={<UserDash />} />
     </Routes>
   );
 }
