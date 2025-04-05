@@ -8,6 +8,7 @@ import About from './pages/About';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
 import UserDash from './pages/UserDash';
+import Artwork from './pages/Artwork';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path='/gallery' element={<Gallery />} />
       <Route path='/contact' element={<Contact />} />
       <Route path='/user-dash' element={<UserDash />} />
+      <Route path='/artworks/{artwork}' element={<Artwork />} />
     </Routes>
   );
 }
