@@ -14,6 +14,7 @@ import UserPurchaseHistoryPage from './pages/PurchaseHistoryPage';
 import Events from './pages/Events';
 import EventDetails from './pages/EventDetails';
 import ArtistDash from './pages/ArtistDash';
+import AllArtworks from './pages/AllArtworks';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
       <Route path='/events' element={<Events />} />
       <Route path='/events/{id}' element={<EventDetails />} />
       <Route path='/artist-dash' element={<ArtistDash />} />
+      <Route path='/artworks' element={<AllArtworks />} />
     </Routes>
   );
 }
