@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import Button from "../ui/button";
+import { EyeIcon } from "lucide-react";
 
 export default function FavoriteArtworks() {
     const artworks = [
@@ -53,6 +54,17 @@ export default function FavoriteArtworks() {
                                         {artwork.title}
                                     </h4>
                                     <p className="text-gray-300 text-sm mt-1">{artwork.artist}</p>
+                                </div>
+
+                                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        className="!bg-transparent text-gray-300 hover:text-white transform transition duration-300 hover:scale-105 border-none p-2"
+                                        onClick={() => console.log(`Voir détails de l'œuvre ID ${artwork.id}`)}
+                                    >
+                                        <EyeIcon className="h-5 w-5" />
+                                    </Button>
                                 </div>
                             </div>
                         </div>
