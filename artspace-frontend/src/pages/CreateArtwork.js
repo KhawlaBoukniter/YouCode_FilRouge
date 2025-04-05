@@ -5,7 +5,7 @@ import ArtworkForm from "../components/artwork/ArtworkForm";
 
 export default function CreateArtwork() {
     return (
-        <div className="flex flex-col min-h-screen bg-[#f8f7f4]">
+        <div className="flex flex-col min-h-screen bg-[#ffffff]">
             <Navbar />
 
             <main className="flex-1 w-full py-24 px-5 md:px-20">

@@ -4,6 +4,7 @@ import Tags from "../ui/tags";
 import { Textarea } from "../ui/textarea";
 import { Select, SelectOption } from "../ui/select";
 import Button from "../ui/button";
+import FileUpload from "../ui/FileUpload";
 
 export default function ArtworkForm() {
     const dimensionFields = [
@@ -36,17 +37,8 @@ export default function ArtworkForm() {
                     </div>
                 </div>
 
-                <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-6 min-h-[300px]">
-                    <img
-                        src="https://c.animaapp.com/m9yoyfdxkNTcMZ/img/frame-1.svg"
-                        alt="Upload 3D Model"
-                        className="w-10 h-10 mb-4"
-                    />
-                    <p className="text-gray-600 font-cormorant">Modèle 3D</p>
-                    <p className="text-sm text-gray-400">Glissez votre fichier 3D ici ou</p>
-                    <Button variant="outline" className="mt-4">
-                        Parcourir les fichiers
-                    </Button>
+                <div className="pt-7">
+                    <FileUpload onFileSelect={(file) => console.log(file)} />
                 </div>
             </div>
 
