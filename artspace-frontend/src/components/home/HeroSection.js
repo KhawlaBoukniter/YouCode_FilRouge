@@ -1,9 +1,9 @@
 import React from "react";
 import { ArrowRight, Import, Play } from "lucide-react";
 import { Link } from "react-router-dom";
-import Button from "./ui/button";
-import heroImage from "../assets/images/hero-art.png";
-import FadeIn from "./ui/FadeIn";
+import Button from "../ui/button";
+import heroImage from "../../assets/images/hero-art.png";
+import FadeIn from "../ui/FadeIn";
 
 const HeroSection = () => {
     return (

@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import FadeIn from "./ui/FadeIn";
+import FadeIn from "../ui/FadeIn";
 
 const exhibitions = [
     {
