@@ -14,7 +14,7 @@ const CategoriesSection = () => {
 
     return (
         <div className="max-w-7xl mx-auto my-14">
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 justify-center">
                 {categories.map((category) => (
                     <Button
                         key={category.id}
