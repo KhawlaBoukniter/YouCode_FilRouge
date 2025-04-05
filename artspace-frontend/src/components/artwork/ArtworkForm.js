@@ -5,6 +5,7 @@ import { Textarea } from "../ui/textarea";
 import { Select, SelectOption } from "../ui/select";
 import Button from "../ui/button";
 import ImageUpload from "../ui/ImageUpload";
+import Toast from "../ui/toast";
 
 export default function ArtworkForm() {
     const dimensionFields = [
@@ -24,6 +25,8 @@ export default function ArtworkForm() {
         tags: [],
         image: null,
     });
+
+    const [toast, setToast] = useState(null);
 
     const [errors, setErrors] = useState({});
 
@@ -64,6 +67,20 @@ export default function ArtworkForm() {
         } else {
             setErrors({});
             console.log("Form data submitted:", formData);
+
+            setToast({ message: "Œuvre enregistrée avec succès !", type: "success" });
+
+            setFormData({
+                title: "",
+                description: "",
+                category: "",
+                width: "",
+                height: "",
+                depth: "",
+                year: "",
+                tags: [],
+                image: null,
+            });
         }
     };
 
@@ -143,6 +160,14 @@ export default function ArtworkForm() {
                     Soumettre l'œuvre
                 </Button>
             </div>
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </form>
     );
 }
