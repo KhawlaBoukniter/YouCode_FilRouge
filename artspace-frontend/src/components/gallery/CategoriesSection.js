@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../ui/button";
+import FadeIn from "../ui/FadeIn";
 
 const CategoriesSection = () => {
 
@@ -15,19 +16,21 @@ const CategoriesSection = () => {
     return (
         <div className="max-w-7xl mx-auto my-14">
             <div className="flex flex-wrap gap-4 justify-center">
-                {categories.map((category) => (
-                    <Button
-                        key={category.id}
-                        variant={category.active ? "default" : "secondary"}
-                        className={`rounded-full px-6 h-10 hover:text-white hover:bg-black ${category.active
-                            ? "bg-black text-white"
-                            : "bg-gray-100 text-black"
-                            }`}
-                    >
-                        <span className="font-normal font-playfair text-base">
-                            {category.name}
-                        </span>
-                    </Button>
+                {categories.map((category, i) => (
+                    <FadeIn delay={0.2 * i}>
+                        <Button
+                            key={category.id}
+                            variant={category.active ? "default" : "secondary"}
+                            className={`rounded-full px-6 h-10 hover:text-white hover:bg-black ${category.active
+                                ? "bg-black text-white"
+                                : "bg-gray-100 text-black"
+                                }`}
+                        >
+                            <span className="font-normal font-playfair text-base">
+                                {category.name}
+                            </span>
+                        </Button>
+                    </FadeIn>
                 ))}
             </div>
         </div>

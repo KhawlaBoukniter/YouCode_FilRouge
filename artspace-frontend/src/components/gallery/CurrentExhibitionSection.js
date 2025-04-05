@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardContent } from "../ui/card";
+import FadeIn from "../ui/FadeIn";
 
 const CurrentExhibitionSection = () => {
     const exhibitions = [
@@ -30,41 +31,43 @@ const CurrentExhibitionSection = () => {
             </h2>
 
             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8">
-                {exhibitions.map((exhibition) => (
-                    <Card
-                        key={exhibition.id}
-                        className="h-52 bg-white rounded-xl  transform transition duration-300 hover:scale-105 hover:shadow-[0_1rem_2rem_#00000030]"
-                    >
-                        <CardContent className="p-8">
-                            <div className="flex items-start mb-8">
-                                <div className="w-16 h-16 bg-[#c8deef] rounded-full flex items-center justify-center mr-5 flex-shrink-0">
-                                    <img
-                                        className="w-5 h-6"
-                                        alt="Exhibition icon"
-                                        src={exhibition.icon}
-                                    />
+                {exhibitions.map((exhibition, i) => (
+                    <FadeIn delay={0.3 * i}>
+                        <Card
+                            key={exhibition.id}
+                            className="h-52 bg-white rounded-xl  transform transition duration-300 hover:scale-105 hover:shadow-[0_1rem_2rem_#00000030]"
+                        >
+                            <CardContent className="p-8">
+                                <div className="flex items-start mb-8">
+                                    <div className="w-16 h-16 bg-[#c8deef] rounded-full flex items-center justify-center mr-5 flex-shrink-0">
+                                        <img
+                                            className="w-5 h-6"
+                                            alt="Exhibition icon"
+                                            src={exhibition.icon}
+                                        />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-garamond font-normal text-black text-xl leading-5">
+                                            {exhibition.title}
+                                        </h3>
+                                        <p className="font-garamond font-normal text-gray-600 text-base leading-4 mt-2">
+                                            {exhibition.date}
+                                        </p>
+                                    </div>
                                 </div>
                                 <div>
-                                    <h3 className="font-garamond font-normal text-black text-xl leading-5">
-                                        {exhibition.title}
-                                    </h3>
-                                    <p className="font-garamond font-normal text-gray-600 text-base leading-4 mt-2">
-                                        {exhibition.date}
-                                    </p>
+                                    {exhibition.description.map((paragraph, index) => (
+                                        <p
+                                            key={index}
+                                            className="font-garamond font-normal text-gray-700 text-base leading-normal"
+                                        >
+                                            {paragraph}
+                                        </p>
+                                    ))}
                                 </div>
-                            </div>
-                            <div>
-                                {exhibition.description.map((paragraph, index) => (
-                                    <p
-                                        key={index}
-                                        className="font-garamond font-normal text-gray-700 text-base leading-normal"
-                                    >
-                                        {paragraph}
-                                    </p>
-                                ))}
-                            </div>
-                        </CardContent>
-                    </Card>
+                            </CardContent>
+                        </Card>
+                    </FadeIn>
                 ))}
             </div>
         </div>
