@@ -5,6 +5,7 @@ import Museum3D from './pages/3D/Museum3D';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import About from './pages/About';
+import Gallery from './pages/Gallery';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path='/register' element={<Register />} />
       <Route path='/login' element={<Login />} />
       <Route path='/about' element={<About />} />
+      <Route path='/gallery' element={<Gallery />} />
     </Routes>
   );
 }
