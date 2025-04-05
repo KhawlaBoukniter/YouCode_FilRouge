@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import About from './pages/About';
 import Gallery from './pages/Gallery';
+import Contact from './pages/Contact';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path='/login' element={<Login />} />
       <Route path='/about' element={<About />} />
       <Route path='/gallery' element={<Gallery />} />
+      <Route path='/contact' element={<Contact />} />
     </Routes>
   );
 }
