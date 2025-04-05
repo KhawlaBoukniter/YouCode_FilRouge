@@ -2,7 +2,7 @@ import React from "react";
 
 const CallToAction = () => {
     return (
-        <section className="px-12">
+        <section className="px-12 mb-20">
             < div className="max-w-[1232px] mx-auto relative" >
                 {/* Background Image */}
                 < img
