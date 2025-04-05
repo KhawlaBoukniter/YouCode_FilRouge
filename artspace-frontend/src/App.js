@@ -14,7 +14,7 @@ import UserPurchaseHistoryPage from './pages/PurchaseHistoryPage';
 import Events from './pages/Events';
 import EventDetails from './pages/EventDetails';
 import ArtistDash from './pages/ArtistDash';
-import AllArtworks from './pages/AllArtworks';
+import ArtistArtworks from './pages/ArtistArtworks';
 import CreateArtwork from './pages/CreateArtwork';
 
 function App() {
@@ -27,15 +27,21 @@ function App() {
       <Route path='/about' element={<About />} />
       <Route path='/gallery' element={<Gallery />} />
       <Route path='/contact' element={<Contact />} />
+
       <Route path='/user-dash' element={<UserDash />} />
+      <Route path='/user/artworks/saved' element={<UserFavoriteArtworksPage />} />
+      <Route path='/user/artworks/purshased' element={<UserPurchaseHistoryPage />} />
+
       <Route path='/artworks/{artwork}' element={<Artwork />} />
-      <Route path='/artworks/saved' element={<UserFavoriteArtworksPage />} />
-      <Route path='/artworks/purshased' element={<UserPurchaseHistoryPage />} />
-      <Route path='/events' element={<Events />} />
-      <Route path='/events/{id}' element={<EventDetails />} />
-      <Route path='/artist-dash' element={<ArtistDash />} />
-      <Route path='/artworks' element={<AllArtworks />} />
       <Route path='/artworks/create' element={<CreateArtwork />} />
+
+      <Route path='/events/{id}' element={<EventDetails />} />
+      {/* <Route path='/events/create' element={<CreateEvent />} /> */}
+
+      <Route path='/artist-dash' element={<ArtistDash />} />
+      <Route path='/artist/artworks' element={<ArtistArtworks />} />
+      <Route path='/artist/events' element={<Events />} />
+
     </Routes>
   );
 }

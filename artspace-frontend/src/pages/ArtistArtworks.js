@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Eye, Edit, Trash2 } from "lucide-react";
 
-export default function AllArtworks() {
+export default function ArtistArtworks() {
     const artworks = [
         {
             id: 1,
