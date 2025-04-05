@@ -9,6 +9,7 @@ import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
 import UserDash from './pages/UserDash';
 import Artwork from './pages/Artwork';
+import UserFavoriteArtworksPage from './pages/UserFavoriteArtworksPage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path='/contact' element={<Contact />} />
       <Route path='/user-dash' element={<UserDash />} />
       <Route path='/artworks/{artwork}' element={<Artwork />} />
+      <Route path='/artworks/saved' element={<UserFavoriteArtworksPage />} />
     </Routes>
   );
 }
