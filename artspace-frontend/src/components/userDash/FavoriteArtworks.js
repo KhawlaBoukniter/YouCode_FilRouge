@@ -26,7 +26,7 @@ export default function FavoriteArtworks() {
 
     return (
         <Card className="rounded-2xl shadow-md">
-            <CardHeader className="px-8 p-8 flex flex-row justify-between items-center">
+            <CardHeader className="px-8 pb-0 flex flex-row justify-between items-center">
                 <CardTitle className="text-2xl font-playfair text-gray-800">
                     Favorite Artworks
                 </CardTitle>
