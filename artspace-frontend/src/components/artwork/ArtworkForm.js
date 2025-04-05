@@ -4,7 +4,7 @@ import Tags from "../ui/tags";
 import { Textarea } from "../ui/textarea";
 import { Select, SelectOption } from "../ui/select";
 import Button from "../ui/button";
-import FileUpload from "../ui/FileUpload";
+import ImageUpload from "../ui/ImageUpload";
 
 export default function ArtworkForm() {
     const dimensionFields = [
@@ -31,14 +31,15 @@ export default function ArtworkForm() {
                         <label className="text-sm text-gray-600 font-cormorant">Catégorie</label>
                         <Select>
                             <SelectOption value="peinture">Peinture</SelectOption>
-                            <SelectOption value="sculpture">Sculpture</SelectOption>
+                            <SelectOption value="illustration">Illustration</SelectOption>
                             <SelectOption value="photographie">Photographie</SelectOption>
+                            <SelectOption value="art-numerique">Art numérique</SelectOption>
                         </Select>
                     </div>
                 </div>
 
                 <div className="pt-7">
-                    <FileUpload onFileSelect={(file) => console.log(file)} />
+                    <ImageUpload onFileSelect={(file) => console.log(file)} />
                 </div>
             </div>
 
@@ -48,14 +49,14 @@ export default function ArtworkForm() {
                         <label className="text-sm text-gray-600 font-cormorant">Dimensions</label>
                         <div className="grid grid-cols-3 gap-4">
                             {dimensionFields.map((field) => (
-                                <Input key={field.id} type="number" placeholder={field.label} />
+                                <Input key={field.id} type="number" min="0" placeholder={field.label} />
                             ))}
                         </div>
                     </div>
 
                     <div className="space-y-2">
                         <label className="text-sm text-gray-600 font-cormorant">Année de création</label>
-                        <Input type="number" placeholder="2025" />
+                        <Input type="number" min="0" placeholder="2025" />
                     </div>
                 </div>
 
