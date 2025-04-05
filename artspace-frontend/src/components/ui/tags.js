@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function Tags() {
-    const [tags, setTags] = useState([]);
+export default function Tags({ value = [], onChange }) {
+    const [tags, setTags] = useState(value);
     const [inputValue, setInputValue] = useState("");
+
+    useEffect(() => {
+        setTags(value || []);
+    }, [value]);
 
     const handleKeyDown = (e) => {
         if (e.key === "Enter" && inputValue.trim() !== "") {
             e.preventDefault();
             if (!tags.includes(inputValue.trim())) {
                 setTags([...tags, inputValue.trim()]);
+                onChange([...tags, inputValue.trim()]);
             }
             setInputValue("");
         }
@@ -16,6 +21,7 @@ export default function Tags() {
 
     const removeTag = (indexToRemove) => {
         setTags(tags.filter((_, index) => index !== indexToRemove));
+        onChange(tags.filter((_, index) => index !== indexToRemove));
     };
 
     return (
