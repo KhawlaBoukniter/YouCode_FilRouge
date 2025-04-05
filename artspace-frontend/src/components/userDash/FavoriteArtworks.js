@@ -1,0 +1,64 @@
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import Button from "../ui/button";
+
+export default function FavoriteArtworks() {
+    const artworks = [
+        {
+            id: 1,
+            title: "Abstract Harmony",
+            artist: "by Marie Dubois",
+            image: "https://c.animaapp.com/m9y8ql4xx8o8m6/img/img-3.png",
+        },
+        {
+            id: 2,
+            title: "Eternal Dance",
+            artist: "by Jean-Paul Roux",
+            image: "https://c.animaapp.com/m9y8ql4xx8o8m6/img/img-2.png",
+        },
+        {
+            id: 3,
+            title: "Digital Dreams",
+            artist: "by Alex Chen",
+            image: "https://c.animaapp.com/m9y8ql4xx8o8m6/img/img-1.png",
+        },
+    ];
+
+    return (
+        <Card className="rounded-2xl shadow-md">
+            <CardHeader className="px-8 p-8 flex flex-row justify-between items-center">
+                <CardTitle className="text-2xl font-playfair text-gray-800">
+                    Favorite Artworks
+                </CardTitle>
+                <Button variant="link" className="text-[#3a6b8f] font-playfair text-base p-0">
+                    View All
+                </Button>
+            </CardHeader>
+
+            <CardContent className="p-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    {artworks.map((artwork) => (
+                        <div
+                            key={artwork.id}
+                            className="relative h-64 rounded-lg overflow-hidden group"
+                            style={{
+                                backgroundImage: `url(${artwork.image})`,
+                                backgroundSize: "cover",
+                                backgroundPosition: "center",
+                            }}
+                        >
+                            <div className="absolute bottom-0 w-full h-24 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                <div className="p-4">
+                                    <h4 className="text-white text-base font-semibold">
+                                        {artwork.title}
+                                    </h4>
+                                    <p className="text-gray-300 text-sm mt-1">{artwork.artist}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </CardContent>
+        </Card>
+    );
+}
