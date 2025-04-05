@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Input } from "../ui/input";
 import Tags from "../ui/tags";
 import { Textarea } from "../ui/textarea";
@@ -29,6 +29,8 @@ export default function ArtworkForm() {
     const [toast, setToast] = useState(null);
 
     const [errors, setErrors] = useState({});
+
+    const imageUploadRef = useRef();
 
     const handleChange = (field, value) => {
         setFormData({ ...formData, [field]: value });
@@ -69,6 +71,10 @@ export default function ArtworkForm() {
             console.log("Form data submitted:", formData);
 
             setToast({ message: "Œuvre enregistrée avec succès !", type: "success" });
+
+            if (imageUploadRef.current) {
+                imageUploadRef.current.reset();
+            }
 
             setFormData({
                 title: "",
@@ -114,7 +120,7 @@ export default function ArtworkForm() {
                 </div>
 
                 <div className="pt-7">
-                    <ImageUpload onFileSelect={handleFileSelect} />
+                    <ImageUpload ref={imageUploadRef} onFileSelect={handleFileSelect} />
                     {errors.image && <p className="text-red-500 text-sm mt-2">{errors.image}</p>}
                 </div>
             </div>

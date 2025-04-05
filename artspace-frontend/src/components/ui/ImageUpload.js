@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 
-export default function ImageUpload({ onFileSelect }) {
+const ImageUpload = forwardRef(({ onFileSelect }, ref) => {
     const [fileName, setFileName] = useState("");
+
+    useImperativeHandle(ref, () => ({
+        reset() {
+            setFileName("");
+        }
+    }));
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -53,4 +59,7 @@ export default function ImageUpload({ onFileSelect }) {
             )}
         </div>
     );
-}
+})
+
+ImageUpload.displayName = "ImageUpload";
+export default ImageUpload;
