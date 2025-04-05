@@ -3,14 +3,14 @@ import { Card, CardContent } from "../ui/card";
 
 const ContactForm = () => {
     return (
-        <Card className="w-full md:max-w-xl max-h-full bg-[#d5d4d440] rounded-3xl border-0 mx-10 my-5">
+        <Card className="w-full md:max-w-xl max-h-full !bg-[#D6D5D5] rounded-3xl border-0 mx-10 my-5 opacity-70">
             <CardContent className="p-10">
                 <form className="space-y-8">
                     <div className="space-y-4">
                         <input
                             type="text"
                             placeholder="Your Name"
-                            className="w-full h-14 bg-transparent border-0 border-b-2 border-transparent outline-none text-[#cecece] text-base font-playfair px-0"
+                            className="w-full h-14 bg-transparent border-0 border-b-2 border-transparent outline-none text-[#a09048] text-base font-playfair px-0"
                             style={{
                                 borderImage: "linear-gradient(90deg, rgba(59,108,143,1) 0%, rgba(197,181,133,1) 100%) 1",
                             }}
@@ -19,7 +19,7 @@ const ContactForm = () => {
                         <input
                             type="email"
                             placeholder="Your Email"
-                            className="w-full h-14 bg-transparent border-0 border-b-2 border-transparent outline-none text-[#cecece] text-base font-playfair px-0"
+                            className="w-full h-14 bg-transparent border-0 border-b-2 border-transparent outline-none text-[#a09048] text-base font-playfair px-0"
                             style={{
                                 borderImage: "linear-gradient(90deg, rgba(59,108,143,1) 0%, rgba(197,181,133,1) 100%) 1",
                             }}
@@ -27,7 +27,7 @@ const ContactForm = () => {
 
                         <textarea
                             placeholder="Your Message"
-                            className="w-full pt-4 h-32 bg-transparent border-0 border-b-2 border-transparent text-[#cecece] text-base font-playfair resize-none outline-none px-0"
+                            className="w-full pt-4 h-32 bg-transparent border-0 border-b-2 border-transparent text-[#a09048] text-base font-playfair resize-none outline-none px-0"
                             style={{
                                 borderImage: "linear-gradient(90deg, rgba(59,108,143,1), rgba(197,181,133,1)) 1",
                                 borderImageSlice: 1,
