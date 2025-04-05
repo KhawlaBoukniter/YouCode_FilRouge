@@ -1,0 +1,79 @@
+import React from "react";
+import { Card, CardContent } from "../ui/card";
+import { MailIcon, MapPinIcon, InstagramIcon, TwitterIcon, FacebookIcon, LinkedinIcon, HashIcon } from "lucide-react";
+import FadeIn from "../ui/FadeIn";
+
+const contactCards = [
+    {
+        id: 1,
+        title: "Visit Us",
+        content: ["123 ArtSpace Avenue", "Creative District, CA 90210"],
+        icon: <MapPinIcon className="h-6 w-6 text-white" />,
+        bgColor: "bg-[#3a6b8f]",
+    },
+    {
+        id: 2,
+        title: "Email Us",
+        content: ["hello@artspace.gallery", "exhibitions@artspace.gallery"],
+        icon: <MailIcon className="h-6 w-6 text-white" />,
+        bgColor: "bg-[#c5b585]",
+    },
+    {
+        id: 3,
+        title: "Follow Us",
+        socialIcons: true,
+        icon: <HashIcon className="h-6 w-6 text-white" />,
+        bgColor: "bg-[#3a6b8f]",
+    },
+];
+
+const ContactInfoCards = () => {
+    return (
+        <div className="w-full md:max-w-xl space-y-6 mx-10 my-5">
+            {contactCards.map((card, i) => (
+                <FadeIn delay={0.4 * i}>
+                    <Card
+                        key={card.id}
+                        className={`!bg-[#D6D5D5] rounded-3xl border-0 opacity-70 ${card.socialIcons ? "h-32" : "h-36"
+                            }`}
+                    >
+                        <CardContent className="p-8 flex items-start">
+                            <div
+                                className={`w-16 h-16 ${card.bgColor} rounded-full flex items-center justify-center mr-8`}
+                            >
+                                {card.icon}
+                            </div>
+
+                            <div>
+                                <h3 className="font-playfair text-[#232528] text-xl mb-2">
+                                    {card.title}
+                                </h3>
+
+                                {card.content &&
+                                    card.content.map((line, idx) => (
+                                        <p
+                                            key={idx}
+                                            className="font-playfair text-[#51555e] text-base leading-6"
+                                        >
+                                            {line}
+                                        </p>
+                                    ))}
+
+                                {card.socialIcons && (
+                                    <div className="flex space-x-6 mt-4">
+                                        <InstagramIcon className="h-6 w-6 text-[#51555e]" />
+                                        <TwitterIcon className="h-6 w-6 text-[#51555e]" />
+                                        <FacebookIcon className="h-6 w-6 text-[#51555e]" />
+                                        <LinkedinIcon className="h-6 w-6 text-[#51555e]" />
+                                    </div>
+                                )}
+                            </div>
+                        </CardContent>
+                    </Card>
+                </FadeIn>
+            ))}
+        </div>
+    );
+};
+
+export default ContactInfoCards;
