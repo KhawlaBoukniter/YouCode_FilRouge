@@ -10,6 +10,7 @@ import Contact from './pages/Contact';
 import UserDash from './pages/UserDash';
 import Artwork from './pages/Artwork';
 import UserFavoriteArtworksPage from './pages/UserFavoriteArtworksPage';
+import UserPurchaseHistoryPage from './pages/PurchaseHistoryPage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route path='/user-dash' element={<UserDash />} />
       <Route path='/artworks/{artwork}' element={<Artwork />} />
       <Route path='/artworks/saved' element={<UserFavoriteArtworksPage />} />
+      <Route path='/artworks/purshased' element={<UserPurchaseHistoryPage />} />
     </Routes>
   );
 }
