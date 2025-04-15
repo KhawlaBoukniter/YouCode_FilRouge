@@ -1,11 +1,11 @@
 import { ChevronRightIcon, HeartIcon } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import Button from "../ui/button";
 import { Card, CardContent } from "../ui/card"
 import FadeIn from "../ui/FadeIn";
 
 const ArtPieceSection = () => {
-    const artworks = [
+    const allArtworks = [
         {
             id: 1,
             image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-1.png",
@@ -54,16 +54,39 @@ const ArtPieceSection = () => {
             price: "€2,500",
             featured: true,
         },
+        {
+            id: 5,
+            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-4.png",
+            title: "Abstraction en Mouvement",
+            artist: "Par Marie Laurent",
+            price: "€2,500",
+            featured: true,
+        },
+        {
+            id: 6,
+            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-5.png",
+            title: "Abstraction en Mouvement",
+            artist: "Par Marie Laurent",
+            price: "€2,500",
+            featured: true,
+        },
     ];
+
+    const [visibleCount, setVisibleCount] = useState(6);
+
+    const handleLoadMore = () => {
+        setVisibleCount((prev) => prev + 3);
+    };
+
+    const artworks = allArtworks.slice(0, visibleCount);
 
     return (
         <section className="py-16 flex flex-col items-center mx-8">
             <div className="w-full max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {artworks.map((artwork, i) => (
-                        <FadeIn delay={0.3 * i}>
+                        <FadeIn delay={0.2 * i} key={artwork.id}>
                             <Card
-                                key={artwork.id}
                                 className="rounded-lg overflow-hidden border-0 shadow-none group transform transition duration-300 hover:scale-105 hover:shadow-[0px_15px_20px_#00000030]"
                             >
                                 <CardContent className="p-0 relative">
@@ -102,13 +125,15 @@ const ArtPieceSection = () => {
                 </div>
             </div>
 
-            <Button
-                variant="outline"
-                className="mt-16 h-12 rounded-full bg-[#fff5d8] hover:bg-[#d3bb7560] border-0 text-[#020000] font-garamond transform transition duration-300 hover:scale-105 hover:shadow-[0_0_2rem_#00000030]"
-            >
-                <span className="font-normal text-base">Voir Plus</span>
-                <ChevronRightIcon className="ml-2 h-4 w-3" />
-            </Button>
+            {visibleCount < allArtworks.length && (
+                <Button
+                    variant="outline"
+                    onClick={handleLoadMore}
+                    className="mt-16 h-12 rounded-full bg-[#fff5d8] hover:bg-[#d3bb7560] border-0 text-[#020000] font-garamond transform transition duration-300 hover:scale-105 hover:shadow-[0_0_2rem_#00000030]"
+                > Charger Plus
+                    <ChevronRightIcon className="ml-2 h-5 w-5" />
+                </Button>
+            )}
         </section>
     );
 };
