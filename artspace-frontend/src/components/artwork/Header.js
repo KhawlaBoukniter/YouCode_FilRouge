@@ -45,6 +45,15 @@ export default function Header() {
                         </div>
                     </div>
 
+                    <div className="flex gap-4 mt-6">
+                        <Button className="bg-[#3a6b8f] hover:bg-[#345c78] text-white rounded-lg font-playfair px-6 py-2 text-base transition">
+                            Modifier
+                        </Button>
+                        <Button variant="destructive" className="rounded-lg font-playfair px-6 py-2 text-base transition">
+                            Supprimer
+                        </Button>
+                    </div>
+
                     <div className="mt-6">
                         <Button className="h-12 w-full md:w-auto bg-[#3a6b8f] text-white rounded-lg font-playfair text-base hover:bg-[#345c78] transition">
                             Acheter / Réserver
