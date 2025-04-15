@@ -1,23 +1,12 @@
 import React from "react";
+import { FacebookIcon, InstagramIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
 
 const Footer = () => {
     const socialIcons = [
-        {
-            alt: "Twitter",
-            src: "/assets/icons/twitter.png",
-        },
-        {
-            alt: "Facebook",
-            src: "/assets/icons/facebook.png",
-        },
-        {
-            alt: "Instagram",
-            src: "/assets/icons/instagram.png",
-        },
-        {
-            alt: "LinkedIn",
-            src: "/assets/icons/linkedin.png",
-        },
+        { name: "Twitter", icon: <TwitterIcon className="w-5 h-5" /> },
+        { name: "Facebook", icon: <FacebookIcon className="w-5 h-5" /> },
+        { name: "Instagram", icon: <InstagramIcon className="w-5 h-5" /> },
+        { name: "LinkedIn", icon: <LinkedinIcon className="w-5 h-5" /> },
     ];
 
     const footerData = {
@@ -52,8 +41,8 @@ const Footer = () => {
                         </p>
                         <div className="flex space-x-4">
                             {socialIcons.map((icon, index) => (
-                                <div key={index} className="w-5 h-5 flex items-center justify-center">
-                                    <img className="w-5 h-5" alt={icon.alt} src={icon.src} />
+                                <div key={index} className="w-5 h-5 flex items-center justify-center text-gray-400 hover:text-[#d3bb75] transition-colors">
+                                    {icon.icon}
                                 </div>
                             ))}
                         </div>
@@ -70,7 +59,7 @@ const Footer = () => {
                                     <div key={index} className="h-6">
                                         <a
                                             href="#"
-                                            className="font-garamond text-gray-400 text-base leading-4 hover:text-white transition-colors"
+                                            className="font-garamond text-gray-400 text-base leading-4 hover:text-[#d3bb75] transition-colors"
                                         >
                                             {link}
                                         </a>
