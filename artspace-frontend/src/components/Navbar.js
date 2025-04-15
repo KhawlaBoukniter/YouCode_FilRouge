@@ -86,7 +86,7 @@ const Navbar = () => {
 
                 {/* Mobile Menu */}
                 {menuOpen && (
-                    <div className="flex flex-col items-start bg-white border-t border-gray-100 py-4 space-y-4 md:hidden">
+                    <div className="flex flex-col items-start bg-white border-t border-gray-100 py-4 space-y-4 md:hidden animate-fadeIn">
                         {navItems.map((item) => {
                             const isActive = location.pathname === item.path;
                             return (
