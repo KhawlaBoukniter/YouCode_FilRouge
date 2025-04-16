@@ -1,6 +1,6 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 
-const ImageUpload = forwardRef(({ onFileSelect }, ref) => {
+const ImageUpload = forwardRef(({ onFileSelect, title = "Modèle 2D", subtitle = "Glissez votre image ici ou" }, ref) => {
     const [fileName, setFileName] = useState("");
 
     useImperativeHandle(ref, () => ({
@@ -24,17 +24,17 @@ const ImageUpload = forwardRef(({ onFileSelect }, ref) => {
             <div className="mb-4">
                 <img
                     src="https://c.animaapp.com/m9yoyfdxkNTcMZ/img/frame-1.svg"
-                    alt="Modèle 2D"
+                    alt={title}
                     className="w-10 h-10 mx-auto"
                 />
             </div>
 
             <h2 className="font-['Cormorant',Helvetica] text-lg text-gray-800 mb-2">
-                Modèle 2D
+                {title}
             </h2>
 
             <p className="text-gray-400 text-sm mb-6 font-['Cormorant',Helvetica]">
-                Glissez votre image ici ou
+                {subtitle}
             </p>
 
             <input

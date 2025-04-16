@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import Button from "../ui/button";
+import ImageUpload from "../ui/ImageUpload";
 
 export default function EventForm() {
+
+    const [formData, setFormData] = useState({
+        title: "",
+        lieu: "",
+        date: "",
+        description: "",
+        image: null,
+    });
+
+    const imageUploadRef = useRef();
+
+    const handleFileSelect = (file) => {
+        handleChange("image", file);
+    };
+
+    const handleChange = (field, value) => {
+        setFormData({ ...formData, [field]: value });
+    }
+
     return (
         <form className="space-y-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -25,10 +45,7 @@ export default function EventForm() {
                 </div>
 
                 <div className="pt-7">
-                    <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-2xl p-8 min-h-[300px] text-center">
-                        <p className="text-gray-500 font-playfair">Téléverser une image d'événement</p>
-                        <input type="file" className="hidden" />
-                    </div>
+                    <ImageUpload onFileSelect={handleFileSelect} title="Affiche de l'événement" subtitle="Glissez votre affiche ici ou" />
                 </div>
             </div>
 
