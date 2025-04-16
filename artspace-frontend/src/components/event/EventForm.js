@@ -15,9 +15,18 @@ export default function EventForm() {
         image: null,
     });
 
+    const [ticketData, setTicketData] = useState([
+        {
+            ticketName: "",
+            ticketPrice: "",
+            ticketQuantity: ""
+        }
+    ]);
+
     const [errors, setErrors] = useState({});
     const [toast, setToast] = useState(null);
     const imageUploadRef = useRef();
+    const [step, setStep] = useState(1);
 
     const handleFileSelect = (file) => {
         handleChange("image", file);
@@ -26,6 +35,12 @@ export default function EventForm() {
     const handleChange = (field, value) => {
         setFormData({ ...formData, [field]: value });
     }
+
+    const handleTicketChange = (i, field, value) => {
+        const updatedTickets = [...ticketData];
+        updatedTickets[index][field] = value;
+        setTicketData(updatedTickets);
+    };
 
     const validateForm = () => {
         const newErr = {};
@@ -41,6 +56,18 @@ export default function EventForm() {
         return newErr;
     };
 
+    const validateTicketForm = () => {
+        const newErr = {};
+        if (!ticketData.ticketName.trim()) newErr.ticketName = "Le nom du billet est obligatoire.";
+        if (!ticketData.ticketPrice || isNaN(ticketData.ticketPrice) || ticketData.ticketPrice <= 0) {
+            newErr.ticketPrice = "Le prix doit être un nombre positif.";
+        }
+        if (!ticketData.ticketQuantity || isNaN(ticketData.ticketQuantity) || ticketData.ticketQuantity <= 0) {
+            newErr.ticketQuantity = "La quantité doit être un nombre positif.";
+        }
+        return newErr;
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const validationErrors = validateForm();
@@ -49,14 +76,25 @@ export default function EventForm() {
             setErrors(validationErrors);
         } else {
             setErrors({});
-            console.log("Formulaire soumis avec succès :", formData);
+            setStep(2);
+        }
+    };
 
-            setToast({ message: "Événement enregistré avec succès !", type: "success" });
+    const handleTicketSubmit = (e) => {
+        e.preventDefault();
+        const validationErrors = validateTicketForm();
+
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+        } else {
+            setErrors({});
+            console.log("Événement complet :", { formData, ticketData });
+
+            setToast({ message: "Événement et billets enregistrés avec succès !", type: "success" });
 
             if (imageUploadRef.current) {
                 imageUploadRef.current.reset();
             }
-
             setFormData({
                 title: "",
                 lieu: "",
@@ -64,69 +102,129 @@ export default function EventForm() {
                 description: "",
                 image: null,
             });
+            setTicketData({
+                ticketName: "",
+                ticketPrice: "",
+                ticketQuantity: "",
+            });
+            setStep(1);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                    <div className="space-y-2">
-                        <label className="text-sm text-gray-600 font-playfair">Nom de l'événement</label>
-                        <Input
-                            placeholder="Entrez le titre de l'événement"
-                            value={formData.title}
-                            onChange={(e) => handleChange("title", e.target.value)}
-                        />
-                        {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
+        <form onSubmit={step === 1 ? handleSubmit : handleTicketSubmit} className="space-y-10">
+            {step === 1 && (
+                <>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div className="space-y-6">
+                            <div className="space-y-2">
+                                <label className="text-sm text-gray-600 font-playfair">Nom de l'événement</label>
+                                <Input
+                                    placeholder="Entrez le titre de l'événement"
+                                    value={formData.title}
+                                    onChange={(e) => handleChange("title", e.target.value)}
+                                />
+                                {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-sm text-gray-600 font-playfair">Lieu</label>
+                                <Input
+                                    placeholder="Entrez le lieu de l'événement"
+                                    value={formData.lieu}
+                                    onChange={(e) => handleChange("lieu", e.target.value)}
+                                />
+                                {errors.lieu && <p className="text-red-500 text-sm">{errors.lieu}</p>}
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-sm text-gray-600 font-playfair">Date</label>
+                                <Input
+                                    type="date"
+                                    value={formData.date}
+                                    onChange={(e) => handleChange("date", e.target.value)}
+                                />
+                                {errors.date && <p className="text-red-500 text-sm">{errors.date}</p>}
+                            </div>
+                        </div>
+
+                        <div className="pt-7">
+                            <ImageUpload ref={imageUploadRef} onFileSelect={handleFileSelect} title="Affiche de l'événement" subtitle="Glissez votre affiche ici ou" />
+                            {errors.image && <p className="text-red-500 text-sm mt-2">{errors.image}</p>}
+                        </div>
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm text-gray-600 font-playfair">Lieu</label>
-                        <Input
-                            placeholder="Entrez le lieu de l'événement"
-                            value={formData.lieu}
-                            onChange={(e) => handleChange("lieu", e.target.value)}
+                        <label className="text-sm text-gray-600 font-playfair">Description</label>
+                        <Textarea
+                            placeholder="Décrivez votre événement"
+                            className="min-h-[120px]"
+                            value={formData.description}
+                            onChange={(e) => handleChange("description", e.target.value)}
                         />
-                        {errors.lieu && <p className="text-red-500 text-sm">{errors.lieu}</p>}
                     </div>
 
-                    <div className="space-y-2">
-                        <label className="text-sm text-gray-600 font-playfair">Date</label>
-                        <Input
-                            min="1900"
-                            type="date"
-                            value={formData.date}
-                            onChange={(e) => handleChange("date", e.target.value)}
-                        />
-                        {errors.date && <p className="text-red-500 text-sm">{errors.date}</p>}
+                    <div className="flex justify-end gap-4">
+                        <Button variant="outline" className="h-12 px-8">
+                            Annuler
+                        </Button>
+                        <Button className="h-12 px-8 bg-[#3a6b8f] text-white" type="submit">
+                            Suivant
+                        </Button>
                     </div>
-                </div>
+                </>
+            )}
 
-                <div className="pt-7">
-                    <ImageUpload ref={imageUploadRef} onFileSelect={handleFileSelect} title="Affiche de l'événement" subtitle="Glissez votre affiche ici ou" />
-                    {errors.image && <p className="text-red-500 text-sm mt-2">{errors.image}</p>}
-                </div>
-            </div>
+            {step === 2 && (
+                <>
+                    <div className="space-y-6">
+                        <h2 className="text-xl font-playfair font-semibold text-gray-700">Ajouter un billet</h2>
 
-            <div className="space-y-2">
-                <label className="text-sm text-gray-600 font-playfair">Description</label>
-                <Textarea
-                    placeholder="Décrivez votre événement"
-                    className="min-h-[120px]"
-                    value={formData.description}
-                    onChange={(e) => handleChange("description", e.target.value)}
-                />
-            </div>
+                        <div className="space-y-2">
+                            <label className="text-sm text-gray-600 font-playfair">Nom du billet</label>
+                            <Input
+                                placeholder="Ex: Entrée standard"
+                                value={ticketData.ticketName}
+                                onChange={(e) => handleTicketChange("ticketName", e.target.value)}
+                            />
+                            {errors.ticketName && <p className="text-red-500 text-sm">{errors.ticketName}</p>}
+                        </div>
 
-            <div className="flex justify-end gap-4">
-                <Button variant="outline" className="h-12 px-8">
-                    Annuler
-                </Button>
-                <Button className="h-12 px-8 bg-[#3a6b8f] text-white">
-                    Soumettre l'événement
-                </Button>
-            </div>
+                        <div className="space-y-2">
+                            <label className="text-sm text-gray-600 font-playfair">Prix du billet (€)</label>
+                            <Input
+                                type="number"
+                                min="0"
+                                placeholder="Ex: 20"
+                                value={ticketData.ticketPrice}
+                                onChange={(e) => handleTicketChange("ticketPrice", e.target.value)}
+                            />
+                            {errors.ticketPrice && <p className="text-red-500 text-sm">{errors.ticketPrice}</p>}
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-sm text-gray-600 font-playfair">Quantité disponible</label>
+                            <Input
+                                type="number"
+                                min="1"
+                                placeholder="Ex: 100"
+                                value={ticketData.ticketQuantity}
+                                onChange={(e) => handleTicketChange("ticketQuantity", e.target.value)}
+                            />
+                            {errors.ticketQuantity && <p className="text-red-500 text-sm">{errors.ticketQuantity}</p>}
+                        </div>
+                    </div>
+
+                    <div className="flex justify-end gap-4 mt-8">
+                        <Button variant="outline" className="h-12 px-8" onClick={() => setStep(1)}>
+                            Retour
+                        </Button>
+                        <Button className="h-12 px-8 bg-[#3a6b8f] text-white" type="submit">
+                            Soumettre l'événement
+                        </Button>
+                    </div>
+                </>
+            )}
 
             {toast && (
                 <Toast
