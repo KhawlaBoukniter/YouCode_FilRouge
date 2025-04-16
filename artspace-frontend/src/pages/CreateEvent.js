@@ -1,0 +1,29 @@
+import React from "react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import EventForm from "../components/event/EventForm";
+
+export default function CreateEvent() {
+    return (
+        <div className="flex flex-col min-h-screen bg-[#ffffff]">
+            <Navbar />
+
+            <main className="flex-1 w-full py-24 px-5 md:px-20">
+                <div className="max-w-[1280px] mx-auto space-y-8">
+                    <div>
+                        <h1 className="text-3xl font-playfair text-gray-800">
+                            Créer un nouvel événement
+                        </h1>
+                        <p className="text-gray-600 text-base font-playfair mt-2">
+                            Partagez votre événement artistique avec le monde
+                        </p>
+                    </div>
+
+                    <EventForm />
+                </div>
+            </main>
+
+            <Footer />
+        </div>
+    );
+}
