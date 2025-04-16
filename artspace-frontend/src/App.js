@@ -16,6 +16,7 @@ import EventDetails from './pages/EventDetails';
 import ArtistDash from './pages/ArtistDash';
 import ArtistArtworks from './pages/ArtistArtworks';
 import CreateArtwork from './pages/CreateArtwork';
+import CreateEvent from './pages/CreateEvent';
 
 function App() {
   return (
@@ -36,7 +37,7 @@ function App() {
       <Route path='/artworks/create' element={<CreateArtwork />} />
 
       <Route path='/events/{id}' element={<EventDetails />} />
-      {/* <Route path='/events/create' element={<CreateEvent />} /> */}
+      <Route path='/events/create' element={<CreateEvent />} />
 
       <Route path='/artist-dash' element={<ArtistDash />} />
       <Route path='/artist/artworks' element={<ArtistArtworks />} />
