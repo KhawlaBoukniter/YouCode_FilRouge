@@ -46,7 +46,20 @@ export default function EventForm() {
         const newErr = {};
         if (!formData.title.trim()) newErr.title = "Le titre est obligatoire.";
         if (!formData.lieu.trim()) newErr.lieu = "Le lieu est obligatoire.";
-        if (!formData.date) newErr.date = "La date est obligatoire.";
+        if (!formData.date) {
+            newErr.date = "La date est obligatoire.";
+        } else {
+            const today = new Date();
+            const evDate = new Date(formData.date);
+
+            today.setHours(0, 0, 0, 0);
+            evDate.setHours(0, 0, 0, 0);
+
+            if (evDate < today) {
+                newErr.date = "La date de l'événement ne peut pas etre au passé";
+            }
+        }
+
         if (!formData.image) newErr.image = "L'affiche de l'événement est obligatoire.";
 
         if (formData.year && (isNaN(formData.year) || formData.year < 1900 || formData.year > new Date().getFullYear())) {
