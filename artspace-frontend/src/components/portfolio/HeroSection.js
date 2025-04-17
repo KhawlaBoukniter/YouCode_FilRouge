@@ -3,7 +3,7 @@ import Button from "../ui/button";
 
 export default function HeroSection() {
     return (
-        <section className="w-full py-24 bg-white">
+        <section className="w-full py-24 bg-white p-10">
             <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-12 items-center">
                 <div className="flex-1 space-y-6">
                     <h1 className="text-5xl font-normal font-playfair text-gray-900 leading-tight">
@@ -30,7 +30,7 @@ export default function HeroSection() {
 
                 <div className="flex-1">
                     <div
-                        className="h-[500px] w-full rounded-2xl bg-cover bg-center"
+                        className="h-auto aspect-square w-full rounded-2xl bg-cover bg-center"
                         style={{
                             backgroundImage: "url(https://c.animaapp.com/ma1evbt5xp47Lo/img/img-1.png)",
                         }}
