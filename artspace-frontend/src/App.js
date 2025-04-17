@@ -17,6 +17,7 @@ import ArtistDash from './pages/ArtistDash';
 import ArtistArtworks from './pages/ArtistArtworks';
 import CreateArtwork from './pages/CreateArtwork';
 import CreateEvent from './pages/CreateEvent';
+import Portfolio from './pages/Portfolio';
 
 function App() {
   return (
@@ -33,15 +34,16 @@ function App() {
       <Route path='/user/artworks/saved' element={<UserFavoriteArtworksPage />} />
       <Route path='/user/artworks/purshased' element={<UserPurchaseHistoryPage />} />
 
-      <Route path='/artworks/{artwork}' element={<Artwork />} />
+      <Route path='/artworks/:artwork' element={<Artwork />} />
       <Route path='/artworks/create' element={<CreateArtwork />} />
 
-      <Route path='/events/{id}' element={<EventDetails />} />
+      <Route path='/events/:id' element={<EventDetails />} />
       <Route path='/events/create' element={<CreateEvent />} />
 
       <Route path='/artist-dash' element={<ArtistDash />} />
       <Route path='/artist/artworks' element={<ArtistArtworks />} />
       <Route path='/artist/events' element={<ArtistEvents />} />
+      <Route path='/artist/:id/portfolio' element={<Portfolio />} />
 
     </Routes>
   );
