@@ -1,0 +1,42 @@
+import React from "react";
+import Button from "../ui/button";
+
+export default function HeroSection() {
+    return (
+        <section className="w-full py-24 bg-white">
+            <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-12 items-center">
+                <div className="flex-1 space-y-6">
+                    <h1 className="text-5xl font-normal font-playfair text-gray-900 leading-tight">
+                        Claire Dubois
+                    </h1>
+
+                    <p className="text-xl font-playfair text-gray-600 leading-relaxed">
+                        Artiste contemporaine spécialisée en art numérique et installations immersives
+                    </p>
+
+                    <div className="flex flex-wrap gap-4 pt-6">
+                        <Button className="h-12 px-8 rounded-full bg-[#3a6b8f] hover:bg-[#2c5270] font-playfair text-base font-normal">
+                            Me contacter
+                        </Button>
+
+                        <Button
+                            variant="outline"
+                            className="h-12 px-8 rounded-full border-[#3a6b8f] text-[#3a6b8f] hover:bg-[#3a6b8f]/10 font-playfair text-base font-normal"
+                        >
+                            Voir mes œuvres
+                        </Button>
+                    </div>
+                </div>
+
+                <div className="flex-1">
+                    <div
+                        className="h-[500px] w-full rounded-2xl bg-cover bg-center"
+                        style={{
+                            backgroundImage: "url(https://c.animaapp.com/ma1evbt5xp47Lo/img/img-1.png)",
+                        }}
+                    />
+                </div>
+            </div>
+        </section>
+    );
+}
