@@ -38,7 +38,7 @@ export default function EventForm() {
 
     const handleTicketChange = (i, field, value) => {
         const updatedTickets = [...ticketData];
-        updatedTickets[index][field] = value;
+        updatedTickets[i][field] = value;
         setTicketData(updatedTickets);
     };
 
@@ -58,13 +58,19 @@ export default function EventForm() {
 
     const validateTicketForm = () => {
         const newErr = {};
-        if (!ticketData.ticketName.trim()) newErr.ticketName = "Le nom du billet est obligatoire.";
-        if (!ticketData.ticketPrice || isNaN(ticketData.ticketPrice) || ticketData.ticketPrice <= 0) {
-            newErr.ticketPrice = "Le prix doit être un nombre positif.";
-        }
-        if (!ticketData.ticketQuantity || isNaN(ticketData.ticketQuantity) || ticketData.ticketQuantity <= 0) {
-            newErr.ticketQuantity = "La quantité doit être un nombre positif.";
-        }
+
+        ticketData.forEach((ticket, index) => {
+            if (!ticket.ticketName.trim()) {
+                newErr[`ticketName_${index}`] = "Le nom du billet est obligatoire.";
+            }
+            if (!ticket.ticketPrice || isNaN(ticket.ticketPrice) || ticket.ticketPrice <= 0) {
+                newErr[`ticketPrice_${index}`] = "Le prix doit être un nombre positif.";
+            }
+            if (!ticket.ticketQuantity || isNaN(ticket.ticketQuantity) || ticket.ticketQuantity <= 0) {
+                newErr[`ticketQuantity_${index}`] = "La quantité doit être un nombre positif.";
+            }
+        });
+
         return newErr;
     };
 
@@ -102,11 +108,13 @@ export default function EventForm() {
                 description: "",
                 image: null,
             });
-            setTicketData({
-                ticketName: "",
-                ticketPrice: "",
-                ticketQuantity: "",
-            });
+            setTicketData([
+                {
+                    ticketName: "",
+                    ticketPrice: "",
+                    ticketQuantity: "",
+                }
+            ]);
             setStep(1);
         }
     };
@@ -180,38 +188,58 @@ export default function EventForm() {
                     <div className="space-y-6">
                         <h2 className="text-xl font-playfair font-semibold text-gray-700">Ajouter un billet</h2>
 
-                        <div className="space-y-2">
-                            <label className="text-sm text-gray-600 font-playfair">Nom du billet</label>
-                            <Input
-                                placeholder="Ex: Entrée standard"
-                                value={ticketData.ticketName}
-                                onChange={(e) => handleTicketChange("ticketName", e.target.value)}
-                            />
-                            {errors.ticketName && <p className="text-red-500 text-sm">{errors.ticketName}</p>}
-                        </div>
+                        {ticketData.map((ticket, i) => (
+                            <div key={i} className="space-y-4 border p-4 rounded-md shadow-sm bg-gray-50">
+                                <div className="space-y-2">
+                                    <label className="text-sm text-gray-600 font-playfair">Nom du billet</label>
+                                    <Input
+                                        placeholder="Ex: Entrée standard"
+                                        value={ticket.ticketName}
+                                        onChange={(e) => handleTicketChange(i, "ticketName", e.target.value)}
+                                    />
+                                    {errors[`ticketName_${i}`] && <p className="text-red-500 text-sm">{errors[`ticketName_${i}`]}</p>}
+                                </div>
 
-                        <div className="space-y-2">
-                            <label className="text-sm text-gray-600 font-playfair">Prix du billet (€)</label>
-                            <Input
-                                type="number"
-                                min="0"
-                                placeholder="Ex: 20"
-                                value={ticketData.ticketPrice}
-                                onChange={(e) => handleTicketChange("ticketPrice", e.target.value)}
-                            />
-                            {errors.ticketPrice && <p className="text-red-500 text-sm">{errors.ticketPrice}</p>}
-                        </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm text-gray-600 font-playfair">Prix du billet (€)</label>
+                                    <Input
+                                        type="number"
+                                        min="0"
+                                        placeholder="Ex: 20"
+                                        value={ticket.ticketPrice}
+                                        onChange={(e) => handleTicketChange(i, "ticketPrice", e.target.value)}
+                                    />
+                                    {errors[`ticketPrice_${i}`] && <p className="text-red-500 text-sm">{errors[`ticketPrice_${i}`]}</p>}
+                                </div>
 
-                        <div className="space-y-2">
-                            <label className="text-sm text-gray-600 font-playfair">Quantité disponible</label>
-                            <Input
-                                type="number"
-                                min="1"
-                                placeholder="Ex: 100"
-                                value={ticketData.ticketQuantity}
-                                onChange={(e) => handleTicketChange("ticketQuantity", e.target.value)}
-                            />
-                            {errors.ticketQuantity && <p className="text-red-500 text-sm">{errors.ticketQuantity}</p>}
+                                <div className="space-y-2">
+                                    <label className="text-sm text-gray-600 font-playfair">Quantité disponible</label>
+                                    <Input
+                                        type="number"
+                                        min="1"
+                                        placeholder="Ex: 100"
+                                        value={ticket.ticketQuantity}
+                                        onChange={(e) => handleTicketChange(i, "ticketQuantity", e.target.value)}
+                                    />
+                                    {errors[`ticketQuantity_${i}`] && <p className="text-red-500 text-sm">{errors[`ticketQuantity_${i}`]}</p>}
+                                </div>
+                            </div>
+                        ))}
+
+                        <div className="flex justify-start">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                className="h-10 px-6 mt-6"
+                                onClick={() =>
+                                    setTicketData([
+                                        ...ticketData,
+                                        { ticketName: "", ticketPrice: "", ticketQuantity: "" }
+                                    ])
+                                }
+                            >
+                                Ajouter un billet
+                            </Button>
                         </div>
                     </div>
 
