@@ -11,7 +11,7 @@ import UserDash from './pages/UserDash';
 import Artwork from './pages/Artwork';
 import UserFavoriteArtworksPage from './pages/UserFavoriteArtworksPage';
 import UserPurchaseHistoryPage from './pages/PurchaseHistoryPage';
-import Events from './pages/Events';
+import ArtistEvents from './pages/ArtistEvents';
 import EventDetails from './pages/EventDetails';
 import ArtistDash from './pages/ArtistDash';
 import ArtistArtworks from './pages/ArtistArtworks';
@@ -41,7 +41,7 @@ function App() {
 
       <Route path='/artist-dash' element={<ArtistDash />} />
       <Route path='/artist/artworks' element={<ArtistArtworks />} />
-      <Route path='/artist/events' element={<Events />} />
+      <Route path='/artist/events' element={<ArtistEvents />} />
 
     </Routes>
   );
