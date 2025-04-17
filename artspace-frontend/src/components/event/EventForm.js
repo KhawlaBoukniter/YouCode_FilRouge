@@ -4,6 +4,7 @@ import { Textarea } from "../ui/textarea";
 import Button from "../ui/button";
 import ImageUpload from "../ui/ImageUpload";
 import Toast from "../ui/toast";
+import { TrashIcon } from 'lucide-react';
 
 export default function EventForm() {
 
@@ -27,20 +28,6 @@ export default function EventForm() {
     const [toast, setToast] = useState(null);
     const imageUploadRef = useRef();
     const [step, setStep] = useState(1);
-
-    const handleFileSelect = (file) => {
-        handleChange("image", file);
-    };
-
-    const handleChange = (field, value) => {
-        setFormData({ ...formData, [field]: value });
-    }
-
-    const handleTicketChange = (i, field, value) => {
-        const updatedTickets = [...ticketData];
-        updatedTickets[i][field] = value;
-        setTicketData(updatedTickets);
-    };
 
     const validateForm = () => {
         const newErr = {};
@@ -87,6 +74,20 @@ export default function EventForm() {
         return newErr;
     };
 
+    const handleFileSelect = (file) => {
+        handleChange("image", file);
+    };
+
+    const handleChange = (field, value) => {
+        setFormData({ ...formData, [field]: value });
+    }
+
+    const handleTicketChange = (i, field, value) => {
+        const updatedTickets = [...ticketData];
+        updatedTickets[i][field] = value;
+        setTicketData(updatedTickets);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const validationErrors = validateForm();
@@ -130,6 +131,12 @@ export default function EventForm() {
             ]);
             setStep(1);
         }
+    };
+
+    const handleRemoveTicket = (i) => {
+        const updatedTickets = [...ticketData];
+        updatedTickets.splice(i, 1);
+        setTicketData(updatedTickets);
     };
 
     return (
@@ -202,7 +209,17 @@ export default function EventForm() {
                         <h2 className="text-xl font-playfair font-semibold text-gray-700">Ajouter un billet</h2>
 
                         {ticketData.map((ticket, i) => (
-                            <div key={i} className="space-y-4 border p-4 rounded-md shadow-sm bg-gray-50">
+                            <div key={i} className="space-y-4 border p-4 rounded-md shadow-sm bg-gray-50 relative">
+                                {ticketData.length > 1 && (
+                                    <button
+                                        type="button"
+                                        onClick={() => handleRemoveTicket(i)}
+                                        className="absolute top-2 right-2 p-4 text-red-500 hover:text-red-700"
+                                    >
+                                        <TrashIcon size={18} />
+                                    </button>
+                                )}
+
                                 <div className="space-y-2">
                                     <label className="text-sm text-gray-600 font-playfair">Nom du billet</label>
                                     <Input
