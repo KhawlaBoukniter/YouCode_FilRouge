@@ -134,9 +134,13 @@ export default function EventForm() {
     };
 
     const handleRemoveTicket = (i) => {
-        const updatedTickets = [...ticketData];
-        updatedTickets.splice(i, 1);
-        setTicketData(updatedTickets);
+        if (ticketData.length > 1) {
+            const updatedTickets = [...ticketData];
+            updatedTickets.splice(i, 1);
+            setTicketData(updatedTickets);
+
+            setToast({ message: "Billet supprimé avec succès !", type: "success" });
+        }
     };
 
     return (
