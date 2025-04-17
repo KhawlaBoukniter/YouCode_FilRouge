@@ -1,4 +1,5 @@
 import React from "react";
+import { CalendarIcon, ClockIcon, UsersIcon } from "lucide-react";
 
 export default function UpcomingEvents() {
     const events = [
@@ -40,9 +41,18 @@ export default function UpcomingEvents() {
                         <h3 className="text-gray-200 font-bold text-xl">{event.title}</h3>
                         <p className="text-[#374151] text-base mt-2">{event.description}</p>
                         <div className="flex items-center gap-4 mt-4 text-[#374151] text-sm">
-                            <span>{event.date}</span>
-                            <span>{event.time}</span>
-                            <span>{event.attendees} inscrits</span>
+                            <div className="flex items-center gap-1">
+                                <CalendarIcon size={16} className="text-[#374151]" />
+                                <span>{event.date}</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                                <ClockIcon size={16} className="text-[#374151]" />
+                                <span>{event.time}</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                                <UsersIcon size={16} className="text-[#374151]" />
+                                <span>{event.attendees} inscrits</span>
+                            </div>
                         </div>
                     </div>
                 ))}
