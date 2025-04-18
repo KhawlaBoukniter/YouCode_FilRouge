@@ -10,7 +10,7 @@ export default function StatsSection() {
     ];
 
     return (
-        <section className="py-28 px-4 md:px-20 bg-white">
+        <section className="pt-28 pb-20 px-4 md:px-20 bg-white">
             <div className="max-w-7xl mx-auto">
                 <h2 className="text-3xl font-playfair text-gray-800 text-center mb-14">
                     Statistiques générales
