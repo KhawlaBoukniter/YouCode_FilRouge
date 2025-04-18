@@ -18,6 +18,7 @@ import ArtistArtworks from './pages/ArtistArtworks';
 import CreateArtwork from './pages/CreateArtwork';
 import CreateEvent from './pages/CreateEvent';
 import Portfolio from './pages/Portfolio';
+import AdminDash from './pages/AdminDash';
 
 function App() {
   return (
@@ -44,6 +45,8 @@ function App() {
       <Route path='/artist/artworks' element={<ArtistArtworks />} />
       <Route path='/artist/events' element={<ArtistEvents />} />
       <Route path='/artist/:id/portfolio' element={<Portfolio />} />
+
+      <Route path='/admin-dash' element={<AdminDash />} />
 
     </Routes>
   );
