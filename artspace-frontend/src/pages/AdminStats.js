@@ -12,7 +12,6 @@ export default function AdminStats() {
                 <Sidebar />
 
                 <main className="flex-1 pl-16 p-8 md:py-20 py-10 space-y-10">
-
                     <TopEventsTable />
                     <ChartSection />
                 </main>

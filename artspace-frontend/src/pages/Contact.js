@@ -40,8 +40,8 @@ export default function Contact() {
                     </div>
 
                     <Footer />
-                </div>
-            </main>
-        </div>
+                </div >
+            </main >
+        </div >
     );
 }
