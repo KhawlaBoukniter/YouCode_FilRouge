@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function AuthLayout({ title, subtitle, activeTab = 'register', children }) {
     return (
         <div
-            className="flex flex-col md:flex-row w-full bg-cover bg-center relative from-black/60 to-transparent min-h-screen"
+            className="flex flex-col md:justify-around p-8 md:p-0 md:flex-row w-full bg-cover bg-center relative from-black/60 to-transparent min-h-screen"
             style={{ backgroundImage: `url(${museum})` }}
         >
             {/* overlay */}
@@ -15,9 +15,9 @@ export default function AuthLayout({ title, subtitle, activeTab = 'register', ch
             ></div>
 
             {/* left side */}
-            <div className="relative w-full md:w-3/5 md:h-full h-screen bg-cover inset-0 bg-center pl-20 overflow-x-hidden z-10">
+            <div className="hidden md:flex md:px-0 w-full md:mb-8 md:w-fit flex-col justify-center px-4 sm:px-10 z-10 min-h-screen">
                 <h1
-                    className="font-playfair text-7xl font-bold mt-52"
+                    className="font-playfair md:text-5xl md:w-fit md:mt-0 text-7xl font-bold mt-52"
                     style={{
                         background: "linear-gradient(90deg, #DEBB21, #FAFAFA)",
                         WebkitBackgroundClip: "text",
@@ -28,13 +28,13 @@ export default function AuthLayout({ title, subtitle, activeTab = 'register', ch
                 >
                     ArtSpace
                 </h1>
-                <p className="mt-8 font-playfair text-lg font-bold text-white">
+                <p className="md:text-sm mt-8 md:w-fit font-playfair text-lg font-bold text-white">
                     L'art à portée de clic, en immersion totale
                 </p>
             </div>
 
             {/* form side */}
-            <div className="w-full md:w-1/3 my-8 z-20 bg-[#bdb6a0e8] rounded-xl">
+            <div className="w-full md:w-5/12 my-8 z-20 bg-[#bdb6a0e8] rounded-xl">
                 <div className="bg-[#0707076c] w-full h-full px-8 py-4 flex flex-col justify-center rounded-xl">
                     {/* back button */}
                     <div className="flex items-center mb-4">

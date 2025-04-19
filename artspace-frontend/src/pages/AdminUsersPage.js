@@ -1,6 +1,6 @@
 import React from "react";
 import Footer from "../components/Footer";
-import AdminSidebar from "../components/admin/Sidebar";
+import Sidebar from "../components/admin/Sidebar";
 import { Card, CardHeader, CardTitle, CardContent } from "../components/ui/card";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "../components/ui/table";
 import Button from "../components/ui/button";
@@ -13,12 +13,12 @@ export default function AdminUsersPage() {
     ];
 
     return (
-        <div className="flex flex-col ml-64 min-h-screen ">
+        <div className="flex flex-col md:ml-64 ml-4">
 
-            <div className="flex flex-1 w-full">
-                <AdminSidebar />
+            <div className="flex-1">
+                <Sidebar />
 
-                <main className="flex-1 pl-16 p-8 py-20 space-y-10">
+                <main className="flex-1 pl-16 p-8 md:py-20 py-10 space-y-10">
                     <Card className="rounded-2xl shadow-md">
                         <CardHeader className="px-8 pb-0">
                             <CardTitle className="text-2xl font-playfair text-gray-800">

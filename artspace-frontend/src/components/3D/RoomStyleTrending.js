@@ -31,8 +31,8 @@ export default function RoomStyleTrending({ position = [0, 0, 0], controlsRef })
                 <MeshReflectorMaterial
                     blur={[400, 100]}
                     resolution={1024}
-                    mixBlur={2}
-                    mixStrength={20}
+                    mixBlur={8}
+                    mixStrength={10}
                     roughness={0.1}
                     depthScale={1.2}
                     minDepthThreshold={0.4}

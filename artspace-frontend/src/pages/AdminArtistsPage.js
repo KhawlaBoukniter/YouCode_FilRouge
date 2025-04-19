@@ -28,24 +28,24 @@ export default function AdminArtistsPage() {
     const totalPages = Math.ceil(filteredArtists.length / artistsPerPage);
 
     return (
-        <div className="flex flex-col ml-64 min-h-screen">
-            <div className="flex flex-1 w-full">
+        <div className="flex flex-col md:ml-64 ml-4">
+            <div className="flex-1">
                 <Sidebar />
 
-                <main className="flex-1 pl-16 p-8 py-20 space-y-10">
+                <main className="flex-1 pl-16 p-8 md:py-20 py-10 space-y-10">
                     <Card className="rounded-2xl shadow-md">
-                        <CardHeader className="px-8 pb-0 flex justify-between items-center">
+                        <CardHeader className="px-8 flex flex-col pb-0 gap-4 justify-between items-center">
                             <CardTitle className="text-2xl font-playfair text-gray-800">
                                 Validation des artistes
                             </CardTitle>
 
-                            <div className="flex gap-4">
+                            <div className="flex md:gap-4 gap-1">
                                 {["Tous", "En attente", "Validé", "Refusé"].map((status) => (
                                     <Button
                                         key={status}
                                         variant={filter === status ? "default" : "outline"}
                                         onClick={() => { setFilter(status); setCurrentPage(1); }}
-                                        className="rounded-full text-sm"
+                                        className="rounded-full text-sm py-0"
                                     >
                                         {status}
                                     </Button>

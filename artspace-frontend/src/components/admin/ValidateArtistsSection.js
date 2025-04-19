@@ -11,7 +11,7 @@ export default function ValidateArtistsSection() {
     ];
 
     return (
-        <section className="pb-20 px-4 md:px-20 bg-[#f8f7f4]">
+        <section className="md:py-20 py-10 px-4 bg-[#f8f7f4]">
             <div className="max-w-[1280px] mx-auto">
                 <Card className="rounded-2xl shadow-md">
                     <CardHeader className="px-8 pb-0 flex flex-row justify-between items-center">

@@ -9,11 +9,11 @@ import ManageEventsSection from "../components/admin/ManageEventsSection";
 
 export default function AdminDash() {
     return (
-        <div className="flex flex-col ml-64 bg-[#f8f7f4]">
-            <div className="flex-1 ">
+        <div className="flex flex-col md:ml-64 ml-4 bg-[#f8f7f4]">
+            <div className="flex-1">
                 <Sidebar />
 
-                <main className="flex-1 ">
+                <main className="flex-1">
                     <StatsSection />
                     <ManageUsersSection />
                     <ValidateArtistsSection />

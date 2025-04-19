@@ -23,11 +23,11 @@ export default function AdminEventsPage() {
     const totalPages = Math.ceil(events.length / eventsPerPage);
 
     return (
-        <div className="flex flex-col ml-64 min-h-screen ">
-            <div className="flex flex-1 w-full">
+        <div className="flex flex-col md:ml-64 ml-4">
+            <div className="flex-1">
                 <Sidebar />
 
-                <main className="flex-1 pl-16 p-8 py-20 space-y-10">
+                <main className="flex-1 pl-16 p-8 md:py-20 py-10 space-y-10">
                     <Card className="rounded-2xl shadow-md">
                         <CardHeader className="px-8 pb-0">
                             <CardTitle className="text-2xl font-playfair text-gray-800">

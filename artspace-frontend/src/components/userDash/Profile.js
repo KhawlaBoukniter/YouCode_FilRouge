@@ -54,15 +54,15 @@ export default function Profile() {
                                     variant="outline"
                                     className="h-10 bg-gray-100 rounded-lg text-gray-700"
                                 >
-                                    <PenSquareIcon className="w-4 h-4 mr-2" />
-                                    Modifier
+                                    <PenSquareIcon className="w-4 h-4 mr-2 md:mr-0" />
+                                    <span className="md:hidden">Modifier</span>
                                 </Button>
                                 <Button
                                     variant="outline"
                                     className="h-10 bg-red-50 text-red-600 rounded-lg"
                                 >
-                                    <LogOutIcon className="w-4 h-4 mr-2" />
-                                    Déconnexion
+                                    <LogOutIcon className="w-4 h-4 mr-2 md:mr-0" />
+                                    <span className="md:hidden">Déconnexion</span>
                                 </Button>
                             </div>
                         </div>

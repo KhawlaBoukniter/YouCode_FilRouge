@@ -44,7 +44,7 @@ export default function UserPurchaseHistoryPage() {
         <div className="flex flex-col min-h-screen bg-[#f8f7f4]">
             <Navbar />
 
-            <main className="flex-1 w-full py-24 px-5 md:px-20">
+            <main className="flex-1 w-full py-24 px-5 md:px-12">
                 <div className="max-w-[1280px] mx-auto space-y-8">
                     <h1 className="text-4xl font-playfair text-gray-800 mb-8">
                         Mon historique d'achats

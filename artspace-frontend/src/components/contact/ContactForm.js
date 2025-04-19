@@ -3,7 +3,7 @@ import { Card, CardContent } from "../ui/card";
 
 const ContactForm = () => {
     return (
-        <Card className="w-full md:max-w-xl max-h-full !bg-[#D6D5D5] rounded-3xl border-0 mx-10 my-5 opacity-70">
+        <Card className="w-full max-w-[95%] sm:max-w-lg lg:max-w-xl bg-[#D6D5D5] rounded-3xl border-0 mx-auto my-5 opacity-70">
             <CardContent className="p-10">
                 <form className="space-y-8">
                     <div className="space-y-4">
@@ -37,13 +37,12 @@ const ContactForm = () => {
                         />
                     </div>
 
-                    <div class="flex items-center justify-center">
+                    <div className="flex items-center justify-center">
                         <button
                             type="submit"
-                            className="w-44 h-14 rounded-full text-white text-lg font-playfair "
+                            className="w-full sm:w-44 h-14 rounded-full text-white text-lg font-playfair"
                             style={{
-                                background:
-                                    "linear-gradient(90deg, rgba(59,108,143,1) 0%, rgba(204,185,132,1) 100%)",
+                                background: "linear-gradient(90deg, rgba(59,108,143,1) 0%, rgba(204,185,132,1) 100%)",
                             }}
                         >
                             Send Message
@@ -52,8 +51,6 @@ const ContactForm = () => {
                 </form>
             </CardContent>
         </Card>
-
-
     );
 };
 

@@ -18,13 +18,13 @@ const Section = () => {
                     <div className="container px-20">
                         <div className="max-w-[768px]">
                             <FadeIn delay={0.3}>
-                                <h1 className="text-6xl text-white font-normal [font-family:'Cormorant_Garamond',Helvetica] leading-[60px]">
+                                <h1 className="text-6xl text-white font-normal font-garamond leading-[60px]">
                                     Where Art Meets Innovation
                                 </h1>
                             </FadeIn>
 
                             <FadeIn delay={0.5}>
-                                <p className="mt-8 text-xl text-white font-normal [font-family:'Cormorant_Garamond',Helvetica] leading-5 max-w-[683px]">
+                                <p className="mt-8 text-xl text-white font-normal font-garamond leading-5 max-w-[683px]">
                                     Experience art like never before in our revolutionary 3D virtual
                                     museum, where tradition meets technology.
                                 </p>

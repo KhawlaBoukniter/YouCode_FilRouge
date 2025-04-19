@@ -110,6 +110,7 @@ export default function ArtworkForm() {
                     <div className="space-y-2">
                         <label className="text-sm text-gray-600 font-cormorant">Catégorie</label>
                         <Select value={formData.category} onChange={(e) => handleChange("category", e.target.value)} >
+                            <SelectOption value="">Choisie une catégorie</SelectOption>
                             <SelectOption value="peinture">Peinture</SelectOption>
                             <SelectOption value="illustration">Illustration</SelectOption>
                             <SelectOption value="photographie">Photographie</SelectOption>

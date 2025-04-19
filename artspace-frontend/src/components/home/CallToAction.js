@@ -26,7 +26,7 @@ const CallToAction = () => {
                         <button className="bg-gray-900 text-[#d3bb75] rounded-full h-[44px] px-6 font-garamond font-bold text-sm sm:text-base transition hover:opacity-90 w-full sm:w-auto max-w-[280px]">
                             Start Free Trial
                         </button>
-                        <button className="border border-black border-[1.5px] rounded-full h-[44px] px-6 text-black font-playfair text-sm sm:text-base hover:bg-black hover:text-white hover:shadow-sm transition w-full sm:w-auto max-w-[280px]">
+                        <button className="border border-black rounded-full h-[44px] px-6 text-black font-playfair text-sm sm:text-base hover:bg-black hover:text-white hover:shadow-sm transition w-full sm:w-auto max-w-[280px]">
                             Learn More
                         </button>
                     </div>

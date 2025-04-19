@@ -33,11 +33,11 @@ export default function Tickets() {
             </CardHeader>
 
             <CardContent className="p-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4">
                     {tickets.map((ticket) => (
                         <div
                             key={ticket.id}
-                            className="flex flex-col justify-between bg-gray-100 rounded-lg p-6 hover:shadow transition"
+                            className="flex flex-col justify-between bg-gray-100 rounded-lg p-6 md:p-4 hover:shadow transition"
                         >
                             <div className="space-y-2">
                                 <h4 className="text-xl font-playfair text-gray-800">{ticket.type}</h4>

@@ -1,6 +1,14 @@
 import React from "react";
 import { Card, CardContent } from "../ui/card";
-import { MailIcon, MapPinIcon, InstagramIcon, TwitterIcon, FacebookIcon, LinkedinIcon, HashIcon } from "lucide-react";
+import {
+    MailIcon,
+    MapPinIcon,
+    InstagramIcon,
+    TwitterIcon,
+    FacebookIcon,
+    LinkedinIcon,
+    HashIcon,
+} from "lucide-react";
 import FadeIn from "../ui/FadeIn";
 
 const contactCards = [
@@ -29,12 +37,11 @@ const contactCards = [
 
 const ContactInfoCards = () => {
     return (
-        <div className="w-full md:max-w-xl space-y-6 mx-10 my-5">
+        <div className="w-full max-w-[95%] sm:max-w-lg lg:max-w-xl space-y-6 mx-auto my-5">
             {contactCards.map((card, i) => (
-                <FadeIn delay={0.4 * i}>
+                <FadeIn key={card.id} delay={0.4 * i}>
                     <Card
-                        key={card.id}
-                        className={`!bg-[#D6D5D5] rounded-3xl border-0 opacity-70 ${card.socialIcons ? "h-32" : "h-36"
+                        className={`bg-[#D6D5D5] !h-[8.25rem] !my-auto rounded-3xl border-0 opacity-70 ${card.socialIcons ? "h-32" : "h-36"
                             }`}
                     >
                         <CardContent className="p-8 flex items-start">
