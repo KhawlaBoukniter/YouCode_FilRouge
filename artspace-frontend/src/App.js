@@ -36,21 +36,21 @@ function App() {
       <Route path='/register' element={<Register />} /> {/* à revoir */}
       <Route path='/login' element={<Login />} /> {/* à revoir */}
       <Route path='/about' element={<About />} />
-      <Route path='/gallery' element={<Gallery />} />
+      <Route path='/gallery' element={<Gallery />} /> {/* done */}
       <Route path='/contact' element={<Contact />} />
 
       <Route path='/user-dash' element={<UserDash />} /> {/* done */}
       <Route path='/user/artworks/saved' element={<UserFavoriteArtworksPage />} /> {/* done */}
       <Route path='/user/artworks/purchased' element={<UserPurchaseHistoryPage />} /> {/* done */}
-      <Route path='/user/edit' element={<UserEdit />} /> {/* done */}
+      <Route path='/user/edit' element={<UserEdit />} /> {/* à revoir */}
 
-      <Route path='/artworks/:id' element={<Artwork />} />
+      <Route path='/artworks/:id' element={<Artwork />} /> {/* done */}
       <Route path='/artworks/create' element={<CreateArtwork />} />
       <Route path='/artworks/edit/:id' element={<CreateArtwork />} />
 
       <Route path='/events/:id' element={<EventDetails />} />
       <Route path='/events/create' element={<CreateEvent />} />
-      <Route path='/events' element={<AllEvents />} />
+      <Route path='/events' element={<AllEvents />} /> {/* done */}
 
       <Route path='/artist-dash' element={<ArtistDash />} />
       <Route path='/artist/artworks' element={<ArtistArtworks />} />

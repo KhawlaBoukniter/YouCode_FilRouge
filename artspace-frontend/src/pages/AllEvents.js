@@ -8,31 +8,27 @@ import api from "../api";
 export default function AllEvents() {
     const [allEvents, setAllEvents] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const eventsPerPage = 6;
 
     useEffect(() => {
         const fetchEvents = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const res = await api.get("/all-events", {
+                const res = await api.get(`/all-events?page=${currentPage}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                setAllEvents(res.data.events?.data || res.data.events || []);
+                setAllEvents(res.data.events);
             } catch (err) {
                 console.error("Erreur lors du chargement des événements", err);
             }
         };
 
         fetchEvents();
-    }, []);
+    }, [currentPage]);
 
-    const indexOfLast = currentPage * eventsPerPage;
-    const indexOfFirst = indexOfLast - eventsPerPage;
-    const currentEvents = allEvents.slice(indexOfFirst, indexOfLast);
-
-    const totalPages = Math.ceil(allEvents.length / eventsPerPage);
+    const events = allEvents?.data || [];
+    const totalPages = allEvents?.last_page || 1;
 
     return (
         <div className="flex flex-col min-h-screen bg-[#f8f7f4]">
@@ -52,7 +48,7 @@ export default function AllEvents() {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {currentEvents.map(event => (
+                        {events.map(event => (
                             <Card key={event.id} className="overflow-hidden rounded-xl shadow-md">
                                 <div
                                     className="h-56 bg-cover bg-center"
