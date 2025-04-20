@@ -33,16 +33,16 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/museum/:roomId" element={<Museum3D />} />
-      <Route path='/register' element={<Register />} />
-      <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} /> {/* à revoir */}
+      <Route path='/login' element={<Login />} /> {/* à revoir */}
       <Route path='/about' element={<About />} />
       <Route path='/gallery' element={<Gallery />} />
       <Route path='/contact' element={<Contact />} />
 
-      <Route path='/user-dash' element={<UserDash />} />
-      <Route path='/user/artworks/saved' element={<UserFavoriteArtworksPage />} />
-      <Route path='/user/artworks/purchased' element={<UserPurchaseHistoryPage />} />
-      <Route path='/user/edit' element={<UserEdit />} />
+      <Route path='/user-dash' element={<UserDash />} /> {/* done */}
+      <Route path='/user/artworks/saved' element={<UserFavoriteArtworksPage />} /> {/* done */}
+      <Route path='/user/artworks/purchased' element={<UserPurchaseHistoryPage />} /> {/* done */}
+      <Route path='/user/edit' element={<UserEdit />} /> {/* done */}
 
       <Route path='/artworks/:id' element={<Artwork />} />
       <Route path='/artworks/create' element={<CreateArtwork />} />

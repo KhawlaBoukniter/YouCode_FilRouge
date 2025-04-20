@@ -3,7 +3,6 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import HeroSection from '../components/gallery/HeroSection';
 import ArtPieceSection from '../components/gallery/ArtPieceSection';
-import FeaturedCollection from '../components/gallery/FeaturedCollection';
 import api from "../api";
 
 export default function Gallery() {
@@ -51,7 +50,6 @@ export default function Gallery() {
                 ))}
             </div>
             <ArtPieceSection artworks={filteredArtworks} />
-            <FeaturedCollection />
             <Footer />
         </main>
     );
