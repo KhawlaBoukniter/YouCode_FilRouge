@@ -27,27 +27,26 @@ export default function UpcomingEventsSection() {
 
                 <div className="max-w-[896px] mx-auto space-y-6">
                     {upcomingEvents.map((event) => (
-                        <Card
-                            key={event.id}
-                            className="rounded-xl border border-gray-100"
-                        >
-                            <CardContent className="p-6">
-                                <div className="flex justify-between items-start">
-                                    <div>
-                                        <h3 className="text-xl font-playfair text-gray-800 leading-5 whitespace-nowrap">
-                                            {event.title}
-                                        </h3>
-                                        <p className="mt-3 text-base font-playfair text-gray-600 leading-4">
-                                            {event.dateLocation}
-                                        </p>
-                                    </div>
+                        <a href={`/events/${event.id}`}>
+                            <Card key={event.id} className="rounded-xl border border-gray-100 hover:shadow-md transition">
+                                <CardContent className="p-6">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <h3 className="text-xl font-playfair text-gray-800 leading-5 whitespace-nowrap">
+                                                {event.title}
+                                            </h3>
+                                            <p className="mt-3 text-base font-playfair text-gray-600 leading-4">
+                                                {event.dateLocation}
+                                            </p>
+                                        </div>
 
-                                    <Badge className="bg-emerald-100 text-emerald-700 rounded-full px-4 py-1 font-playfair text-sm font-normal">
-                                        {event.status}
-                                    </Badge>
-                                </div>
-                            </CardContent>
-                        </Card>
+                                        <Badge className="bg-emerald-100 text-emerald-700 rounded-full px-4 py-1 font-playfair text-sm font-normal">
+                                            {event.status}
+                                        </Badge>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </a>
                     ))}
                 </div>
             </div>

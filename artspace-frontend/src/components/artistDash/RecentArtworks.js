@@ -41,9 +41,9 @@ export default function RecentArtworks() {
                 <h2 className="text-2xl font-playfair text-gray-800">
                     Vos Œuvres Récentes
                 </h2>
-                <button className="text-[#3a6b8f] font-playfair hover:underline">
+                <a href="/artist/artworks" className="text-[#3a6b8f] font-playfair hover:underline">
                     Voir tout
-                </button>
+                </a>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -83,12 +83,12 @@ export default function RecentArtworks() {
                                 </div>
 
                                 <div className="flex items-center gap-2">
-                                    <button className="hover:text-blue-700">
+                                    <a href={`/artworks/edit/${artwork.id}`} className="hover:text-blue-700">
                                         <Edit className="w-4 h-4" />
-                                    </button>
-                                    <button className="hover:text-red-500">
+                                    </a>
+                                    <a href={`/artworks/delete/${artwork.id}`} className="hover:text-red-500">
                                         <Trash2 className="w-4 h-4" />
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

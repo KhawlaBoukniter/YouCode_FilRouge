@@ -7,6 +7,8 @@ import { SearchIcon, MenuIcon, XIcon } from "lucide-react";
 const navItems = [
     { name: "Accueil", path: "/" },
     { name: "Galerie", path: "/gallery" },
+    { name: "Evenements", path: "/events" },
+    { name: "Musée 3D", path: "/museum/trending" },
     { name: "À propos", path: "/about" },
     { name: "Contact", path: "/contact" },
 ];

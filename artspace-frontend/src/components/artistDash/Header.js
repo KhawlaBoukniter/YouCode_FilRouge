@@ -11,22 +11,28 @@ export default function Header() {
                     Gérez vos œuvres et événements
                 </p>
             </div>
-            <button className="mt-4 md:mt-0 flex items-center gap-2 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
-                <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 4v16m8-8H4"
-                    />
-                </svg>
-                Nouvelle Œuvre
-            </button>
+            <div className="flex flex-wrap gap-4">
+                <a href="/artist/portfolio">
+                    <button className="flex items-center gap-2 border border-gray-800 text-gray-800 px-5 py-2 rounded-lg hover:bg-gray-100 transition">
+                        🎨 Voir mon portfolio
+                    </button>
+                </a>
+
+                <a href="/artworks/create">
+                    <button className="flex items-center gap-2 bg-black text-white px-5 py-2 rounded-lg hover:bg-gray-800 transition">
+                        <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            viewBox="0 0 24 24"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Nouvelle Œuvre
+                    </button>
+                </a>
+            </div>
         </div>
     );
 }

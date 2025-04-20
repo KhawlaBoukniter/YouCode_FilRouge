@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Input } from "../ui/input";
 import Tags from "../ui/tags";
 import { Textarea } from "../ui/textarea";
@@ -7,7 +7,7 @@ import Button from "../ui/button";
 import ImageUpload from "../ui/ImageUpload";
 import Toast from "../ui/toast";
 
-export default function ArtworkForm() {
+export default function ArtworkForm({ mode = "create", initialData = null }) {
     const dimensionFields = [
         { id: "width", label: "Largeur" },
         { id: "height", label: "Hauteur" },
@@ -31,6 +31,12 @@ export default function ArtworkForm() {
     const [errors, setErrors] = useState({});
 
     const imageUploadRef = useRef();
+
+    useEffect(() => {
+        if (initialData) {
+            setFormData(initialData);
+        }
+    }, [initialData]);
 
     const handleChange = (field, value) => {
         setFormData({ ...formData, [field]: value });
@@ -68,25 +74,33 @@ export default function ArtworkForm() {
             setErrors(validationErr);
         } else {
             setErrors({});
-            console.log("Form data submitted:", formData);
+            console.log(mode === "edit" ? "Updating" : "Submitting", formData);
 
-            setToast({ message: "Œuvre enregistrée avec succès !", type: "success" });
-
-            if (imageUploadRef.current) {
-                imageUploadRef.current.reset();
-            }
-
-            setFormData({
-                title: "",
-                description: "",
-                category: "",
-                width: "",
-                height: "",
-                depth: "",
-                year: "",
-                tags: [],
-                image: null,
+            setToast({
+                message:
+                    mode === "edit"
+                        ? "Œuvre mise à jour avec succès !"
+                        : "Œuvre enregistrée avec succès !",
+                type: "success",
             });
+
+            if (mode === "create") {
+                setFormData({
+                    title: "",
+                    description: "",
+                    category: "",
+                    width: "",
+                    height: "",
+                    depth: "",
+                    year: "",
+                    tags: [],
+                    image: null,
+                });
+
+                if (imageUploadRef.current) {
+                    imageUploadRef.current.reset();
+                }
+            }
         }
     };
 
@@ -164,7 +178,7 @@ export default function ArtworkForm() {
                     Annuler
                 </Button>
                 <Button className="h-12 px-8 bg-[#3a6b8f] text-white">
-                    Soumettre l'œuvre
+                    {mode === "edit" ? "Mettre à jour" : "Soumettre l'œuvre"}
                 </Button>
             </div>
 

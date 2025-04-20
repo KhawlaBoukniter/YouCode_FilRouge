@@ -52,12 +52,23 @@ export default function AdminEventsPage() {
                                             <TableCell className="font-playfair text-gray-600">{event.date}</TableCell>
                                             <TableCell className="font-playfair text-gray-600">{event.status}</TableCell>
                                             <TableCell className="text-center flex justify-center gap-2 py-4">
-                                                <Button size="sm" className="bg-[#3a6b8f] hover:bg-[#345c78] text-white font-playfair rounded-full px-4">
-                                                    Valider
-                                                </Button>
-                                                <Button size="sm" variant="outline" className="border-gray-400 text-gray-600 hover:bg-gray-100 font-playfair rounded-full px-4">
-                                                    Archiver
-                                                </Button>
+                                                <a href={`/admin/events/${event.id}/validate`}>
+                                                    <Button
+                                                        size="sm"
+                                                        className="bg-[#3a6b8f] hover:bg-[#345c78] text-white font-playfair rounded-full px-4"
+                                                    >
+                                                        Valider
+                                                    </Button>
+                                                </a>
+                                                <a href={`/admin/events/${event.id}/archive`}>
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline"
+                                                        className="border-gray-400 text-gray-600 hover:bg-gray-100 font-playfair rounded-full px-4"
+                                                    >
+                                                        Archiver
+                                                    </Button>
+                                                </a>
                                             </TableCell>
                                         </TableRow>
                                     ))}

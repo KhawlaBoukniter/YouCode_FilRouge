@@ -37,7 +37,7 @@ export default function AuthLayout({ title, subtitle, activeTab = 'register', ch
             <div className="w-full md:w-5/12 my-8 z-20 bg-[#bdb6a0e8] rounded-xl">
                 <div className="bg-[#0707076c] w-full h-full px-8 py-4 flex flex-col justify-center rounded-xl">
                     {/* back button */}
-                    <div className="flex items-center mb-4">
+                    <a href="/" className="flex items-center mb-4">
                         <svg width="30" height="30" fill="none" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M11.48 25.585L6.99998 21.105L11.48 16.625"
@@ -62,7 +62,7 @@ export default function AuthLayout({ title, subtitle, activeTab = 'register', ch
                             />
                         </svg>
                         <span className="ml-4 font-garamond text-[#d3bb75] text-l">Retour à l’accueil</span>
-                    </div>
+                    </a>
 
                     <div className="w-full mx-auto">
                         <div className="text-center mb-4">

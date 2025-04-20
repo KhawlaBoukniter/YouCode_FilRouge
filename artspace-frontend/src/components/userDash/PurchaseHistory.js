@@ -37,9 +37,9 @@ export default function PurchaseHistory() {
                 <CardTitle className="text-2xl font-playfair text-gray-800">
                     Purchase History
                 </CardTitle>
-                <Button variant="link" className="text-[#3a6b8f] font-playfair text-base p-0">
+                <a href="/user/artworks/purshased" className="text-[#3a6b8f] font-playfair text-base hover:underline">
                     View All
-                </Button>
+                </a>
             </CardHeader>
 
             <CardContent className="p-8 overflow-x-auto">
@@ -61,7 +61,9 @@ export default function PurchaseHistory() {
                                             className="w-12 h-12 rounded bg-cover bg-center"
                                             style={{ backgroundImage: `url(${purchase.image})` }}
                                         />
-                                        <span className="font-playfair text-gray-800">{purchase.artwork}</span>
+                                        <a href={`/artworks/${purchase.id}`} className="font-playfair text-[#3a6b8f] hover:underline">
+                                            {purchase.artwork}
+                                        </a>
                                     </div>
                                 </TableCell>
                                 <TableCell className="font-playfair text-gray-600">{purchase.artist}</TableCell>

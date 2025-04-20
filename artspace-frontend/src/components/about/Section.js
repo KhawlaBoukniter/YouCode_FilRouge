@@ -32,16 +32,20 @@ const Section = () => {
 
                             <FadeIn delay={0.7}>
                                 <div className="mt-10 flex space-x-4">
-                                    <Button className="h-[52px] w-44 rounded-full bg-white !text-black hover:bg-white/90">
-                                        Take Virtual Tour
-                                    </Button>
+                                    <a href="/museum/trending">
+                                        <Button className="h-[52px] w-44 rounded-full bg-white !text-black hover:bg-white/90">
+                                            Take Virtual Tour
+                                        </Button>
+                                    </a>
 
-                                    <Button
-                                        variant="outline"
-                                        className="h-[52px] w-[126px] rounded-full border-2 border-white text-black hover:bg-white/10 hover:text-white"
-                                    >
-                                        Learn More
-                                    </Button>
+                                    <a href="/about">
+                                        <Button
+                                            variant="outline"
+                                            className="h-[52px] w-[126px] rounded-full border-2 border-white text-black hover:bg-white/10 hover:text-white"
+                                        >
+                                            Learn More
+                                        </Button>
+                                    </a>
                                 </div>
                             </FadeIn>
                         </div>

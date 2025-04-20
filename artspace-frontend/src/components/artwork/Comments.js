@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
+import { TrashIcon } from "lucide-react";
+import Toast from "../ui/toast";
 
 export default function Comments() {
-    const comments = [
+    const [toast, setToast] = useState(null);
+
+    const [comments, setComments] = useState([
         {
             id: 1,
             user: "Amélie Dupont",
@@ -22,7 +26,16 @@ export default function Comments() {
             avatar: "https://randomuser.me/api/portraits/women/68.jpg",
             text: "Une vraie réussite artistique, félicitations à l'artiste !",
         },
-    ];
+    ]);
+
+    const handleDelete = (id) => {
+        // eslint-disable-next-line no-restricted-globals
+        const confirmed = confirm("Voulez-vous vraiment supprimer ce commentaire ?");
+        if (confirmed) {
+            setComments(comments.filter(comment => comment.id !== id));
+            setToast({ message: "Commentaire supprimé avec succès", type: "success" });
+        }
+    };
 
     return (
         <Card className="rounded-2xl shadow-md">
@@ -36,20 +49,36 @@ export default function Comments() {
                 {comments.map((comment) => (
                     <div
                         key={comment.id}
-                        className="flex items-start gap-4 bg-gray-100 rounded-lg p-4 hover:shadow transition"
+                        className="flex items-start gap-4 bg-gray-100 rounded-lg p-4 hover:shadow transition justify-between"
                     >
-                        <Avatar className="!h-12 w-12 self-center">
-                            <AvatarImage src={comment.avatar} alt={comment.user} />
+                        <div className="flex gap-4">
+                            <Avatar className="!h-12 w-12 self-center">
+                                <AvatarImage src={comment.avatar} alt={comment.user} />
+                            </Avatar>
 
-                        </Avatar>
-
-                        <div>
-                            <h4 className="font-playfair text-lg text-gray-800">{comment.user}</h4>
-                            <p className="text-gray-600 mt-1 font-playfair">{comment.text}</p>
+                            <div>
+                                <h4 className="font-playfair text-lg text-gray-800">{comment.user}</h4>
+                                <p className="text-gray-600 mt-1 font-playfair">{comment.text}</p>
+                            </div>
                         </div>
+
+                        <button
+                            onClick={() => handleDelete(comment.id)}
+                            className="text-gray-400 hover:text-red-500 transition"
+                            title="Supprimer"
+                        >
+                            <TrashIcon className="h-5 w-5" />
+                        </button>
                     </div>
                 ))}
             </CardContent>
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </Card>
     );
 }

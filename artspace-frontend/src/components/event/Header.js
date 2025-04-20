@@ -38,9 +38,11 @@ export default function Header() {
                     </div>
 
                     <div className="mt-6">
-                        <Button className="h-12 w-full md:w-auto bg-[#3a6b8f] text-white rounded-lg font-playfair hover:bg-[#345c78] transition">
-                            Réserver un ticket
-                        </Button>
+                        <a href="#tickets">
+                            <Button className="h-12 w-full md:w-auto bg-[#3a6b8f] text-white rounded-lg font-playfair hover:bg-[#345c78] transition">
+                                Réserver un ticket
+                            </Button>
+                        </a>
                     </div>
                 </div>
             </CardContent>

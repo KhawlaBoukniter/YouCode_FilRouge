@@ -18,12 +18,9 @@ export default function ValidateEventsSection() {
                         <CardTitle className="text-2xl font-playfair text-gray-800">
                             Validation des événements
                         </CardTitle>
-                        <Button
-                            variant="link"
-                            className="text-[#3a6b8f] font-playfair text-base p-0"
-                        >
+                        <a href="/admin/events" className="text-[#3a6b8f] font-playfair text-base hover:underline">
                             Voir tout
-                        </Button>
+                        </a>
                     </CardHeader>
 
                     <CardContent className="p-8 overflow-x-auto">
@@ -44,19 +41,23 @@ export default function ValidateEventsSection() {
                                         <TableCell className="font-playfair text-gray-600">{event.date}</TableCell>
                                         <TableCell className="font-playfair text-gray-600">{event.organizer}</TableCell>
                                         <TableCell className="text-center flex justify-center gap-4 py-4">
-                                            <Button
-                                                size="sm"
-                                                className="bg-emerald-500 hover:bg-emerald-600 text-white font-playfair rounded-full px-4"
-                                            >
-                                                Valider
-                                            </Button>
-                                            <Button
-                                                size="sm"
-                                                variant="outline"
-                                                className="border-red-500 text-red-500 hover:bg-red-50 font-playfair rounded-full px-4"
-                                            >
-                                                Refuser
-                                            </Button>
+                                            <a href={`/admin/events/${event.id}/validate`}>
+                                                <Button
+                                                    size="sm"
+                                                    className="bg-emerald-500 hover:bg-emerald-600 text-white font-playfair rounded-full px-4"
+                                                >
+                                                    Valider
+                                                </Button>
+                                            </a>
+                                            <a href={`/admin/events/${event.id}/refuse`}>
+                                                <Button
+                                                    size="sm"
+                                                    variant="outline"
+                                                    className="border-red-500 text-red-500 hover:bg-red-50 font-playfair rounded-full px-4"
+                                                >
+                                                    Refuser
+                                                </Button>
+                                            </a>
                                         </TableCell>
                                     </TableRow>
                                 ))}

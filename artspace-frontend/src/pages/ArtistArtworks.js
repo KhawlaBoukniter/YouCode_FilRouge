@@ -73,12 +73,12 @@ export default function ArtistArtworks() {
                                         </div>
 
                                         <div className="flex items-center gap-2">
-                                            <button className="hover:text-blue-700">
+                                            <a href={`/artworks/edit/${artwork.id}`} className="hover:text-blue-700">
                                                 <Edit className="w-4 h-4" />
-                                            </button>
-                                            <button className="hover:text-red-500">
+                                            </a>
+                                            <a href={`/artworks/delete/${artwork.id}`} className="hover:text-red-500">
                                                 <Trash2 className="w-4 h-4" />
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

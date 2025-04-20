@@ -9,7 +9,6 @@ export default function Contact() {
         <div>
             <Navbar />
             <main className="flex w-full flex-col relative min-h-screen bg-[#706F68] overflow-hidden pt-16">
-                {/* Background Image */}
                 <img
                     src="../assets/images/cta-bg.png"
                     alt="background"
@@ -17,7 +16,6 @@ export default function Contact() {
                 />
 
                 <div className="relative z-10">
-                    {/* Header */}
                     <div className="my-10 mx-auto px-4 text-center">
                         <h2
                             className="font-playfair text-3xl sm:text-4xl font-normal"
@@ -36,7 +34,6 @@ export default function Contact() {
                         </p>
                     </div>
 
-                    {/* Form + Info */}
                     <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-10 px-4 sm:px-6 lg:px-10 my-10">
                         <ContactForm />
                         <ContactInfoCards />

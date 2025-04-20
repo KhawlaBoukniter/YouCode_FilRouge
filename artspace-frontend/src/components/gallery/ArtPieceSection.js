@@ -4,73 +4,7 @@ import Button from "../ui/button";
 import { Card, CardContent } from "../ui/card"
 import FadeIn from "../ui/FadeIn";
 
-const ArtPieceSection = () => {
-    const allArtworks = [
-        {
-            id: 1,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-1.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-        {
-            id: 2,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-        {
-            id: 3,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-2.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-        {
-            id: 4,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-3.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-        {
-            id: 5,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-4.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-        {
-            id: 6,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-5.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-        {
-            id: 5,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-4.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-        {
-            id: 6,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-5.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-    ];
+const ArtPieceSection = ({ artworks }) => {
 
     const [visibleCount, setVisibleCount] = useState(6);
 
@@ -78,13 +12,13 @@ const ArtPieceSection = () => {
         setVisibleCount((prev) => prev + 3);
     };
 
-    const artworks = allArtworks.slice(0, visibleCount);
+    const visibleArtworks = artworks.slice(0, visibleCount);
 
     return (
         <section className="py-16 flex flex-col items-center mx-8">
             <div className="w-full max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {artworks.map((artwork, i) => (
+                    {visibleArtworks.map((artwork, i) => (
                         <FadeIn delay={0.2 * i} key={artwork.id}>
                             <Card
                                 className="rounded-lg overflow-hidden border-0 shadow-none group transform transition duration-300 hover:scale-105 hover:shadow-[0px_15px_20px_#00000030]"
@@ -98,7 +32,11 @@ const ArtPieceSection = () => {
                                     {artwork.featured && (
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                             <div className="absolute bottom-0 w-full px-6 py-5">
-                                                <h3 className="text-white text-xl font-garamond">{artwork.title}</h3>
+                                                <a href={`/artworks/${artwork.id}`}>
+                                                    <h3 className="text-white text-xl font-garamond hover:underline">
+                                                        {artwork.title}
+                                                    </h3>
+                                                </a>
                                                 <p className="text-gray-300 text-sm font-garamond">{artwork.artist}</p>
                                                 <div className="flex items-center justify-between mt-4">
                                                     <span className="text-white text-xl font-garamond">{artwork.price}</span>
@@ -110,9 +48,11 @@ const ArtPieceSection = () => {
                                                         >
                                                             <HeartIcon className="w-4 h-4 text-white" />
                                                         </button>
-                                                        <Button className="h-9 rounded-full bg-white hover:bg-white/90 !text-black">
-                                                            <span className="font-garamond text-sm">Acheter</span>
-                                                        </Button>
+                                                        <a href={`/artworks/${artwork.id}`}>
+                                                            <Button className="h-9 rounded-full bg-white hover:bg-white/90 !text-black">
+                                                                <span className="font-garamond text-sm">Acheter</span>
+                                                            </Button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -125,7 +65,7 @@ const ArtPieceSection = () => {
                 </div>
             </div>
 
-            {visibleCount < allArtworks.length && (
+            {visibleCount < artworks.length && (
                 <Button
                     variant="outline"
                     onClick={handleLoadMore}

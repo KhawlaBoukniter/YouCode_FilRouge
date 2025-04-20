@@ -18,12 +18,9 @@ export default function ManageEventsSection() {
                         <CardTitle className="text-2xl font-playfair text-gray-800">
                             Gestion des événements
                         </CardTitle>
-                        <Button
-                            variant="link"
-                            className="text-[#3a6b8f] font-playfair text-base p-0"
-                        >
+                        <a href="/events/create" className="text-[#3a6b8f] font-playfair text-base hover:underline">
                             Créer un événement
-                        </Button>
+                        </a>
                     </CardHeader>
 
                     <CardContent className="p-8 overflow-x-auto">
@@ -44,19 +41,23 @@ export default function ManageEventsSection() {
                                         <TableCell className="font-playfair text-gray-600">{event.date}</TableCell>
                                         <TableCell className="font-playfair text-gray-600">{event.status}</TableCell>
                                         <TableCell className="text-center flex justify-center gap-4 py-4">
-                                            <Button
-                                                size="sm"
-                                                className="bg-[#3a6b8f] hover:bg-[#345c78] text-white font-playfair rounded-full px-4"
-                                            >
-                                                Éditer
-                                            </Button>
-                                            <Button
-                                                size="sm"
-                                                variant="outline"
-                                                className="border-red-500 text-red-500 hover:bg-red-50 font-playfair rounded-full px-4"
-                                            >
-                                                Supprimer
-                                            </Button>
+                                            <a href={`/events/${event.id}/edit`}>
+                                                <Button
+                                                    size="sm"
+                                                    className="bg-[#3a6b8f] hover:bg-[#345c78] text-white font-playfair rounded-full px-4"
+                                                >
+                                                    Éditer
+                                                </Button>
+                                            </a>
+                                            <a href={`/events/${event.id}/delete`}>
+                                                <Button
+                                                    size="sm"
+                                                    variant="outline"
+                                                    className="border-red-500 text-red-500 hover:bg-red-50 font-playfair rounded-full px-4"
+                                                >
+                                                    Supprimer
+                                                </Button>
+                                            </a>
                                         </TableCell>
                                     </TableRow>
                                 ))}

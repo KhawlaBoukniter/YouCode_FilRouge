@@ -31,9 +31,9 @@ export default function FavoriteArtworks() {
                 <CardTitle className="text-2xl font-playfair text-gray-800">
                     Favorite Artworks
                 </CardTitle>
-                <Button variant="link" className="text-[#3a6b8f] font-playfair text-base p-0">
+                <a href="/user/artworks/saved" className="text-[#3a6b8f] font-playfair text-base hover:underline">
                     View All
-                </Button>
+                </a>
             </CardHeader>
 
             <CardContent className="p-8">
@@ -57,14 +57,15 @@ export default function FavoriteArtworks() {
                                 </div>
 
                                 <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                                    <Button
-                                        variant="outline"
-                                        size="icon"
-                                        className="!bg-transparent text-gray-300 hover:text-white transform transition duration-300 hover:scale-105 border-none p-2"
-                                        onClick={() => console.log(`Voir détails de l'œuvre ID ${artwork.id}`)}
-                                    >
-                                        <EyeIcon className="h-5 w-5" />
-                                    </Button>
+                                    <a href={`/artworks/${artwork.id}`}>
+                                        <Button
+                                            variant="outline"
+                                            size="icon"
+                                            className="!bg-transparent text-gray-300 hover:text-white transform transition duration-300 hover:scale-105 border-none p-2"
+                                        >
+                                            <EyeIcon className="h-5 w-5" />
+                                        </Button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

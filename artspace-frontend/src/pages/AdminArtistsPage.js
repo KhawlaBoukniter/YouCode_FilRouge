@@ -71,19 +71,23 @@ export default function AdminArtistsPage() {
                                             <TableCell className="font-playfair text-gray-600">{artist.email}</TableCell>
                                             <TableCell className="font-playfair text-gray-600">{artist.status}</TableCell>
                                             <TableCell className="text-center flex justify-center gap-2 py-4">
-                                                <Button
-                                                    size="sm"
-                                                    className="bg-[#3a6b8f] hover:bg-[#345c78] text-white font-playfair rounded-full px-4"
-                                                >
-                                                    Valider
-                                                </Button>
-                                                <Button
-                                                    size="sm"
-                                                    variant="outline"
-                                                    className="border-red-500 text-red-500 hover:bg-red-50 font-playfair rounded-full px-4"
-                                                >
-                                                    Refuser
-                                                </Button>
+                                                <a href={`/admin/artists/${artist.id}/validate`}>
+                                                    <Button
+                                                        size="sm"
+                                                        className="bg-[#3a6b8f] hover:bg-[#345c78] text-white font-playfair rounded-full px-4"
+                                                    >
+                                                        Valider
+                                                    </Button>
+                                                </a>
+                                                <a href={`/admin/artists/${artist.id}/refuse`}>
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline"
+                                                        className="border-red-500 text-red-500 hover:bg-red-50 font-playfair rounded-full px-4"
+                                                    >
+                                                        Refuser
+                                                    </Button>
+                                                </a>
                                             </TableCell>
                                         </TableRow>
                                     ))}

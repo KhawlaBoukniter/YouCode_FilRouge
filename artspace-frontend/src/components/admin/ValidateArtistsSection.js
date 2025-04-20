@@ -18,12 +18,9 @@ export default function ValidateArtistsSection() {
                         <CardTitle className="text-2xl font-playfair text-gray-800">
                             Validation des artistes
                         </CardTitle>
-                        <Button
-                            variant="link"
-                            className="text-[#3a6b8f] font-playfair text-base p-0"
-                        >
+                        <a href="/admin/artists" className="text-[#3a6b8f] font-playfair text-base hover:underline">
                             Voir tout
-                        </Button>
+                        </a>
                     </CardHeader>
 
                     <CardContent className="p-8 overflow-x-auto">
@@ -42,23 +39,32 @@ export default function ValidateArtistsSection() {
                                     <TableRow key={artist.id} className="hover:bg-gray-50">
                                         <TableCell className="font-playfair text-gray-800">{artist.name}</TableCell>
                                         <TableCell className="font-playfair text-gray-600">{artist.email}</TableCell>
-                                        <TableCell className="font-playfair text-blue-600 hover:underline cursor-pointer">
-                                            {artist.portfolio}
+                                        <TableCell>
+                                            <a
+                                                href={`/artist/${artist.id}/portfolio`}
+                                                className="font-playfair text-blue-600 hover:underline"
+                                            >
+                                                Voir Portfolio
+                                            </a>
                                         </TableCell>
                                         <TableCell className="text-center flex justify-center gap-4 py-4">
-                                            <Button
-                                                size="sm"
-                                                className="bg-emerald-500 hover:bg-emerald-600 text-white font-playfair rounded-full px-4"
-                                            >
-                                                Valider
-                                            </Button>
-                                            <Button
-                                                size="sm"
-                                                variant="outline"
-                                                className="border-red-500 text-red-500 hover:bg-red-50 font-playfair rounded-full px-4"
-                                            >
-                                                Refuser
-                                            </Button>
+                                            <a href={`/admin/artists/${artist.id}/validate`}>
+                                                <Button
+                                                    size="sm"
+                                                    className="bg-emerald-500 hover:bg-emerald-600 text-white font-playfair rounded-full px-4"
+                                                >
+                                                    Valider
+                                                </Button>
+                                            </a>
+                                            <a href={`/admin/artists/${artist.id}/refuse`}>
+                                                <Button
+                                                    size="sm"
+                                                    variant="outline"
+                                                    className="border-red-500 text-red-500 hover:bg-red-50 font-playfair rounded-full px-4"
+                                                >
+                                                    Refuser
+                                                </Button>
+                                            </a>
                                         </TableCell>
                                     </TableRow>
                                 ))}

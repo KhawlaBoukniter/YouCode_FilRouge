@@ -23,6 +23,9 @@ import AdminUsersPage from './pages/AdminUsersPage';
 import AdminArtistsPage from './pages/AdminArtistsPage';
 import AdminEvents from './pages/AdminEvents';
 import AdminStats from './pages/AdminStats';
+import AllEvents from './pages/AllEvents';
+import TicketReservation from './pages/TicketReservation';
+import ArtistPortfolioEditor from './pages/ArtistPortfolioEditor';
 
 function App() {
   return (
@@ -41,20 +44,25 @@ function App() {
 
       <Route path='/artworks/:artwork' element={<Artwork />} />
       <Route path='/artworks/create' element={<CreateArtwork />} />
+      <Route path='/artworks/edit/:id' element={<CreateArtwork />} />
 
       <Route path='/events/:id' element={<EventDetails />} />
       <Route path='/events/create' element={<CreateEvent />} />
+      <Route path='/events' element={<AllEvents />} />
 
       <Route path='/artist-dash' element={<ArtistDash />} />
       <Route path='/artist/artworks' element={<ArtistArtworks />} />
       <Route path='/artist/events' element={<ArtistEvents />} />
       <Route path='/artist/:id/portfolio' element={<Portfolio />} />
+      <Route path='/artist/:id/portfolio/editor' element={<ArtistPortfolioEditor />} />
 
       <Route path='/admin-dash' element={<AdminDash />} />
       <Route path='/admin/users' element={<AdminUsersPage />} />
       <Route path='/admin/artists' element={<AdminArtistsPage />} />
       <Route path='/admin/events' element={<AdminEvents />} />
       <Route path='/admin/stats' element={<AdminStats />} />
+
+      <Route path='/tickets/:id/reserve' element={<TicketReservation />} />
 
     </Routes>
   );

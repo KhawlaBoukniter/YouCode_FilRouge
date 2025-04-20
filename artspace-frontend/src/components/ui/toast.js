@@ -11,7 +11,7 @@ export default function Toast({ message, type = "success", onClose }) {
 
     return (
         <div
-            className={`fixed top-5 right-5 z-50 px-6 py-3 rounded-md text-white shadow-lg transition-all
+            className={`fixed top-20 right-5 z-50 px-6 py-3 rounded-md text-white shadow-lg transition-all
         ${type === "success" ? "bg-green-600" : "bg-red-600"}
       `}
         >

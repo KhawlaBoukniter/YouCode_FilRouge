@@ -46,19 +46,23 @@ export default function AdminUsersPage() {
                                             <TableCell className="font-playfair text-gray-600">{user.role}</TableCell>
                                             <TableCell className="font-playfair text-gray-600">{user.status}</TableCell>
                                             <TableCell className="text-center flex justify-center gap-2 py-4">
-                                                <Button
-                                                    size="sm"
-                                                    className="bg-[#3a6b8f] hover:bg-[#345c78] text-white font-playfair rounded-full px-4"
-                                                >
-                                                    Activer
-                                                </Button>
-                                                <Button
-                                                    size="sm"
-                                                    variant="outline"
-                                                    className="border-red-500 text-red-500 hover:bg-red-50 font-playfair rounded-full px-4"
-                                                >
-                                                    Supprimer
-                                                </Button>
+                                                <a href={`/admin/users/${user.id}/activate`}>
+                                                    <Button
+                                                        size="sm"
+                                                        className="bg-[#3a6b8f] hover:bg-[#345c78] text-white font-playfair rounded-full px-4"
+                                                    >
+                                                        Activer
+                                                    </Button>
+                                                </a>
+                                                <a href={`/admin/users/${user.id}/delete`}>
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline"
+                                                        className="border-red-500 text-red-500 hover:bg-red-50 font-playfair rounded-full px-4"
+                                                    >
+                                                        Supprimer
+                                                    </Button>
+                                                </a>
                                             </TableCell>
                                         </TableRow>
                                     ))}

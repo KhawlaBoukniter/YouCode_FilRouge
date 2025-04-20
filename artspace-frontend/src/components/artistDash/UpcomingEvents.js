@@ -27,16 +27,19 @@ export default function UpcomingEvents() {
                 <h2 className="text-2xl font-playfair text-gray-800">
                     Événements à venir
                 </h2>
-                <button className="text-[#3a6b8f] font-playfair hover:underline">
+                <a href="/events/create" className="text-[#3a6b8f] font-playfair hover:underline">
                     Créer un événement
-                </button>
+                </a>
+                <a href="/artist/events" className="text-[#3a6b8f] font-playfair hover:underline">
+                    Voir tout
+                </a>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {events.map((event) => (
-                    <div
-                        key={event.id}
-                        className="bg-black/30 rounded-xl p-6 border border-gray-800"
+                    <a
+                        href={`/events/${event.id}`}
+                        className="bg-black/30 rounded-xl p-6 border border-gray-800 block hover:shadow-lg transition"
                     >
                         <h3 className="text-gray-200 font-bold text-xl">{event.title}</h3>
                         <p className="text-[#374151] text-base mt-2">{event.description}</p>
@@ -54,7 +57,7 @@ export default function UpcomingEvents() {
                                 <span>{event.attendees} inscrits</span>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 ))}
             </div>
         </div>

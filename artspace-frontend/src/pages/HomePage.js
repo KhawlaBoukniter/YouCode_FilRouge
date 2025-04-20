@@ -2,7 +2,6 @@ import React from 'react';
 import Navbar from "../components/Navbar";
 import HeroSection from "../components/home/HeroSection";
 import RevolutionaryFeatures from "../components/home/RevolutionaryFeatures";
-import FeaturedExhibitions from "../components/home/FeaturedExhibitions";
 import Testimonials from "../components/home/Testimonials";
 import CallToAction from "../components/home/CallToAction";
 import Footer from "../components/Footer";
@@ -13,7 +12,6 @@ export default function HomePage() {
             <Navbar />
             <HeroSection />
             <RevolutionaryFeatures />
-            <FeaturedExhibitions />
             <Testimonials />
             <CallToAction />
             <Footer />

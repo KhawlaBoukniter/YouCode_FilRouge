@@ -63,14 +63,15 @@ export default function ArtistEvents() {
                                     </div>
 
                                     <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                                        <Button
-                                            variant="outline"
-                                            size="icon"
-                                            className="bg-white text-gray-800 hover:bg-gray-100 rounded-full p-2"
-                                            onClick={() => console.log(`Voir détails de l'événement ID ${event.id}`)}
-                                        >
-                                            Voir
-                                        </Button>
+                                        <a href={`/events/${event.id}`}>
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                className="bg-white text-gray-800 hover:bg-gray-100 rounded-full p-2"
+                                            >
+                                                Voir
+                                            </Button>
+                                        </a>
                                     </div>
                                 </CardContent>
                             </Card>

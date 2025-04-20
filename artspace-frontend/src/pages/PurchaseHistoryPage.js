@@ -71,7 +71,12 @@ export default function UserPurchaseHistoryPage() {
                                                         className="w-12 h-12 rounded bg-cover bg-center"
                                                         style={{ backgroundImage: `url(${purchase.image})` }}
                                                     ></div>
-                                                    <span className="font-playfair text-gray-800">{purchase.artwork}</span>
+                                                    <a
+                                                        href={`/artworks/${purchase.id}`}
+                                                        className="font-playfair text-[#3a6b8f] hover:underline"
+                                                    >
+                                                        {purchase.artwork}
+                                                    </a>
                                                 </div>
                                             </TableCell>
                                             <TableCell className="font-playfair text-gray-600">{purchase.artist}</TableCell>

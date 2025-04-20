@@ -20,7 +20,6 @@ export default function Profile() {
                     <div className="relative">
                         <Avatar className="h-28 w-28 md:h-32 md:w-32 border-4 border-white shadow-md">
                             <AvatarImage src={userProfile.avatar} alt="Profile" />
-                            <AvatarFallback>SL</AvatarFallback>
                         </Avatar>
                         <div className="absolute bottom-0 right-0 w-7 h-7 bg-[#3a6b8f] rounded-full flex items-center justify-center shadow-md">
                             <img
@@ -50,20 +49,18 @@ export default function Profile() {
                             </div>
 
                             <div className="flex gap-4">
-                                <Button
-                                    variant="outline"
-                                    className="h-10 bg-gray-100 rounded-lg text-gray-700"
-                                >
-                                    <PenSquareIcon className="w-4 h-4 mr-2 md:mr-0" />
-                                    <span className="md:hidden">Modifier</span>
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    className="h-10 bg-red-50 text-red-600 rounded-lg"
-                                >
-                                    <LogOutIcon className="w-4 h-4 mr-2 md:mr-0" />
-                                    <span className="md:hidden">Déconnexion</span>
-                                </Button>
+                                <a href="/user/edit">
+                                    <Button variant="outline" className="h-10 bg-gray-100 rounded-lg text-gray-700">
+                                        <PenSquareIcon className="w-4 h-4 mr-2 md:mr-0" />
+                                        <span className="md:hidden">Modifier</span>
+                                    </Button>
+                                </a>
+                                <a href="/login">
+                                    <Button variant="outline" className="h-10 bg-red-50 text-red-600 rounded-lg">
+                                        <LogOutIcon className="w-4 h-4 mr-2 md:mr-0" />
+                                        <span className="md:hidden">Déconnexion</span>
+                                    </Button>
+                                </a>
                             </div>
                         </div>
                     </div>

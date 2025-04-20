@@ -1,6 +1,7 @@
 import React from "react";
 import image from '../../assets/images/mission-section.png'
 import FadeIn from "../ui/FadeIn";
+import Button from "../ui/button";
 
 const MissionSection = () => {
     const stats = [
@@ -34,6 +35,12 @@ const MissionSection = () => {
                                     qui dépasse les frontières géographiques et donne vie aux chefs-d'œuvre.
                                 </p>
                             </FadeIn>
+
+                            <a href="/museum/trending">
+                                <Button className="mt-6 bg-[#3a6b8f] text-white px-6 py-2 rounded-full hover:bg-[#2f5b7b] font-garamond">
+                                    Visiter le musée 3D
+                                </Button>
+                            </a>
                         </div>
 
                         <FadeIn delay={0.6}>

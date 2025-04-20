@@ -3,7 +3,6 @@ import Navbar from "../components/Navbar";
 import Section from "../components/about/Section";
 import MissionSection from "../components/about/MissionSection";
 import ExperienceSection from "../components/about/ExperienceSection";
-import CuratorsSection from "../components/about/CuratorsSection";
 import Footer from "../components/Footer";
 
 export default function About() {
@@ -13,7 +12,6 @@ export default function About() {
             <Section />
             <MissionSection />
             <ExperienceSection />
-            <CuratorsSection />
             <Footer />
         </main>
     );

@@ -163,6 +163,15 @@ export default function Register() {
                     Créer un compte
                 </button>
 
+                <div className="text-center mt-4">
+                    <span className="text-sm text-gray-400 font-playfair">
+                        Vous avez déjà un compte ?{" "}
+                        <a href="/login" className="text-blue-400 hover:underline">
+                            Se connecter
+                        </a>
+                    </span>
+                </div>
+
                 <div className="flex items-center my-6">
                     <div className="flex-grow h-px bg-gray-600" />
                     <span className="px-3 text-sm text-gray-400 font-playfair">Ou continuer avec</span>

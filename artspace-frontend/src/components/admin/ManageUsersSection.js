@@ -19,12 +19,9 @@ export default function ManageUsersSection() {
                         <CardTitle className="text-2xl font-playfair text-gray-800">
                             Gestion des utilisateurs
                         </CardTitle>
-                        <Button
-                            variant="link"
-                            className="text-[#3a6b8f] font-playfair text-base p-0"
-                        >
+                        <a href="/admin/users" className="text-[#3a6b8f] font-playfair text-base hover:underline">
                             Voir tout
-                        </Button>
+                        </a>
                     </CardHeader>
 
                     <CardContent className="p-8 overflow-x-auto">
@@ -45,9 +42,12 @@ export default function ManageUsersSection() {
                                         <TableCell className="font-playfair text-gray-600">{user.email}</TableCell>
                                         <TableCell className="font-playfair text-gray-600">{user.role}</TableCell>
                                         <TableCell className="text-center">
-                                            <button className="text-red-500 hover:underline font-playfair">
+                                            <a
+                                                href={`/admin/users/${user.id}/suspend`}
+                                                className="text-red-500 hover:underline font-playfair"
+                                            >
                                                 Suspendre
-                                            </button>
+                                            </a>
                                         </TableCell>
                                     </TableRow>
                                 ))}

@@ -9,7 +9,6 @@ const HeroSection = () => {
     return (
         <section className="bg-gradient-to-r from-gray-50 to-white w-full">
             <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-20 py-20 pb-10 flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
-                {/* Left Content */}
                 <div className="w-full lg:w-[592px] space-y-10 md:space-y-[70px] text-center lg:text-left">
                     <FadeIn>
                         <h1 className="font-garamond text-3xl md:text-4xl text-black leading-snug">
@@ -42,6 +41,7 @@ const HeroSection = () => {
                             <Button
                                 variant="outline"
                                 className="h-[50px] w-[171px] rounded-full border-gray-300 text-black font-garamond text-base flex items-center gap-2"
+                                onClick={() => window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank")}
                             >
                                 <Play className="h-4 w-3" aria-hidden="true" />
                                 Watch Demo
@@ -50,7 +50,6 @@ const HeroSection = () => {
                     </div>
                 </div>
 
-                {/* Right Image */}
                 <div className="w-full max-w-[500px] h-[300px] sm:h-[400px] lg:h-[500px]">
                     <div
                         className="w-full h-full rounded-2xl bg-cover bg-center"

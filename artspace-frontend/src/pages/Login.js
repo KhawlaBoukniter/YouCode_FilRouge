@@ -112,6 +112,15 @@ export default function Login() {
                     Se connecter
                 </button>
 
+                <div className="text-center mt-4">
+                    <span className="text-sm text-gray-400 font-playfair">
+                        Pas encore de compte ?{" "}
+                        <a href="/register" className="text-blue-400 hover:underline">
+                            Créez-en un
+                        </a>
+                    </span>
+                </div>
+
                 <div className="flex items-center my-6">
                     <div className="flex-grow h-px bg-gray-600" />
                     <span className="px-3 text-sm text-gray-400 font-playfair">Ou continuer avec</span>

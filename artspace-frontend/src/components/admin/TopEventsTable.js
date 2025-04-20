@@ -29,7 +29,9 @@ export default function TopEventsTable() {
                     <TableBody>
                         {topEvents.map((event) => (
                             <TableRow key={event.id} className="hover:bg-gray-50">
-                                <TableCell className="font-playfair text-gray-800">{event.title}</TableCell>
+                                <TableCell className="font-playfair text-[#3a6b8f] hover:underline">
+                                    <a href={`/events/${event.id}`}>{event.title}</a>
+                                </TableCell>
                                 <TableCell className="font-playfair text-gray-600">{event.date}</TableCell>
                                 <TableCell className="text-right font-playfair text-gray-800">{event.ticketsSold}</TableCell>
                             </TableRow>

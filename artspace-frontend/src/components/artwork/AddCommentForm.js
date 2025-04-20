@@ -9,7 +9,7 @@ export default function AddCommentForm() {
         e.preventDefault();
         if (comment.trim()) {
             console.log("Commentaire envoyé:", comment);
-            setComment(""); // Vider le champ après l'envoi
+            setComment("");
         }
     };
 

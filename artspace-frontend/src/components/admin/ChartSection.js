@@ -12,7 +12,6 @@ export default function ChartSection() {
 
             <CardContent className="p-8">
                 <div className="w-full h-[400px] flex items-center justify-center text-gray-400 bg-gray-50 border border-dashed rounded-xl">
-                    {/* Placeholder de graphique */}
                     Graphique à venir (Recharts ou autre)
                 </div>
             </CardContent>

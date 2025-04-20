@@ -58,7 +58,7 @@ const Footer = () => {
                                 {section.links.map((link, index) => (
                                     <div key={index} className="h-6">
                                         <a
-                                            href="#"
+                                            href={`/${link.toLowerCase().replace(/\s+/g, "-")}`}
                                             className="font-garamond text-gray-400 text-base leading-4 hover:text-[#d3bb75] transition-colors"
                                         >
                                             {link}

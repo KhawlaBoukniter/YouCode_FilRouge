@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Card, CardContent } from "../components/ui/card";
-import { EyeIcon } from "lucide-react";
+import { EyeIcon, TrashIcon } from "lucide-react";
 import Button from "../components/ui/button";
 
 export default function UserFavoriteArtworksPage() {
@@ -39,6 +39,10 @@ export default function UserFavoriteArtworksPage() {
         },
     ];
 
+    const handleRemove = (id) => {
+        console.log(`Supprimer l'œuvre avec id : ${id}`);
+    };
+
     return (
         <div className="flex flex-col min-h-screen bg-[#f8f7f4]">
             <Navbar />
@@ -71,14 +75,22 @@ export default function UserFavoriteArtworksPage() {
                                     </div>
 
                                     <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                                        <Button
-                                            variant="outline"
-                                            size="icon"
-                                            className="!bg-transparent hover:text-white text-gray-300 border-none transform transition duration-300 hover:scale-105 p-2"
-                                            onClick={() => console.log(`Voir détails de l'œuvre ID ${artwork.id}`)}
+                                        <a href={`/artworks/${artwork.id}`}>
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                className="!bg-transparent hover:text-white text-gray-300 border-none transform transition duration-300 hover:scale-105 p-2"
+                                            >
+                                                <EyeIcon className="h-5 w-5" />
+                                            </Button>
+                                        </a>
+                                        <button
+                                            onClick={() => handleRemove(artwork.id)}
+                                            className="rounded-full p-2 text-gray-300 hover:text-red-500 transform transition duration-300 hover:scale-105"
+                                            aria-label="Retirer des favoris"
                                         >
-                                            <EyeIcon className="h-5 w-5" />
-                                        </Button>
+                                            <TrashIcon className="w-5 h-5" />
+                                        </button>
                                     </div>
                                 </CardContent>
                             </Card>

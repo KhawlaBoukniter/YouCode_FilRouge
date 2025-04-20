@@ -31,9 +31,9 @@ const CategoriesSection = () => {
                     <FadeIn delay={0.2 * i} key={category.id}>
                         <Button
                             variant={category.active ? "default" : "secondary"}
-                            className={`rounded-full px-6 h-10 hover:text-white hover:bg-black ${category.active
-                                ? "bg-black text-white"
-                                : "bg-gray-100 text-black"
+                            className={`rounded-full px-6 h-10 font-playfair text-base ${category.active
+                                    ? "bg-black text-white"
+                                    : "bg-gray-100 text-black hover:text-white hover:bg-black"
                                 }`}
                         >
                             <span className="font-normal font-playfair text-base">

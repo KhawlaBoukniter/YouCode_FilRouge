@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent } from "../ui/card";
+import Toast from "../ui/toast";
 
 const ContactForm = () => {
+    const [toast, setToast] = useState(null);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        setToast({ message: "Œuvre enregistrée avec succès !", type: "success" });
+    };
+
     return (
         <Card className="w-full max-w-[95%] sm:max-w-lg lg:max-w-xl bg-[#D6D5D5] rounded-3xl border-0 mx-auto my-5 opacity-70">
             <CardContent className="p-10">
-                <form className="space-y-8">
+                <form className="space-y-8" onSubmit={handleSubmit}>
                     <div className="space-y-4">
                         <input
                             type="text"
@@ -48,6 +57,14 @@ const ContactForm = () => {
                             Send Message
                         </button>
                     </div>
+
+                    {toast && (
+                        <Toast
+                            message={toast.message}
+                            type={toast.type}
+                            onClose={() => setToast(false)}
+                        />
+                    )}
                 </form>
             </CardContent>
         </Card>
