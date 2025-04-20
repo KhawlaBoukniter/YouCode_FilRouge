@@ -10,7 +10,8 @@ class Artwork extends Model
         'title',
         'description',
         'image',
-        'artist_id'
+        'artist_id',
+        'price',
     ];
 
     public function artist()
