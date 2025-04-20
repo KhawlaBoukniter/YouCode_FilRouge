@@ -34,7 +34,7 @@ export default function Artwork() {
                 const data = res.data;
 
                 setArtwork(res.data.artwork);
-                setComments(res.data.comments || []);
+                setComments(res.data.comments.data || []);
                 setLikedByUser(res.data.liked_by_user);
                 setIsSaved(res.data.is_saved_by_user);
                 setCanEdit(res.data.can_edit);
@@ -65,7 +65,7 @@ export default function Artwork() {
                         canDelete={canDelete}
                     />
                     <Description description={artwork.description} />
-                    <Comments artworkId={artwork.id} comments={comments} setComments={setComments} />
+                    <Comments artworkId={artwork.id} />
                     <AddCommentForm artworkId={artwork.id} setComments={setComments} />
                 </div>
             </main>

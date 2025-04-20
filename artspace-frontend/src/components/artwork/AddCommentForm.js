@@ -1,15 +1,36 @@
 import React, { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import Button from "../ui/button";
+import api from "../../api";
 
-export default function AddCommentForm() {
+export default function AddCommentForm({ artworkId, setComments }) {
     const [comment, setComment] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (comment.trim()) {
-            console.log("Commentaire envoyé:", comment);
+        if (!comment.trim()) {
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem("token");
+            const res = await api.post(
+                `/comments`,
+                {
+                    artwork_id: artworkId,
+                    content: comment.trim(),
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            setComments((prev) => [res.data.comment, ...prev]);
             setComment("");
+        } catch (error) {
+            console.error("Erreur lors de l'envoi du commentaire :", error);
         }
     };
 
