@@ -39,7 +39,13 @@ export default function Register() {
                 navigate('/login');
             }, 2000);
         } catch (error) {
-            setErrorMessage("Erreur : " + error.message);
+            if (error.response && error.response.data && error.response.data.errors) {
+                const errors = error.response.data.errors;
+                const firstKey = Object.keys(errors)[0];
+                setErrorMessage(errors[firstKey][0]);
+            } else {
+                setErrorMessage("Erreur : " + error.message);
+            }
         }
     };
 

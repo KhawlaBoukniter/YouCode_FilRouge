@@ -104,7 +104,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/me/avatar', [AuthController::class, 'uploadAvatar']);
 
-    Route::get('/events', [EventController::class, 'index']);
+    Route::get('/all-events', [EventController::class, 'index']);
     Route::get('/events/{event}', [EventController::class, 'show']);
 
     Route::post('/checkout/{reservation}', [PaymentController::class, 'checkout']);

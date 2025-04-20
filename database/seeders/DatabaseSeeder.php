@@ -19,5 +19,12 @@ class DatabaseSeeder extends Seeder
         $this->call(SavedArtworksSeeder::class);
         $this->call(CommentSeeder::class);
         $this->call(ArtworkPriceSeeder::class);
+        $this->call([
+            RoleSeeder::class,
+            UserSeeder::class,
+            ArtistSeeder::class,
+            EventSeeder::class,
+            // autres...
+        ]);
     }
 }

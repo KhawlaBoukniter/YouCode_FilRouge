@@ -13,7 +13,12 @@ export default function AllEvents() {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const res = await api.get("/events");
+                const token = localStorage.getItem("token");
+                const res = await api.get("/all-events", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
                 setAllEvents(res.data.events?.data || res.data.events || []);
             } catch (err) {
                 console.error("Erreur lors du chargement des événements", err);
@@ -55,8 +60,8 @@ export default function AllEvents() {
                                 />
                                 <CardContent className="p-4">
                                     <h3 className="text-xl font-playfair text-gray-800 mb-1">{event.title}</h3>
-                                    <p className="text-sm text-gray-600 font-playfair">{event.artist}</p>
-                                    <p className="text-sm text-gray-500 font-playfair mt-1">{event.location} – {event.date}</p>
+                                    <p className="text-sm text-gray-600 font-playfair">{event.artist?.user?.name || "Artiste inconnu"}</p>
+                                    <p className="text-sm text-gray-500 font-playfair mt-1">{event.location} – {event.start_date}</p>
                                     <a href={`/events/${event.id}`}>
                                         <Button
                                             variant="outline"
