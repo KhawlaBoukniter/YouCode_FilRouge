@@ -63,7 +63,7 @@ export default function UserFavoriteArtworksPage() {
                                             <div
                                                 className="h-full bg-cover bg-center"
                                                 style={{
-                                                    backgroundImage: `url(${artwork.image_url})`,
+                                                    backgroundImage: `url(${artwork.image})`,
                                                 }}
                                             ></div>
 
@@ -71,7 +71,7 @@ export default function UserFavoriteArtworksPage() {
                                                 <h4 className="text-white text-lg font-semibold">
                                                     {artwork.title}
                                                 </h4>
-                                                <p className="text-gray-300 text-sm">{artwork.artist?.name}</p>
+                                                <p className="text-gray-300 text-sm">{artwork.artist?.user?.name || "Artiste inconnue"}</p>
                                             </div>
 
                                             <div className="absolute top-4 right-4 flex flex-col items-end gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
@@ -79,18 +79,18 @@ export default function UserFavoriteArtworksPage() {
                                                     <Button
                                                         variant="outline"
                                                         size="icon"
-                                                        className="!bg-transparent hover:text-white text-gray-300 border-none transform transition duration-300 hover:scale-105 p-2"
+                                                        className=" text-black border-none transform transition duration-300 hover:scale-105 p-2"
                                                     >
                                                         <EyeIcon className="h-5 w-5" />
                                                     </Button>
                                                 </a>
-                                                <button
+                                                <Button
                                                     onClick={() => handleRemove(artwork.id)}
                                                     className="rounded-full p-2 text-gray-300 hover:text-red-500 transform transition duration-300 hover:scale-105"
                                                     aria-label="Retirer des favoris"
                                                 >
                                                     <TrashIcon className="w-5 h-5" />
-                                                </button>
+                                                </Button>
                                             </div>
                                         </CardContent>
                                     </Card>
