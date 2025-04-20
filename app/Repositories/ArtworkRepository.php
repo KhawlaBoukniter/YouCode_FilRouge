@@ -46,7 +46,7 @@ class ArtworkRepository
     {
         return [
             'artwork' => $artwork->load('artist.user'),
-            'comments' => $artwork->comments()->latest()->paginate(5)
+            'comments' => $artwork->comments()->with('user')->latest()->paginate(5)
         ];
     }
 
