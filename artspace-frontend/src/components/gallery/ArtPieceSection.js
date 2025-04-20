@@ -50,8 +50,15 @@ const ArtPieceSection = ({ artworks }) => {
                                                             <EyeIcon className="w-4 h-4 text-white" />
                                                         </Button>
                                                     </a>
-                                                    <Button className="h-9 rounded-full bg-white hover:bg-white/90 !text-black">
-                                                        <span className="font-garamond text-sm">Acheter</span>
+                                                    <Button
+                                                        disabled={artwork.is_purchased}
+                                                        className={`h-9 rounded-full ${artwork.is_purchased
+                                                            ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                                                            : "bg-white hover:bg-white/90 !text-black"}`}
+                                                    >
+                                                        <span className="font-garamond text-sm">
+                                                            {artwork.is_purchased ? "Déjà achetée" : "Acheter"}
+                                                        </span>
                                                     </Button>
                                                 </div>
                                             </div>

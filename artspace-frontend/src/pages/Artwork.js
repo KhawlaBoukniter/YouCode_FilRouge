@@ -17,6 +17,7 @@ export default function Artwork() {
     const [canEdit, setCanEdit] = useState(false);
     const [canDelete, setCanDelete] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [isPurchased, setIsPurchased] = useState(false);
 
     console.log(typeof id);
 
@@ -40,6 +41,7 @@ export default function Artwork() {
                 setCanEdit(res.data.can_edit);
                 setCanDelete(res.data.can_delete);
                 setLoading(false);
+                setIsPurchased(res.data.is_purchased)
             } catch (error) {
                 console.error("Erreur chargement de l’œuvre :", error);
                 setLoading(false);
@@ -63,6 +65,7 @@ export default function Artwork() {
                         isLiked={likedByUser}
                         canEdit={canEdit}
                         canDelete={canDelete}
+                        isPurchased={isPurchased}
                     />
                     <Description description={artwork.description} />
                     <Comments artworkId={artwork.id} />

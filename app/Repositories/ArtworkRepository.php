@@ -10,7 +10,7 @@ class ArtworkRepository
 {
     public function getAll(array $filters = [])
     {
-        $query = Artwork::with('artist.user')->latest();
+        $query = Artwork::with('artist.user', 'buyers')->latest();
 
         if (!empty($filters['artist_id'])) {
             $query->where('artist_id', $filters['artist_id']);
@@ -23,7 +23,7 @@ class ArtworkRepository
             });
         }
 
-        return $query->paginate(6);
+        return $query->paginate(12);
     }
 
     public function create(array $data)

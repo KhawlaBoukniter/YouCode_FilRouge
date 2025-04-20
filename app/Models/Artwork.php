@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Artwork extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'title',
         'description',
@@ -32,5 +35,12 @@ class Artwork extends Model
     public function getLikesCountAttribute()
     {
         return $this->likes()->count();
+    }
+
+    public function buyers()
+    {
+        return $this->belongsToMany(User::class, 'artwork_user')
+            ->withPivot('price', 'purchased_at')
+            ->withTimestamps();
     }
 }

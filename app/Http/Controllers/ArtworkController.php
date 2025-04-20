@@ -80,6 +80,7 @@ class ArtworkController extends Controller
         $isMine = $user && $artwork->artist && $artwork->artist->user_id === $user->id;
         $canEdit = $user ? $user->can('update', $artwork) : false;
         $canDelete = $user ? $user->can('delete', $artwork) : false;
+        $isPurchased = $user ? $artwork->buyers->contains($user->id) : false;
 
         return response()->json([
             'artwork' => $result['artwork']->loadCount('likes'),
@@ -90,6 +91,7 @@ class ArtworkController extends Controller
             'is_mine' => $isMine,
             'can_edit' => $canEdit,
             'can_delete' => $canDelete,
+            'is_purchased' => $isPurchased,
         ]);
     }
 

@@ -19,7 +19,15 @@ class ArtworkService
 
     public function list(array $filters = [])
     {
-        return $this->artworkRepo->getAll($filters);
+        $user = Auth::user();
+        $artworks = $this->artworkRepo->getAll($filters);
+
+        $artworks->getCollection()->transform(function ($artwork) use ($user) {
+            $artwork->is_purchased = $user ? $artwork->buyers->contains($user->id) : false;
+            return $artwork;
+        });
+
+        return $artworks;
     }
 
     public function create(array $data)

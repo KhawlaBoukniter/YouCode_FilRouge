@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HeartIcon, BookmarkIcon } from "lucide-react";
 import Button from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import api from "../../api";
 
-export default function Header({ artwork, isSaved, isLiked, canEdit, canDelete }) {
+export default function Header({ artwork, isSaved, isLiked, canEdit, canDelete, isPurchased }) {
 
     const [likes, setLikes] = useState(artwork.likes_count || 0);
     const [liked, setLiked] = useState(isLiked);
@@ -88,9 +88,14 @@ export default function Header({ artwork, isSaved, isLiked, canEdit, canDelete }
 
                     <div className="mt-6">
                         <a href={`/checkout/${artwork.id}`}>
-                            <Button className="h-12 w-full md:w-auto bg-[#3a6b8f] text-white rounded-lg font-playfair text-base hover:bg-[#345c78] transition">
-                                Acheter
+                            <Button
+                                disabled={isPurchased}
+                                className={`h-12 w-full md:w-auto rounded-lg font-playfair text-base transition 
+        ${isPurchased ? "bg-gray-300 text-gray-600 cursor-not-allowed" : "bg-[#3a6b8f] text-white hover:bg-[#345c78]"}`}
+                            >
+                                {isPurchased ? "Déjà achetée" : "Acheter"}
                             </Button>
+
                         </a>
                     </div>
                 </div>
