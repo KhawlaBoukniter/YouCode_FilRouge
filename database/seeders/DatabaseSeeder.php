@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ArtworkUserSeeder::class);
         $this->call(SavedArtworksSeeder::class);
         $this->call(CommentSeeder::class);
+        $this->call(ArtworkPriceSeeder::class);
     }
 }
