@@ -33,6 +33,7 @@ class CommentController extends Controller
         $data['user_id'] = Auth::id();
 
         $comment = $this->commentService->store($data);
+        $comment->load('user');
 
         return response()->json([
             'message' => 'Commentaire ajouté avec succès',
