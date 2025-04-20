@@ -89,6 +89,8 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/reservations/{reservation}/total', [ReservationController::class, 'getTotal']);
     });
 
+    Route::get('/users/{user}/stats', [StatsController::class, 'userStats']);
+
     Route::get('/artworks', [ArtworkController::class, 'index']);
     Route::get('/artworks/{artwork}', [ArtworkController::class, 'show']);
 

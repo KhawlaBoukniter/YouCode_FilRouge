@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Services\StatsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -75,6 +76,13 @@ class StatsController extends Controller
 
         return response()->json([
             'global_stats' => $stats
+        ]);
+    }
+
+    public function userStats(User $user)
+    {
+        return response()->json([
+            'favorites' => $user->savedArtworks()->count(),
         ]);
     }
 }

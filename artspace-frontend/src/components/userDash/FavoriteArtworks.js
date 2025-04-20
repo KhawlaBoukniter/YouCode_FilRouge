@@ -1,29 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import Button from "../ui/button";
 import { EyeIcon } from "lucide-react";
+import api from "../../api";
 
-export default function FavoriteArtworks() {
-    const artworks = [
-        {
-            id: 1,
-            title: "Abstract Harmony",
-            artist: "by Marie Dubois",
-            image: "https://c.animaapp.com/m9y8ql4xx8o8m6/img/img-3.png",
-        },
-        {
-            id: 2,
-            title: "Eternal Dance",
-            artist: "by Jean-Paul Roux",
-            image: "https://c.animaapp.com/m9y8ql4xx8o8m6/img/img-2.png",
-        },
-        {
-            id: 3,
-            title: "Digital Dreams",
-            artist: "by Alex Chen",
-            image: "https://c.animaapp.com/m9y8ql4xx8o8m6/img/img-1.png",
-        },
-    ];
+export default function FavoriteArtworks({ user }) {
+
+    const [artworks, setArtworks] = useState([]);
+
+    useEffect(() => {
+        const fetchFavorites = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await api.get("/artworks/saved", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                setArtworks(res.data || []);
+            } catch (error) {
+                console.error("Erreur lors du chargement des œuvres favorites :", error);
+            }
+        };
+
+        fetchFavorites();
+    }, []);
 
     return (
         <Card className="rounded-2xl shadow-md">
