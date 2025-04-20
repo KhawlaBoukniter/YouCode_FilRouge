@@ -1,10 +1,23 @@
 import React from "react";
-import { MailIcon, MapPinIcon, LogOutIcon, PenSquareIcon } from "lucide-react";
-import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
+import { MailIcon, LogOutIcon, PenSquareIcon } from "lucide-react";
+import { Avatar, AvatarImage } from "../ui/avatar";
 import Button from "../ui/button";
 import { Card, CardContent } from "../ui/card";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile({ user }) {
+    const navigate = useNavigate();
+
+    const handleEdit = () => {
+        navigate("/user/edit");
+    }
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user_id");
+
+        navigate("/login");
+    }
 
     return (
         <Card className="w-full rounded-2xl shadow-md">
@@ -38,18 +51,14 @@ export default function Profile({ user }) {
                             </div>
 
                             <div className="flex gap-4">
-                                <a href="/user/edit">
-                                    <Button variant="outline" className="h-10 bg-gray-100 rounded-lg text-gray-700">
-                                        <PenSquareIcon className="w-4 h-4 mr-2 md:mr-0" />
-                                        <span className="">Modifier</span>
-                                    </Button>
-                                </a>
-                                <a href="/login">
-                                    <Button variant="outline" className="h-10 bg-red-50 text-red-600 rounded-lg">
-                                        <LogOutIcon className="w-4 h-4 mr-2 md:mr-0" />
-                                        <span className="">Déconnexion</span>
-                                    </Button>
-                                </a>
+                                <Button variant="outline" onClick={handleEdit} className="h-10 bg-gray-100 rounded-lg text-gray-700">
+                                    <PenSquareIcon className="w-4 h-4 mr-2 md:mr-0" />
+                                    <span className="">Modifier</span>
+                                </Button>
+                                <Button variant="outline" onClick={handleLogout} className="h-10 bg-red-50 text-red-600 rounded-lg">
+                                    <LogOutIcon className="w-4 h-4 mr-2 md:mr-0" />
+                                    <span className="">Déconnexion</span>
+                                </Button>
                             </div>
                         </div>
                     </div>
