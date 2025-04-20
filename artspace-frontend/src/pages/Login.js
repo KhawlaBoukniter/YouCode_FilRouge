@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AuthLayout from "../components/AuthLayout";
 import { useNavigate } from "react-router-dom";
+import api from "../api";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -20,37 +21,29 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrorMessage("");
+        setSuccessMessage("");
 
         try {
-            const response = await fetch("http://localhost:8000/api/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
-                body: JSON.stringify({
-                    email,
-                    password,
-                }),
-            });
+            const response = await api.post("/login", { email, password });
 
-            const data = await response.json();
+            const data = response.data;
             console.log(data);
-
-            if (!response.ok) {
-                setErrorMessage(data.message || "Identifiants incorrects");
-                setSuccessMessage("");
-                return;
-            }
-
-            setErrorMessage("");
 
             setSuccessMessage("Connexion réussie! Redirection...");
 
             localStorage.setItem("token", data.token);
 
+            const role = data.user?.role?.name || "";
+
             setTimeout(() => {
-                navigate('/dashboard');
+                if (role === "admin") {
+                    navigate('/admin-dash');
+                } else if (role === "artist") {
+                    navigate('/artist-dash');
+                } else {
+                    navigate('/user-dash');
+                }
             }, 2000);
 
         } catch (error) {
