@@ -82,4 +82,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reservation::class);
     }
+
+    public function purchasedArtworks()
+    {
+        return $this->belongsToMany(Artwork::class, 'artwork_user')
+            ->withPivot('price', 'purchased_at')
+            ->withTimestamps();
+    }
 }

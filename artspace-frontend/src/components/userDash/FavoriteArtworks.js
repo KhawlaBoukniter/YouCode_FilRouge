@@ -6,25 +6,32 @@ import api from "../../api";
 
 export default function FavoriteArtworks({ user }) {
 
-    const [artworks, setArtworks] = useState([]);
+    const [favorites, setFavorites] = useState([]);
 
     useEffect(() => {
+        if (!user) return;
+
         const fetchFavorites = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const res = await api.get("/artworks/saved", {
+                const response = await api.get("/artworks/saved", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                setArtworks(res.data || []);
+
+                console.log("Saved artworks:", response.data);
+                const artworksArray = response.data.saved_artworks?.data ?? [];
+                setFavorites(artworksArray);
+
             } catch (error) {
-                console.error("Erreur lors du chargement des œuvres favorites :", error);
+                console.error("Erreur chargement favoris :", error);
+                setFavorites([]);
             }
         };
 
         fetchFavorites();
-    }, []);
+    }, [user]);
 
     return (
         <Card className="rounded-2xl shadow-md">
@@ -38,40 +45,44 @@ export default function FavoriteArtworks({ user }) {
             </CardHeader>
 
             <CardContent className="p-8">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    {artworks.map((artwork) => (
-                        <div
-                            key={artwork.id}
-                            className="relative h-64 rounded-lg overflow-hidden group"
-                            style={{
-                                backgroundImage: `url(${artwork.image})`,
-                                backgroundSize: "cover",
-                                backgroundPosition: "center",
-                            }}
-                        >
-                            <div className="absolute bottom-0 w-full h-24 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
-                                <div className="p-4">
-                                    <h4 className="text-white text-base font-semibold">
-                                        {artwork.title}
-                                    </h4>
-                                    <p className="text-gray-300 text-sm mt-1">{artwork.artist}</p>
-                                </div>
+                {favorites.length === 0 ? (
+                    <p className="text-center text-gray-500 font-playfair">Aucune œuvre sauvegardée.</p>
+                ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                        {favorites.map((artwork) => (
+                            <div
+                                key={artwork.id}
+                                className="relative h-64 rounded-lg overflow-hidden group"
+                                style={{
+                                    backgroundImage: `url(${artwork.image_url})`,
+                                    backgroundSize: "cover",
+                                    backgroundPosition: "center",
+                                }}
+                            >
+                                <div className="absolute bottom-0 w-full h-24 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                    <div className="p-4">
+                                        <h4 className="text-white text-base font-semibold">
+                                            {artwork.title}
+                                        </h4>
+                                        <p className="text-gray-300 text-sm mt-1">{artwork.artist?.name}</p>
+                                    </div>
 
-                                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                                    <a href={`/artworks/${artwork.id}`}>
-                                        <Button
-                                            variant="outline"
-                                            size="icon"
-                                            className="!bg-transparent text-gray-300 hover:text-white transform transition duration-300 hover:scale-105 border-none p-2"
-                                        >
-                                            <EyeIcon className="h-5 w-5" />
-                                        </Button>
-                                    </a>
+                                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                        <a href={`/artworks/${artwork.id}`}>
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                className="!bg-transparent text-gray-300 hover:text-white transform transition duration-300 hover:scale-105 border-none p-2"
+                                            >
+                                                <EyeIcon className="h-5 w-5" />
+                                            </Button>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                )}
             </CardContent>
         </Card>
     );

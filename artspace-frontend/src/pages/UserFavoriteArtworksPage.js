@@ -1,46 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Card, CardContent } from "../components/ui/card";
 import { EyeIcon, TrashIcon } from "lucide-react";
 import Button from "../components/ui/button";
+import api from "../api";
 
 export default function UserFavoriteArtworksPage() {
-    const artworks = [
-        {
-            id: 1,
-            title: "Abstract Harmony",
-            artist: "by Marie Dubois",
-            image: "https://c.animaapp.com/m9y8ql4xx8o8m6/img/img-3.png",
-        },
-        {
-            id: 2,
-            title: "Eternal Dance",
-            artist: "by Jean-Paul Roux",
-            image: "https://c.animaapp.com/m9y8ql4xx8o8m6/img/img-2.png",
-        },
-        {
-            id: 3,
-            title: "Digital Dreams",
-            artist: "by Alex Chen",
-            image: "https://c.animaapp.com/m9y8ql4xx8o8m6/img/img-1.png",
-        },
-        {
-            id: 4,
-            title: "Sunset Memories",
-            artist: "by Lea Moreau",
-            image: "https://c.animaapp.com/m9y8ql4xx8o8m6/img/img-4.png",
-        },
-        {
-            id: 5,
-            title: "Urban Jungle",
-            artist: "by Hugo Martin",
-            image: "https://c.animaapp.com/m9y8ql4xx8o8m6/img/img-5.png",
-        },
-    ];
+    const [artworks, setArtworks] = useState([]);
 
-    const handleRemove = (id) => {
-        console.log(`Supprimer l'œuvre avec id : ${id}`);
+    useEffect(() => {
+        const fetchFavorites = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await api.get("/artworks/saved", {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                const list = res.data.saved_artworks?.data || res.data.saved_artworks || [];
+                setArtworks(list);
+            } catch (error) {
+                console.error("Erreur chargement favoris :", error);
+                setArtworks([]);
+            }
+        };
+
+        fetchFavorites();
+    }, []);
+
+    const handleRemove = async (id) => {
+        try {
+            const token = localStorage.getItem("token");
+            await api.post(`/artworks/${id}/save`, {}, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            setArtworks((prev) => prev.filter((art) => art.id !== id));
+        } catch (error) {
+            console.error("Erreur suppression favori :", error);
+        }
     };
 
     return (
@@ -54,47 +50,53 @@ export default function UserFavoriteArtworksPage() {
                     </h1>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        {artworks.map((artwork) => (
-                            <Card
-                                key={artwork.id}
-                                className="relative h-80 rounded-lg overflow-hidden group md:h-72"
-                            >
-                                <CardContent className="h-full p-0">
-                                    <div
-                                        className="h-full bg-cover bg-center"
-                                        style={{
-                                            backgroundImage: `url(${artwork.image})`,
-                                        }}
-                                    ></div>
+                        {artworks.length === 0 ? (
+                            <p className="text-center text-gray-500 font-playfair">Aucune œuvre sauvegardée.</p>
+                        ) : (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                                {artworks.map((artwork) => (
+                                    <Card
+                                        key={artwork.id}
+                                        className="relative h-80 rounded-lg overflow-hidden group md:h-72"
+                                    >
+                                        <CardContent className="h-full p-0">
+                                            <div
+                                                className="h-full bg-cover bg-center"
+                                                style={{
+                                                    backgroundImage: `url(${artwork.image_url})`,
+                                                }}
+                                            ></div>
 
-                                    <div className="absolute bottom-0 w-full h-24 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-4">
-                                        <h4 className="text-white text-lg font-semibold">
-                                            {artwork.title}
-                                        </h4>
-                                        <p className="text-gray-300 text-sm">{artwork.artist}</p>
-                                    </div>
+                                            <div className="absolute bottom-0 w-full h-24 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-4">
+                                                <h4 className="text-white text-lg font-semibold">
+                                                    {artwork.title}
+                                                </h4>
+                                                <p className="text-gray-300 text-sm">{artwork.artist?.name}</p>
+                                            </div>
 
-                                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                                        <a href={`/artworks/${artwork.id}`}>
-                                            <Button
-                                                variant="outline"
-                                                size="icon"
-                                                className="!bg-transparent hover:text-white text-gray-300 border-none transform transition duration-300 hover:scale-105 p-2"
-                                            >
-                                                <EyeIcon className="h-5 w-5" />
-                                            </Button>
-                                        </a>
-                                        <button
-                                            onClick={() => handleRemove(artwork.id)}
-                                            className="rounded-full p-2 text-gray-300 hover:text-red-500 transform transition duration-300 hover:scale-105"
-                                            aria-label="Retirer des favoris"
-                                        >
-                                            <TrashIcon className="w-5 h-5" />
-                                        </button>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        ))}
+                                            <div className="absolute top-4 right-4 flex flex-col items-end gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                                <a href={`/artworks/${artwork.id}`}>
+                                                    <Button
+                                                        variant="outline"
+                                                        size="icon"
+                                                        className="!bg-transparent hover:text-white text-gray-300 border-none transform transition duration-300 hover:scale-105 p-2"
+                                                    >
+                                                        <EyeIcon className="h-5 w-5" />
+                                                    </Button>
+                                                </a>
+                                                <button
+                                                    onClick={() => handleRemove(artwork.id)}
+                                                    className="rounded-full p-2 text-gray-300 hover:text-red-500 transform transition duration-300 hover:scale-105"
+                                                    aria-label="Retirer des favoris"
+                                                >
+                                                    <TrashIcon className="w-5 h-5" />
+                                                </button>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </main>

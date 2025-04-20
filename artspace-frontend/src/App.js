@@ -40,7 +40,7 @@ function App() {
 
       <Route path='/user-dash' element={<UserDash />} />
       <Route path='/user/artworks/saved' element={<UserFavoriteArtworksPage />} />
-      <Route path='/user/artworks/purshased' element={<UserPurchaseHistoryPage />} />
+      <Route path='/user/artworks/purchased' element={<UserPurchaseHistoryPage />} />
 
       <Route path='/artworks/:artwork' element={<Artwork />} />
       <Route path='/artworks/create' element={<CreateArtwork />} />

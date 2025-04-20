@@ -1,78 +1,87 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardHeader, CardContent, CardTitle } from "../ui/card";
-import Button from "../ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import Button from "../ui/button";
+import api from "../../api";
 
-export default function PurchaseHistory() {
-    const purchases = [
-        {
-            id: 1,
-            artwork: "Abstract Harmony",
-            artist: "Jean Dubois",
-            date: "Mar 15, 2025",
-            price: "€2,400",
-            image: "https://c.animaapp.com/m9y8ql4xx8o8m6/img/img-4.png",
-        },
-        {
-            id: 2,
-            artwork: "Portrait of Elegance",
-            artist: "Maria Silva",
-            date: "Feb 28, 2025",
-            price: "€3,800",
-            image: "https://c.animaapp.com/m9y8ql4xx8o8m6/img/img-5.png",
-        },
-        {
-            id: 3,
-            artwork: "Geometric Dreams",
-            artist: "Alex Chen",
-            date: "Jan 10, 2025",
-            price: "€1,900",
-            image: "https://c.animaapp.com/m9y8ql4xx8o8m6/img/img-6.png",
-        },
-    ];
+export default function PurchaseHistory({ user }) {
+    const [purchases, setPurchases] = useState([]);
+
+    useEffect(() => {
+        const fetchPurchases = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await api.get("/purchases", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                console.log("🛒 Purchases:", res.data);
+                setPurchases(res.data.purchases || []);
+            } catch (error) {
+                console.error("Erreur chargement achats :", error);
+                setPurchases([]);
+            }
+        };
+
+        if (user) {
+            fetchPurchases();
+        }
+    }, [user]);
 
     return (
         <Card className="rounded-2xl shadow-md">
             <CardHeader className="px-8 pb-0 flex flex-row justify-between items-center">
                 <CardTitle className="text-2xl font-playfair text-gray-800">
-                    Purchase History
+                    Historique des achats
                 </CardTitle>
-                <a href="/user/artworks/purshased" className="text-[#3a6b8f] font-playfair text-base hover:underline">
-                    View All
+                <a href="/user/artworks/purchased" className="text-[#3a6b8f] font-playfair text-base hover:underline">
+                    Voir tout
                 </a>
             </CardHeader>
 
             <CardContent className="p-8 overflow-x-auto">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead className="text-gray-600 font-playfair">Artwork</TableHead>
-                            <TableHead className="text-gray-600 font-playfair">Artist</TableHead>
-                            <TableHead className="text-gray-600 font-playfair">Date</TableHead>
-                            <TableHead className="text-right text-gray-600 font-playfair">Price</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {purchases.map((purchase) => (
-                            <TableRow key={purchase.id} className="hover:bg-gray-50">
-                                <TableCell>
-                                    <div className="flex items-center gap-3">
-                                        <div
-                                            className="w-12 h-12 rounded bg-cover bg-center"
-                                            style={{ backgroundImage: `url(${purchase.image})` }}
-                                        />
-                                        <a href={`/artworks/${purchase.id}`} className="font-playfair text-[#3a6b8f] hover:underline">
-                                            {purchase.artwork}
-                                        </a>
-                                    </div>
-                                </TableCell>
-                                <TableCell className="font-playfair text-gray-600">{purchase.artist}</TableCell>
-                                <TableCell className="font-playfair text-gray-600">{purchase.date}</TableCell>
-                                <TableCell className="text-right font-playfair text-gray-800">{purchase.price}</TableCell>
+                {purchases.length === 0 ? (
+                    <p className="text-center text-gray-500 font-playfair">Aucune œuvre achetée pour le moment.</p>
+                ) : (
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead className="text-gray-600 font-playfair">Œuvre</TableHead>
+                                <TableHead className="text-gray-600 font-playfair">Artiste</TableHead>
+                                <TableHead className="text-gray-600 font-playfair">Date</TableHead>
+                                <TableHead className="text-right text-gray-600 font-playfair">Prix</TableHead>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHeader>
+                        <TableBody>
+                            {purchases.map((purchase) => (
+                                <TableRow key={purchase.id} className="hover:bg-gray-50">
+                                    <TableCell>
+                                        <div className="flex items-center gap-3">
+                                            <div
+                                                className="w-12 h-12 rounded bg-cover bg-center"
+                                                style={{ backgroundImage: `url(${purchase.image})` }}
+                                            />
+                                            <a href={`/artworks/${purchase.id}`} className="font-playfair text-[#3a6b8f] hover:underline">
+                                                {purchase.title}
+                                            </a>
+                                        </div>
+                                    </TableCell>
+                                    <TableCell className="font-playfair text-gray-600">
+                                        {purchase.artist?.user?.name || "—"}
+                                    </TableCell>
+                                    <TableCell className="font-playfair text-gray-600">
+                                        {purchase.pivot?.purchased_at?.slice(0, 10) || "—"}
+                                    </TableCell>
+                                    <TableCell className="text-right font-playfair text-gray-800">
+                                        {purchase.pivot?.price} €
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                )}
             </CardContent>
         </Card>
     );

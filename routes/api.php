@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\StatsController;
@@ -87,6 +88,8 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/reservations/{reservation}/status', [ReservationController::class, 'getAvailableActions']);
         Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy']);
         Route::get('/reservations/{reservation}/total', [ReservationController::class, 'getTotal']);
+
+        Route::get('/purchases', [PurchaseController::class, 'index'])->middleware('auth:api');
     });
 
     Route::get('/users/{user}/stats', [StatsController::class, 'userStats']);
