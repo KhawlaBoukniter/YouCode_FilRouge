@@ -1,6 +1,7 @@
 import AuthLayout from "../components/AuthLayout";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../api"
 
 export default function Register() {
     const [firstName, setFirstName] = useState("");
@@ -13,48 +14,26 @@ export default function Register() {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-
-        if (token) {
-            navigate('/dashboard');
-        }
-    }, []);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrorMessage("");
+        setSuccessMessage("");
 
         try {
-            const response = await fetch('http://localhost:8000/api/register', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                },
-                body: JSON.stringify({
-                    name: `${firstName} ${lastName}`.trim(),
-                    email,
-                    password,
-                    role_id,
-                }),
+            const response = await api.post("/register", {
+                name: `${firstName} ${lastName}`.trim(),
+                email,
+                password,
+                role_id,
             });
 
             console.log("RAW RESPONSE:", response);
 
-            const data = await response.json();
+            const data = response.data;
             console.log(data);
 
 
-            if (!response.ok) {
-                setErrorMessage(data.message || "Erreur lors de l'inscription");
-                setSuccessMessage("");
-                return;
-            }
-
-            setErrorMessage("");
-            setSuccessMessage("Inscription réussie ! Redirection...s");
-
-            localStorage.setItem("token", data.token);
+            setSuccessMessage("Inscription réussie ! Redirection...");
 
             setTimeout(() => {
                 navigate('/login');
