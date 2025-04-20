@@ -34,10 +34,6 @@ export default function Profile({ user }) {
                                         <MailIcon className="h-4 w-4" />
                                         <span>{user.email}</span>
                                     </div>
-                                    <div className="flex items-center gap-2">
-                                        <MapPinIcon className="h-4 w-4" />
-                                        <span>location</span>
-                                    </div>
                                 </div>
                             </div>
 

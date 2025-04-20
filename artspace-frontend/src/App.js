@@ -26,6 +26,7 @@ import AdminStats from './pages/AdminStats';
 import AllEvents from './pages/AllEvents';
 import TicketReservation from './pages/TicketReservation';
 import ArtistPortfolioEditor from './pages/ArtistPortfolioEditor';
+import UserEdit from './pages/UserEdit';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
       <Route path='/user-dash' element={<UserDash />} />
       <Route path='/user/artworks/saved' element={<UserFavoriteArtworksPage />} />
       <Route path='/user/artworks/purchased' element={<UserPurchaseHistoryPage />} />
+      <Route path='/user/edit' element={<UserEdit />} />
 
       <Route path='/artworks/:id' element={<Artwork />} />
       <Route path='/artworks/create' element={<CreateArtwork />} />
