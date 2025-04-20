@@ -49,11 +49,11 @@ export default function UserFavoriteArtworksPage() {
                         Mes œuvres favorites
                     </h1>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <div className="">
                         {artworks.length === 0 ? (
                             <p className="text-center text-gray-500 font-playfair">Aucune œuvre sauvegardée.</p>
                         ) : (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 {artworks.map((artwork) => (
                                     <Card
                                         key={artwork.id}

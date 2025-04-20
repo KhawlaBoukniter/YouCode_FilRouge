@@ -48,13 +48,13 @@ export default function FavoriteArtworks({ user }) {
                 {favorites.length === 0 ? (
                     <p className="text-center text-gray-500 font-playfair">Aucune œuvre sauvegardée.</p>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {favorites.map((artwork) => (
                             <div
                                 key={artwork.id}
                                 className="relative h-64 rounded-lg overflow-hidden group"
                                 style={{
-                                    backgroundImage: `url(${artwork.image_url})`,
+                                    backgroundImage: `url(${artwork.image})`,
                                     backgroundSize: "cover",
                                     backgroundPosition: "center",
                                 }}

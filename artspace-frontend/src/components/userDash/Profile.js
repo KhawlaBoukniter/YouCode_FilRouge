@@ -29,7 +29,7 @@ export default function Profile({ user }) {
                                 <h2 className="text-2xl font-playfair text-gray-800">{user.name}</h2>
                                 <p className="text-gray-500 font-playfair mt-2">Rôle : {user.role_id === 2 ? "Artiste" : user.role_id === 3 ? "Visiteur" : "Admin"}</p>
 
-                                <div className="mt-4 flex flex-col sm:flex-row gap-4 text-gray-600 font-playfair">
+                                <div className="mt-4 flex md:flex-col flex-row gap-4 text-gray-600 font-playfair">
                                     <div className="flex items-center gap-2">
                                         <MailIcon className="h-4 w-4" />
                                         <span>{user.email}</span>
@@ -45,13 +45,13 @@ export default function Profile({ user }) {
                                 <a href="/user/edit">
                                     <Button variant="outline" className="h-10 bg-gray-100 rounded-lg text-gray-700">
                                         <PenSquareIcon className="w-4 h-4 mr-2 md:mr-0" />
-                                        <span className="md:hidden">Modifier</span>
+                                        <span className="">Modifier</span>
                                     </Button>
                                 </a>
                                 <a href="/login">
                                     <Button variant="outline" className="h-10 bg-red-50 text-red-600 rounded-lg">
                                         <LogOutIcon className="w-4 h-4 mr-2 md:mr-0" />
-                                        <span className="md:hidden">Déconnexion</span>
+                                        <span className="">Déconnexion</span>
                                     </Button>
                                 </a>
                             </div>

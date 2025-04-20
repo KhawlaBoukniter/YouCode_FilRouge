@@ -58,6 +58,7 @@ const Navbar = () => {
                         {isAuthenticated ? (
                             <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white hover:bg-gray-100 cursor-pointer">
                                 <SearchIcon className="w-5 h-5 text-[#3a6b8f]" />
+
                             </div>
                         ) : (
                             <>

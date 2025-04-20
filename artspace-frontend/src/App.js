@@ -42,7 +42,7 @@ function App() {
       <Route path='/user/artworks/saved' element={<UserFavoriteArtworksPage />} />
       <Route path='/user/artworks/purchased' element={<UserPurchaseHistoryPage />} />
 
-      <Route path='/artworks/:artwork' element={<Artwork />} />
+      <Route path='/artworks/:id' element={<Artwork />} />
       <Route path='/artworks/create' element={<CreateArtwork />} />
       <Route path='/artworks/edit/:id' element={<CreateArtwork />} />
 
