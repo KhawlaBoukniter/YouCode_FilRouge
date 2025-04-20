@@ -49,7 +49,7 @@ export default function FavoriteArtworks({ user }) {
                     <p className="text-center text-gray-500 font-playfair">Aucune œuvre sauvegardée.</p>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {favorites.map((artwork) => (
+                        {favorites.slice(0, 3).map((artwork) => (
                             <div
                                 key={artwork.id}
                                 className="relative h-64 rounded-lg overflow-hidden group"

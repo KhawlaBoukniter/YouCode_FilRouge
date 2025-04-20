@@ -55,7 +55,7 @@ export default function PurchaseHistory({ user }) {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {purchases.map((purchase) => (
+                            {purchases.slice(0, 3).map((purchase) => (
                                 <TableRow key={purchase.id} className="hover:bg-gray-50">
                                     <TableCell>
                                         <div className="flex items-center gap-3">
