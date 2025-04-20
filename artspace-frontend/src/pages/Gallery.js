@@ -3,12 +3,13 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import HeroSection from '../components/gallery/HeroSection';
 import ArtPieceSection from '../components/gallery/ArtPieceSection';
-import CategoriesSection from '../components/gallery/CategoriesSection';
 import FeaturedCollection from '../components/gallery/FeaturedCollection';
 import api from "../api";
 
 export default function Gallery() {
     const [allArtworks, setAllArtworks] = useState([]);
+    console.log(allArtworks);
+
 
     const [selectedArtist, setSelectedArtist] = useState("Tous");
 
@@ -16,7 +17,7 @@ export default function Gallery() {
         const fetchArtworks = async () => {
             try {
                 const res = await api.get('/artworks');
-                setAllArtworks(res.data.artworks || []);
+                setAllArtworks(res.data.artworks.data || []);
             } catch (err) {
                 console.log('Erreur: ', err);
 
@@ -27,15 +28,14 @@ export default function Gallery() {
 
     const filteredArtworks = selectedArtist === "Tous"
         ? allArtworks
-        : allArtworks.filter((artwork) => artwork.artist === selectedArtist);
+        : allArtworks.filter((artwork) => artwork.artist?.user?.name === selectedArtist);
 
-    const uniqueArtists = ["Tous", ...new Set(allArtworks.map(a => a.artist))];
+    const uniqueArtists = ["Tous", ...new Set(allArtworks.map(a => a.artist?.user?.name))];
 
     return (
         <main className="flex flex-col w-full">
             <Navbar />
             <HeroSection />
-            <CategoriesSection />
             <div className="flex justify-center flex-wrap gap-4 my-8">
                 {uniqueArtists.map((artist, i) => (
                     <button
