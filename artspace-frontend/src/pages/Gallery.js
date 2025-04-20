@@ -1,81 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import HeroSection from '../components/gallery/HeroSection';
 import ArtPieceSection from '../components/gallery/ArtPieceSection';
 import CategoriesSection from '../components/gallery/CategoriesSection';
 import FeaturedCollection from '../components/gallery/FeaturedCollection';
+import api from "../api";
 
 export default function Gallery() {
+    const [allArtworks, setAllArtworks] = useState([]);
 
     const [selectedArtist, setSelectedArtist] = useState("Tous");
 
-    const allArtworks = [
-        {
-            id: 1,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-1.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-        {
-            id: 2,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-        {
-            id: 3,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-2.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-        {
-            id: 4,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-3.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-        {
-            id: 5,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-4.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-        {
-            id: 6,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-5.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-        {
-            id: 5,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-4.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-        {
-            id: 6,
-            image: "https://c.animaapp.com/m94sczdf69r2y6/img/img-5.png",
-            title: "Abstraction en Mouvement",
-            artist: "Par Marie Laurent",
-            price: "€2,500",
-            featured: true,
-        },
-    ];
+    useEffect(() => {
+        const fetchArtworks = async () => {
+            try {
+                const res = await api.get('/artworks');
+                setAllArtworks(res.data.artworks || []);
+            } catch (err) {
+                console.log('Erreur: ', err);
+
+            }
+        };
+        fetchArtworks();
+    }, []);
 
     const filteredArtworks = selectedArtist === "Tous"
         ? allArtworks
