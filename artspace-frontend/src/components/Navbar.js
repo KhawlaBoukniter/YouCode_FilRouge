@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Button from "./ui/button";
 import logo from "../assets/logos/logo_artspace.png";
-import { SearchIcon, MenuIcon, XIcon } from "lucide-react";
+import { MenuIcon, XIcon } from "lucide-react";
+import api from "../api";
 
 const navItems = [
     { name: "Accueil", path: "/" },
@@ -17,8 +18,37 @@ const Navbar = () => {
     const location = useLocation();
     const isAuthenticated = localStorage.getItem("token");
     const [menuOpen, setMenuOpen] = useState(false);
+    const [user, setUser] = useState(null);
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) return;
+
+                const res = await api.get('/me', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                setUser(res.data.user);
+            } catch (err) {
+                console.log('Erreur: ', err);
+
+            }
+        };
+        fetchUser();
+    }, []);
+
+    const dashRoute = () => {
+        if (!user) return "/";
+        if (user.role_id == 1) return "/admin-dash";
+        if (user.role_id == 2) return "/artist-dash";
+        return "/user-dash";
+    }
 
     return (
         <div className="bg-[#ffffff8f] border-b border-gray-100 w-full fixed top-0 z-50">
@@ -55,11 +85,14 @@ const Navbar = () => {
 
                     {/* Auth Buttons */}
                     <div className="hidden md:flex items-center space-x-4">
-                        {isAuthenticated ? (
-                            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white hover:bg-gray-100 cursor-pointer">
-                                <SearchIcon className="w-5 h-5 text-[#3a6b8f]" />
-
-                            </div>
+                        {isAuthenticated && user ? (
+                            <Link to={dashRoute()}>
+                                <img
+                                    src={user.avatar || "/default-avatar.png"}
+                                    alt="Avatar"
+                                    className="w-10 h-10 rounded-full object-cover border border-gray-300 hover:shadow-md transition"
+                                />
+                            </Link>
                         ) : (
                             <>
                                 <Link to="/login">
@@ -108,10 +141,14 @@ const Navbar = () => {
                         })}
 
                         <div className="flex flex-col w-full gap-4 px-4 pt-4">
-                            {isAuthenticated ? (
-                                <div className="flex justify-start">
-                                    <SearchIcon className="w-6 h-6 text-[#3a6b8f]" />
-                                </div>
+                            {isAuthenticated && user ? (
+                                <Link to={dashRoute()} className="w-full">
+                                    <img
+                                        src={user.avatar || "/default-avatar.png"}
+                                        alt="Avatar"
+                                        className="w-10 h-10 rounded-full object-cover border border-gray-300 hover:shadow-md transition"
+                                    />
+                                </Link>
                             ) : (
                                 <>
                                     <Link to="/login" className="w-full">
