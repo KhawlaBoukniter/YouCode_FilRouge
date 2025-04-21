@@ -27,7 +27,7 @@ class TicketRequest extends FormRequest
             'type' => 'required|in:vip,standard,free',
             'price' => 'nullable|numeric|min:0',
             'description' => 'nullable|string',
-            'status' => 'required|in:available,paid,cancelled'
+            'status' => 'required|in:available,sold_out,disabled'
         ];
     }
 
@@ -41,7 +41,7 @@ class TicketRequest extends FormRequest
             'type.required' => "Le type de ticket est requis.",
             'type.in' => "Le type de ticket doit être vip, standard ou free.",
             'price.numeric' => "Le prix doit être un nombre.",
-            'status.in' => "Le statut doit être disponible, payé ou annulé.",
+            'status.in' => "Le statut doit être available, sold_out ou disabled.",
         ];
     }
 }

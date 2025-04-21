@@ -32,7 +32,8 @@ class EventController extends Controller
     public function show(Event $event)
     {
         return response()->json([
-            'event' => $event
+            'event' => $event,
+            'tickets' => $event->tickets,
         ]);
     }
 

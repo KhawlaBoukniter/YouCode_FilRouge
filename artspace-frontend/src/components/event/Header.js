@@ -3,20 +3,14 @@ import { Card, CardContent } from "../ui/card";
 import { CalendarIcon, MapPinIcon } from "lucide-react";
 import Button from "../ui/button";
 
-export default function Header() {
-    const event = {
-        title: "Art Expo 2025",
-        date: "15 Mai 2025",
-        location: "Musée d'Art Moderne, Paris",
-        image: "https://c.animaapp.com/m9y8ql4xx8o8m6/img/img-4.png",
-    };
+export default function Header({ event }) {
 
     return (
         <Card className="rounded-2xl shadow-md">
             <CardContent className="p-6 md:p-8 flex flex-col md:flex-row gap-8">
                 <div className="w-full md:w-1/2 h-64 md:h-96 overflow-hidden rounded-lg">
                     <img
-                        src={event.image}
+                        src={event.poster}
                         alt={event.title}
                         className="w-full h-full object-cover rounded-lg"
                     />
@@ -28,7 +22,7 @@ export default function Header() {
 
                         <div className="flex items-center gap-2 text-gray-600 font-playfair">
                             <CalendarIcon className="h-5 w-5" />
-                            <span>{event.date}</span>
+                            <span>{event.start_date}</span> To <span>{event.end_date}</span>
                         </div>
 
                         <div className="flex items-center gap-2 text-gray-600 font-playfair">

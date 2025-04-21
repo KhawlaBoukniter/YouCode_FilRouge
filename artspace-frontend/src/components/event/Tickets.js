@@ -2,27 +2,7 @@ import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import Button from "../ui/button";
 
-export default function Tickets() {
-    const tickets = [
-        {
-            id: 1,
-            type: "Entrée Standard",
-            price: "€15",
-            description: "Accès général à l'exposition pour toute la journée.",
-        },
-        {
-            id: 2,
-            type: "Pass VIP",
-            price: "€40",
-            description: "Accès prioritaire + visite guidée privée + accès aux coulisses.",
-        },
-        {
-            id: 3,
-            type: "Entrée Étudiant",
-            price: "€8",
-            description: "Billet à tarif réduit pour les étudiants avec carte valide.",
-        },
-    ];
+export default function Tickets({ tickets }) {
 
     return (
         <section id="tickets">
@@ -51,8 +31,9 @@ export default function Tickets() {
                                         <Button
                                             variant="outline"
                                             className="bg-white border-gray-300 hover:bg-gray-100 text-gray-800 font-playfair"
+                                            disabled={ticket.status !== "available"}
                                         >
-                                            Réserver
+                                            {ticket.status === "available" ? "Réserver" : "Non disponible"}
                                         </Button>
                                     </a>
                                 </div>
