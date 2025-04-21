@@ -35,7 +35,7 @@ function App() {
       <Route path="/museum/:roomId" element={<Museum3D />} />
       <Route path='/register' element={<Register />} /> {/* à revoir */}
       <Route path='/login' element={<Login />} /> {/* à revoir */}
-      <Route path='/about' element={<About />} />
+      <Route path='/about' element={<About />} /> {/* done */}
       <Route path='/gallery' element={<Gallery />} /> {/* done */}
       <Route path='/contact' element={<Contact />} />
 
