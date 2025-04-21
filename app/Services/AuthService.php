@@ -43,6 +43,12 @@ class AuthService
         }
 
         $user = Auth::user();
+
+        if ($user->role_id == '2' && $user->artist->is_validated === false) {
+            Auth::logout();
+            return 'Non validé';
+        }
+
         $token = $user->createToken('auth_token')->accessToken;
 
         return [

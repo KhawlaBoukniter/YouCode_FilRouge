@@ -31,7 +31,7 @@ import UserEdit from './pages/UserEdit';
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<HomePage />} /> {/* done */}
       <Route path="/museum/:roomId" element={<Museum3D />} />
       <Route path='/register' element={<Register />} /> {/* à revoir */}
       <Route path='/login' element={<Login />} /> {/* à revoir */}
@@ -48,7 +48,7 @@ function App() {
       <Route path='/artworks/create' element={<CreateArtwork />} />
       <Route path='/artworks/edit/:id' element={<CreateArtwork />} />
 
-      <Route path='/events/:id' element={<EventDetails />} />
+      <Route path='/events/:id' element={<EventDetails />} /> {/* done */}
       <Route path='/events/create' element={<CreateEvent />} />
       <Route path='/events' element={<AllEvents />} /> {/* done */}
 

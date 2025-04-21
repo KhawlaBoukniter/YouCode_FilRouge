@@ -47,7 +47,12 @@ export default function Login() {
             }, 2000);
 
         } catch (error) {
-            setErrorMessage("Erreur : " + error.message);
+            if (error.response && error.response.status === 403) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage("Erreur : " + error.message);
+            }
+
         }
     };
 

@@ -32,6 +32,12 @@ class AuthController extends Controller
     {
         $data = $this->authService->login($request->validated());
 
+        if ($data === 'Non validé') {
+            return response()->json([
+                'message' => "Votre compte artiste n'est pas encore validé par l'administration"
+            ], 403);
+        }
+
         if (!$data) {
             return response()->json([
                 'message' => 'Identifiants invalides'
