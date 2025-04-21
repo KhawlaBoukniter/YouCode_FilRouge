@@ -34,12 +34,12 @@ export default function Login() {
 
             localStorage.setItem("token", data.token);
 
-            const role = data.user?.role?.name || "";
+            const roleId = data.user?.role_id;
 
             setTimeout(() => {
-                if (role === "admin") {
+                if (roleId === 1) {
                     navigate('/admin-dash');
-                } else if (role === "artist") {
+                } else if (roleId === 2) {
                     navigate('/artist-dash');
                 } else {
                     navigate('/user-dash');

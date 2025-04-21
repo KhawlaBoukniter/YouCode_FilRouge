@@ -14,8 +14,6 @@ export default function UserDash() {
 
     const { user } = auth;
 
-    console.log(user);
-
     if (!user) return <p>Chargement...</p>;
 
     return (
