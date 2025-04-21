@@ -8,21 +8,11 @@ import ImageUpload from "../ui/ImageUpload";
 import Toast from "../ui/toast";
 
 export default function ArtworkForm({ mode = "create", initialData = null }) {
-    const dimensionFields = [
-        { id: "width", label: "Largeur" },
-        { id: "height", label: "Hauteur" },
-        { id: "depth", label: "Profondeur" },
-    ];
 
     const [formData, setFormData] = useState({
         title: "",
         description: "",
-        category: "",
-        width: "",
-        height: "",
-        depth: "",
-        year: "",
-        tags: [],
+        price: "",
         image: null,
     });
 
@@ -51,19 +41,8 @@ export default function ArtworkForm({ mode = "create", initialData = null }) {
 
         if (!formData.title.trim()) newErr.title = "Le titre est obligatoire";
         if (!formData.description.trim()) newErr.description = "La description est obligatoire";
-        if (!formData.category) newErr.category = "La catégorie est obligatoire";
+        if (!formData.price || isNaN(formData.price) || +formData.price < 0) newErr.price = "Prix invalide";
         if (!formData.image) newErr.image = "L'image  de l'oeuvre est obligatoire";
-
-        ["width", "height", "depth"].forEach(dimension => {
-            if (formData[dimension] && (isNaN(formData[dimension]) || formData[dimension] <= 0)) {
-                newErr[dimension] = `La ${dimension} doit etre un nombre positif`;
-            }
-        });
-
-        if (formData.year && (isNaN(formData.year) || formData.year < 1900 || formData.year > new Date().getFullYear())) {
-            newErr.year = "Veuillez entrer une année valide";
-        }
-
         return newErr;
     };
 
@@ -88,12 +67,7 @@ export default function ArtworkForm({ mode = "create", initialData = null }) {
                 setFormData({
                     title: "",
                     description: "",
-                    category: "",
-                    width: "",
-                    height: "",
-                    depth: "",
-                    year: "",
-                    tags: [],
+                    price: "",
                     image: null,
                 });
 
@@ -122,54 +96,15 @@ export default function ArtworkForm({ mode = "create", initialData = null }) {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm text-gray-600 font-cormorant">Catégorie</label>
-                        <Select value={formData.category} onChange={(e) => handleChange("category", e.target.value)} >
-                            <SelectOption value="">Choisie une catégorie</SelectOption>
-                            <SelectOption value="peinture">Peinture</SelectOption>
-                            <SelectOption value="illustration">Illustration</SelectOption>
-                            <SelectOption value="photographie">Photographie</SelectOption>
-                            <SelectOption value="art-numerique">Art numérique</SelectOption>
-                        </Select>
-                        {errors.category && <p className="text-red-500 text-sm">{errors.category}</p>}
+                        <label className="text-sm text-gray-600 font-cormorant">Prix (€)</label>
+                        <Input type="number" step="0.01" min="0" placeholder="0.00" value={formData.price} onChange={(e) => handleChange("price", e.target.value)} />
+                        {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
                     </div>
                 </div>
 
                 <div className="pt-7">
                     <ImageUpload ref={imageUploadRef} onFileSelect={handleFileSelect} />
                     {errors.image && <p className="text-red-500 text-sm mt-2">{errors.image}</p>}
-                </div>
-            </div>
-
-            <div className="border-t border-gray-100 pt-8 space-y-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div className="space-y-2">
-                        <label className="text-sm text-gray-600 font-cormorant">Dimensions</label>
-                        <div className="grid grid-cols-3 gap-4">
-                            {dimensionFields.map((field) => (
-                                <div key={field.id}>
-                                    <Input
-                                        type="number"
-                                        min="0"
-                                        placeholder={field.label}
-                                        value={formData[field.id]}
-                                        onChange={(e) => handleChange(field.id, e.target.value)}
-                                    />
-                                    {errors[field.id] && <p className="text-red-500 text-sm">{errors[field.id]}</p>}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="space-y-2">
-                        <label className="text-sm text-gray-600 font-cormorant">Année de création</label>
-                        <Input type="number" min="1900" placeholder="2025" value={formData.year} onChange={(e) => handleChange("year", e.target.value)} />
-                        {errors.year && <p className="text-red-500 text-sm">{errors.year}</p>}
-                    </div>
-                </div>
-
-                <div className="space-y-2">
-                    <label className="text-sm text-gray-600 font-cormorant">Tags</label>
-                    <Tags placeholder="Ajoutez des tags séparés par des virgules" value={formData.tags} onChange={(tags) => handleChange("tags", tags)} />
                 </div>
             </div>
 
