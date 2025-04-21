@@ -8,7 +8,7 @@ class EventRepository
 {
     public function getAll(array $filters = [])
     {
-        $query = Event::query()->latest();
+        $query = Event::withCount('reservations')->latest();
 
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {

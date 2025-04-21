@@ -27,4 +27,9 @@ class Event extends Model
     {
         return $this->hasMany(Ticket::class);
     }
+
+    public function reservations()
+    {
+        return $this->hasManyThrough(Reservation::class, Ticket::class, 'event_id', 'ticket_id', 'id', 'id');
+    }
 }

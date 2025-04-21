@@ -1,39 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Eye, Trash2, Edit } from "lucide-react";
+import api from "../../api";
 
-export default function RecentArtworks() {
-    const artworks = [
-        {
-            id: 1,
-            title: "Néomorphisme #12",
-            type: "Sculpture digitale",
-            year: 2025,
-            views: 234,
-            status: "Validée",
-            image:
-                "https://c.animaapp.com/m9yin6yxq1kM86/img/img-1.png",
-        },
-        {
-            id: 2,
-            title: "Géométrie Fluide",
-            type: "Installation",
-            year: 2025,
-            views: 128,
-            status: "En attente",
-            image:
-                "https://c.animaapp.com/m9yin6yxq1kM86/img/img-2.png",
-        },
-        {
-            id: 3,
-            title: "Néon Dreams",
-            type: "Art numérique",
-            year: 2025,
-            views: 456,
-            status: "Validée",
-            image:
-                "https://c.animaapp.com/m9yin6yxq1kM86/img/img-3.png",
-        },
-    ];
+export default function RecentArtworks({ user }) {
+    const [artworks, setArtworks] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        const fetchArtworks = async () => {
+            try {
+                const res = await api.get("/my-artworks");
+                setArtworks(res.data.artworks?.data || []);
+                setLoading(false);
+            } catch (err) {
+                console.error("Erreur:", err);
+                setError("Erreur");
+                setLoading(false);
+            }
+        };
+
+        fetchArtworks();
+    }, []);
+
+    if (loading) return <p>Chargement des œuvres récentes...</p>;
+    if (error) return <p className="text-red-500">{error}</p>;
 
     return (
         <div className="space-y-6">
@@ -47,7 +38,7 @@ export default function RecentArtworks() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {artworks.map((artwork) => (
+                {artworks.slice(0, 3).map((artwork) => (
                     <div
                         key={artwork.id}
                         className="bg-black/30 rounded-xl overflow-hidden border border-gray-800 flex flex-col justify-between"
@@ -56,32 +47,13 @@ export default function RecentArtworks() {
                             className="h-64 bg-cover bg-center relative"
                             style={{ backgroundImage: `url(${artwork.image})` }}
                         >
-                            <div
-                                className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold"
-                                style={{
-                                    backgroundColor:
-                                        artwork.status === "Validée" ? "#34d39933" : "#fbbf2433",
-                                    color:
-                                        artwork.status === "Validée" ? "#10b981" : "#f59e0b",
-                                }}
-                            >
-                                {artwork.status}
-                            </div>
                         </div>
 
                         <div className="p-4 space-y-2">
                             <h3 className="text-gray-200 font-semibold">
                                 {artwork.title}
                             </h3>
-                            <p className="text-[#374151] text-sm">
-                                {artwork.type}, {artwork.year}
-                            </p>
                             <div className="flex items-center justify-between text-[#374151] text-sm">
-                                <div className="flex items-center gap-1">
-                                    <Eye className="w-4 h-4" />
-                                    {artwork.views} vues
-                                </div>
-
                                 <div className="flex items-center gap-2">
                                     <a href={`/artworks/edit/${artwork.id}`} className="hover:text-blue-700">
                                         <Edit className="w-4 h-4" />

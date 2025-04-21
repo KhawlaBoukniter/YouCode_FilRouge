@@ -59,7 +59,10 @@ class AuthService
 
     public function me()
     {
-        return Auth::user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        return $user->load('artist');
     }
 
     public function logout()

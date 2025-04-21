@@ -1,25 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CalendarIcon, ClockIcon, UsersIcon } from "lucide-react";
+import api from "../../api";
 
-export default function UpcomingEvents() {
-    const events = [
-        {
-            id: 1,
-            title: "Exposition Virtuelle: Métamorphoses",
-            description: "Une exploration des transformations digitales",
-            date: "15 Mars 2025",
-            time: "19:00",
-            attendees: 45,
-        },
-        {
-            id: 2,
-            title: "Workshop: Création 3D",
-            description: "Techniques avancées de modélisation",
-            date: "22 Mars 2025",
-            time: "14:00",
-            attendees: 28,
-        },
-    ];
+export default function UpcomingEvents({ user }) {
+
+    const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        console.log(user.artist);
+        console.log(user);
+
+
+        const fetchEvents = async () => {
+            try {
+                const res = await api.get("/all-events");
+                const now = new Date();
+
+                console.log(res.data.events.data);
+
+
+                console.log(events);
+
+
+                const filtered = (res.data.events?.data || []).filter(event =>
+                    user?.artist?.id && event.artist_id === user.artist.id && new Date(event.start_date) >= now
+                );
+
+                console.log(filtered);
+
+
+                setEvents(filtered);
+                setLoading(false);
+            } catch (err) {
+                console.error("Erreur:", err);
+                setError("Erreur.");
+                setLoading(false);
+            }
+        };
+
+        fetchEvents();
+    }, [user]);
+
+    if (loading) return <p>Chargement des événements...</p>;
+    if (error) return <p className="text-red-500">{error}</p>;
 
     return (
         <div className="space-y-6 mt-12">
@@ -36,7 +61,7 @@ export default function UpcomingEvents() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {events.map((event) => (
+                {events.length > 0 ? events.map((event) => (
                     <a
                         href={`/events/${event.id}`}
                         className="bg-black/30 rounded-xl p-6 border border-gray-800 block hover:shadow-lg transition"
@@ -46,19 +71,21 @@ export default function UpcomingEvents() {
                         <div className="flex items-center gap-4 mt-4 text-[#374151] text-sm">
                             <div className="flex items-center gap-1">
                                 <CalendarIcon size={16} className="text-[#374151]" />
-                                <span>{event.date}</span>
+                                <span>{new Date(event.start_date).toLocaleDateString("fr-FR")}</span>
                             </div>
                             <div className="flex items-center gap-1">
                                 <ClockIcon size={16} className="text-[#374151]" />
-                                <span>{event.time}</span>
+                                <span>{new Date(event.start_date).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}</span>
                             </div>
                             <div className="flex items-center gap-1">
                                 <UsersIcon size={16} className="text-[#374151]" />
-                                <span>{event.attendees} inscrits</span>
+                                <span>{event.reservations_count} inscrits</span>
                             </div>
                         </div>
                     </a>
-                ))}
+                )) : (
+                    <p className="text-gray-600">Aucun événement à venir</p>
+                )}
             </div>
         </div>
     );
