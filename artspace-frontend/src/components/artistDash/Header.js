@@ -1,11 +1,11 @@
 import React from "react";
 
-export default function Header() {
+export default function Header({ user }) {
     return (
         <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-center">
             <div>
                 <h1 className="text-3xl font-playfair text-gray-800 mb-2 md:mb-0">
-                    Bienvenue, Artiste
+                    Bienvenue, {user?.name ?? "Artiste"}
                 </h1>
                 <p className="text-gray-600 font-playfair text-base">
                     Gérez vos œuvres et événements
