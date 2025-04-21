@@ -4,6 +4,8 @@ import { CalendarIcon, MapPinIcon } from "lucide-react";
 import Button from "../ui/button";
 
 export default function Header({ event }) {
+    const currentUserId = +localStorage.getItem("userId");
+    const isOwner = event.artist?.user?.id === currentUserId;
 
     return (
         <Card className="rounded-2xl shadow-md">
@@ -31,12 +33,21 @@ export default function Header({ event }) {
                         </div>
                     </div>
 
-                    <div className="mt-6">
-                        <a href="#tickets">
-                            <Button className="h-12 w-full md:w-auto bg-[#3a6b8f] text-white rounded-lg font-playfair hover:bg-[#345c78] transition">
-                                Réserver un ticket
-                            </Button>
-                        </a>
+                    <div className="mt-6 flex gap-4 flex-wrap">
+                        {isOwner ? (
+                            <>
+                                <a href={`/events/${event.id}/edit`}>
+                                    <Button className="bg-yellow-500 text-white">Modifier</Button>
+                                </a>
+                                <Button className="bg-red-500 text-white">Supprimer</Button>
+                            </>
+                        ) : (
+                            <a href="#tickets">
+                                <Button className="h-12 w-full md:w-auto bg-[#3a6b8f] text-white rounded-lg font-playfair hover:bg-[#345c78] transition">
+                                    Réserver un ticket
+                                </Button>
+                            </a>
+                        )}
                     </div>
                 </div>
             </CardContent>
