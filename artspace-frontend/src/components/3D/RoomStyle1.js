@@ -82,7 +82,7 @@ export default function RoomStyle1({ position = [0, 0, 0], controlsRef }) {
                 <meshStandardMaterial color={'#fffbe6'} emissive={'#ffe'} emissiveIntensity={1.5} />
             </mesh>
 
-            <Environment preset="city" />
+            <Environment files="/hdri/potsdamer_platz_1k.hdr" background />
 
             {/* Éclairage global */}
             <ambientLight intensity={0.8} color="#eae5dc" />

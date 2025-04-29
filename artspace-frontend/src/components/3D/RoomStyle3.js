@@ -106,7 +106,7 @@ export default function RoomStyle3({ position = [0, 0, 0], controlsRef }) {
                 </group>
             ))}
 
-            <Environment preset="city" />
+            <Environment files="/hdri/empty_warehouse_01_1k.hdr" background />
 
             {/* Bandes LED intégrées dans les coins du sol en doré clair */}
             {[
