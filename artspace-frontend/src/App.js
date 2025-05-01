@@ -54,7 +54,7 @@ function App() {
 
       <Route path='/artist-dash' element={<ArtistDash />} /> {/* à revoir section events */}
       <Route path='/artist/artworks' element={<ArtistArtworks />} /> {/* done */}
-      <Route path='/artist/events' element={<ArtistEvents />} /> {/* en cours */}
+      <Route path='/artist/events' element={<ArtistEvents />} /> {/* done */}
       <Route path='/artist/:id/portfolio' element={<Portfolio />} />
       <Route path='/artist/:id/portfolio/editor' element={<ArtistPortfolioEditor />} />
 

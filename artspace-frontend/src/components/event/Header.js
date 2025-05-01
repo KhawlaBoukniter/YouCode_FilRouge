@@ -4,7 +4,7 @@ import { CalendarIcon, MapPinIcon } from "lucide-react";
 import Button from "../ui/button";
 
 export default function Header({ event }) {
-    const currentUserId = +localStorage.getItem("userId");
+    const currentUserId = +localStorage.getItem("user_id");
     const isOwner = event.artist?.user?.id === currentUserId;
 
     return (
