@@ -33,6 +33,7 @@ export default function Login() {
             setSuccessMessage("Connexion réussie! Redirection...");
 
             localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
 
             const roleId = data.user?.role_id;
 

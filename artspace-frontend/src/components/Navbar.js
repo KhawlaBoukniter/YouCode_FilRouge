@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "./ui/button";
 import logo from "../assets/logos/logo_artspace.png";
-import { MenuIcon, XIcon } from "lucide-react";
+import { MenuIcon, XIcon, LogOutIcon } from "lucide-react";
 import api from "../api";
 
 const navItems = [
@@ -16,9 +16,15 @@ const navItems = [
 
 const Navbar = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const isAuthenticated = localStorage.getItem("token");
     const [menuOpen, setMenuOpen] = useState(false);
     const [user, setUser] = useState(null);
+
+    const filteredNavItems = navItems.filter((item) => {
+        if (!user || user.role_id === 3) return true;
+        return item.name !== "Galerie" && item.name !== "Evenements";
+    })
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -48,7 +54,14 @@ const Navbar = () => {
         if (user.role_id == 1) return "/admin-dash";
         if (user.role_id == 2) return "/artist-dash";
         return "/user-dash";
-    }
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setUser(null);
+        navigate("/");
+    };
 
     return (
         <div className="bg-[#ffffff8f] border-b border-gray-100 w-full fixed top-0 z-50">
@@ -66,7 +79,7 @@ const Navbar = () => {
 
                     {/* Desktop Menu */}
                     <nav className="hidden md:flex items-center space-x-8">
-                        {navItems.map((item) => {
+                        {filteredNavItems.map((item) => {
                             const isActive = location.pathname === item.path;
                             return (
                                 <Link
@@ -86,13 +99,19 @@ const Navbar = () => {
                     {/* Auth Buttons */}
                     <div className="hidden md:flex items-center space-x-4">
                         {isAuthenticated && user ? (
-                            <Link to={dashRoute()}>
-                                <img
-                                    src={user.avatar || "/default-avatar.png"}
-                                    alt="Avatar"
-                                    className="w-10 h-10 rounded-full object-cover border border-gray-300 hover:shadow-md transition"
-                                />
-                            </Link>
+                            <>
+                                <Link to={dashRoute()}>
+
+                                    <img
+                                        src={user.avatar || "/default-avatar.png"}
+                                        alt="Avatar"
+                                        className="w-10 h-10 rounded-full object-cover border border-gray-300 hover:shadow-md transition"
+                                    />
+                                </Link>
+                                <button onClick={handleLogout} title="Se déconnecter">
+                                    <LogOutIcon className="w-6 h-6 hover:text-red-500 transition" />
+                                </button>
+                            </>
                         ) : (
                             <>
                                 <Link to="/login">

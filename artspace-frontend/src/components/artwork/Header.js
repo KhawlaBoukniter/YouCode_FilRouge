@@ -33,12 +33,18 @@ export default function Header({ artwork, isSaved, isLiked, canEdit, canDelete, 
         }
     };
 
+    const imageUrl = (image) => {
+        return image.startsWith("http")
+            ? image
+            : `http://localhost:8000${image}`;
+    };
+
     return (
         <Card className="rounded-2xl shadow-md">
             <CardContent className="p-6 md:p-8 flex flex-col md:flex-row gap-8">
                 <div className="w-full md:w-1/2 h-64 md:h-96 overflow-hidden rounded-lg">
                     <img
-                        src={artwork.image}
+                        src={imageUrl(artwork.image)}
                         alt={artwork.title}
                         className="w-full h-full object-cover rounded-lg"
                     />
@@ -49,22 +55,25 @@ export default function Header({ artwork, isSaved, isLiked, canEdit, canDelete, 
                         <h1 className="text-3xl font-playfair text-gray-800">{artwork.title}</h1>
                         <h2 className="text-lg font-playfair text-gray-500">by {artwork.artist?.user?.name}</h2>
 
-                        <div className="flex items-center gap-6 mt-4">
-                            <button
-                                onClick={toggleLike}
-                                className={`flex items-center gap-2 font-playfair transition-colors ${liked ? "text-[#e63946]" : "text-gray-600 hover:text-[#e63946]"}`}
-                            >
-                                <HeartIcon className="h-5 w-5" />
-                                <span>{likes}</span>
-                            </button>
-                            <button
-                                onClick={toggleSave}
-                                className={`flex items-center gap-2 font-playfair transition-colors ${saved ? "text-[#f4a261]" : "text-gray-600 hover:text-[#f4a261]"}`}
-                            >
-                                <BookmarkIcon className="h-5 w-5" />
-                                <span>{saved ? "Enregistrée" : "Enregistrer"}</span>
-                            </button>
-                        </div>
+                        {!canEdit && (
+                            <div className="flex items-center gap-6 mt-4">
+                                <button
+                                    onClick={toggleLike}
+                                    className={`flex items-center gap-2 font-playfair transition-colors ${liked ? "text-[#e63946]" : "text-gray-600 hover:text-[#e63946]"}`}
+                                >
+                                    <HeartIcon className="h-5 w-5" />
+                                    <span>{likes}</span>
+                                </button>
+                                <button
+                                    onClick={toggleSave}
+                                    className={`flex items-center gap-2 font-playfair transition-colors ${saved ? "text-[#f4a261]" : "text-gray-600 hover:text-[#f4a261]"}`}
+                                >
+                                    <BookmarkIcon className="h-5 w-5" />
+                                    <span>{saved ? "Enregistrée" : "Enregistrer"}</span>
+                                </button>
+                            </div>
+                        )}
+
 
                         <div className="mt-6">
                             <p className="text-2xl font-playfair text-[#3a6b8f]">{artwork.price}</p>
@@ -86,18 +95,19 @@ export default function Header({ artwork, isSaved, isLiked, canEdit, canDelete, 
                         </div>
                     )}
 
-                    <div className="mt-6">
-                        <a href={`/checkout/${artwork.id}`}>
-                            <Button
-                                disabled={isPurchased}
-                                className={`h-12 w-full md:w-auto rounded-lg font-playfair text-base transition 
-        ${isPurchased ? "bg-gray-300 text-gray-600 cursor-not-allowed" : "bg-[#3a6b8f] text-white hover:bg-[#345c78]"}`}
-                            >
-                                {isPurchased ? "Déjà achetée" : "Acheter"}
-                            </Button>
-
-                        </a>
-                    </div>
+                    {!canEdit && (
+                        <div className="mt-6">
+                            <a href={`/checkout/${artwork.id}`}>
+                                <Button
+                                    disabled={isPurchased}
+                                    className={`h-12 w-full md:w-auto rounded-lg font-playfair text-base transition 
+                                        ${isPurchased ? "bg-gray-300 text-gray-600 cursor-not-allowed" : "bg-[#3a6b8f] text-white hover:bg-[#345c78]"}`}
+                                >
+                                    {isPurchased ? "Déjà achetée" : "Acheter"}
+                                </Button>
+                            </a>
+                        </div>
+                    )}
                 </div>
             </CardContent>
         </Card >

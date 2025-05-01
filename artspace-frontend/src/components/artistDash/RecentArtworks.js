@@ -61,6 +61,9 @@ export default function RecentArtworks({ user }) {
                             </h3>
                             <div className="flex items-center justify-between text-[#374151] text-sm">
                                 <div className="flex items-center gap-2">
+                                    <a href={`/artworks/${artwork.id}`} className="hover:text-green-600">
+                                        <Eye className="w-4 h-4" />
+                                    </a>
                                     <a href={`/artworks/edit/${artwork.id}`} className="hover:text-blue-700">
                                         <Edit className="w-4 h-4" />
                                     </a>

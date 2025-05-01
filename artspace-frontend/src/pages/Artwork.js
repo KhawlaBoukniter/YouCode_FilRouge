@@ -21,7 +21,6 @@ export default function Artwork() {
 
     console.log(typeof id);
 
-
     useEffect(() => {
         const fetchArtwork = async () => {
             try {
