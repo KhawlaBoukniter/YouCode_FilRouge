@@ -6,6 +6,7 @@ use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use App\Services\EventService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class EventController extends Controller
@@ -108,6 +109,15 @@ class EventController extends Controller
         return response()->json([
             'message' => 'Evenement restoré avec succès.',
             'event' => $event
+        ]);
+    }
+
+    public function artistEvents(Request $request)
+    {
+        $userId = Auth::id();
+
+        return response()->json([
+            'events' => $this->eventService->getByArtist($userId),
         ]);
     }
 }

@@ -58,6 +58,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/my-stats', [ArtworkController::class, 'myStats']);
         Route::put('/my-profile', [ArtistController::class, 'updateProfile']);
 
+        Route::get('/my-events', [EventController::class, 'artistEvents']);
         Route::post('/events', [EventController::class, 'store']);
         Route::put('/events/{event}', [EventController::class, 'update']);
         Route::delete('/events/{event}', [EventController::class, 'destroy']);

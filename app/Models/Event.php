@@ -32,4 +32,9 @@ class Event extends Model
     {
         return $this->hasManyThrough(Reservation::class, Ticket::class, 'event_id', 'ticket_id', 'id', 'id');
     }
+
+    public function artist()
+    {
+        return $this->belongsTo(Artist::class);
+    }
 }

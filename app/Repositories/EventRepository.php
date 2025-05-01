@@ -44,4 +44,14 @@ class EventRepository
     {
         return $event->delete();
     }
+
+    public function getByArtistId($userId)
+    {
+        return Event::withCount('reservations')
+            ->whereHas('artist', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            })
+            ->latest()
+            ->get();
+    }
 }

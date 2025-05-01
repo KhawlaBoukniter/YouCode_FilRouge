@@ -46,15 +46,15 @@ function App() {
 
       <Route path='/artworks/:id' element={<Artwork />} /> {/* done */}
       <Route path='/artworks/create' element={<CreateArtwork />} /> {/* done */}
-      <Route path='/artworks/edit/:id' element={<CreateArtwork />} />
+      <Route path='/artworks/edit/:id' element={<CreateArtwork />} /> {/* done */}
 
       <Route path='/events/:id' element={<EventDetails />} /> {/* done */}
       <Route path='/events/create' element={<CreateEvent />} />
       <Route path='/events' element={<AllEvents />} /> {/* done */}
 
       <Route path='/artist-dash' element={<ArtistDash />} /> {/* à revoir section events */}
-      <Route path='/artist/artworks' element={<ArtistArtworks />} /> {/* à ajouter btn detail */}
-      <Route path='/artist/events' element={<ArtistEvents />} />
+      <Route path='/artist/artworks' element={<ArtistArtworks />} /> {/* done */}
+      <Route path='/artist/events' element={<ArtistEvents />} /> {/* en cours */}
       <Route path='/artist/:id/portfolio' element={<Portfolio />} />
       <Route path='/artist/:id/portfolio/editor' element={<ArtistPortfolioEditor />} />
 

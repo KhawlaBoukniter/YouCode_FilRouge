@@ -89,4 +89,9 @@ class EventService
 
         return $event;
     }
+
+    public function getByArtist($userId)
+    {
+        return $this->eventRepo->getByArtistId($userId);
+    }
 }
