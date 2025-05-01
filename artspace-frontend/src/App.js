@@ -49,7 +49,7 @@ function App() {
       <Route path='/artworks/edit/:id' element={<CreateArtwork />} /> {/* done */}
 
       <Route path='/events/:id' element={<EventDetails />} /> {/* done */}
-      <Route path='/events/create' element={<CreateEvent />} />
+      <Route path='/events/create' element={<CreateEvent />} /> {/* done */}
       <Route path='/events' element={<AllEvents />} /> {/* done */}
 
       <Route path='/artist-dash' element={<ArtistDash />} /> {/* à revoir section events */}
