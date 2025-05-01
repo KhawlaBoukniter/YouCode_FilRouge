@@ -5,6 +5,7 @@ import Button from "../ui/button";
 import ImageUpload from "../ui/ImageUpload";
 import Toast from "../ui/toast";
 import api from "../../api";
+import { useNavigate } from "react-router-dom";
 
 export default function ArtworkForm({ mode = "create", initialData = null }) {
 
@@ -20,6 +21,8 @@ export default function ArtworkForm({ mode = "create", initialData = null }) {
     const [errors, setErrors] = useState({});
 
     const imageUploadRef = useRef();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (initialData) {
@@ -54,42 +57,45 @@ export default function ArtworkForm({ mode = "create", initialData = null }) {
         const validationErr = validateForm();
         if (Object.keys(validationErr).length > 0) {
             setErrors(validationErr);
-        } else {
-            setErrors({});
-            const payload = new FormData();
-            payload.append("title", formData.title);
-            payload.append("description", formData.description);
-            payload.append("price", formData.price);
+            return;
+        }
+
+        setErrors({});
+        const payload = new FormData();
+        payload.append("title", formData.title);
+        payload.append("description", formData.description);
+        payload.append("price", formData.price);
+
+        if (formData.image instanceof File) {
             payload.append("image", formData.image);
+        }
 
-            try {
-                if (mode === "create") {
-                    await api.post("/artworks", payload, {
-                        headers: { "Content-Type": "multipart/form-data" },
-                    });
-                    setToast({ message: "Œuvre enregistrée avec succès !", type: "success" });
+        try {
+            if (mode === "create") {
+                const res = await api.post("/artworks", payload, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                const artworkId = res.data.artwork.id;
 
-                    setFormData({
-                        title: "",
-                        description: "",
-                        price: "",
-                        image: null,
-                    });
+                setToast({ message: "Œuvre enregistrée avec succès !", type: "success" });
 
-                    if (imageUploadRef.current) {
-                        imageUploadRef.current.reset();
-                    }
-                }
+                navigate(`/artworks/${artworkId}`);
 
-            } catch (err) {
-                console.error("Erreur lors de l'envoi :", err);
+                setFormData({ title: "", description: "", price: "", image: null });
+                imageUploadRef.current?.reset();
 
-                if (err.response && err.response.status === 422) {
-                    console.log('erreur', err.response.data.errors);
 
-                }
-                setToast({ message: "Erreur lors de l'enregistrement", type: "error" });
+            } else if (mode === "edit" && initialData?.id) {
+                await api.post(`/artworks/${initialData.id}?_method=PUT`, payload, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                setToast({ message: "Œuvre mise à jour avec succès !", type: "success" });
+                navigate(`/artworks/${initialData.id}`);
             }
+
+        } catch (err) {
+            console.error("Erreur:", err);
+            setToast({ message: "Erreur lors de l'enregistrement", type: "error" });
         }
     };
 

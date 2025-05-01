@@ -45,7 +45,7 @@ function App() {
       <Route path='/user/edit' element={<UserEdit />} /> {/* à revoir */}
 
       <Route path='/artworks/:id' element={<Artwork />} /> {/* done */}
-      <Route path='/artworks/create' element={<CreateArtwork />} />
+      <Route path='/artworks/create' element={<CreateArtwork />} /> {/* done */}
       <Route path='/artworks/edit/:id' element={<CreateArtwork />} />
 
       <Route path='/events/:id' element={<EventDetails />} /> {/* done */}
@@ -53,7 +53,7 @@ function App() {
       <Route path='/events' element={<AllEvents />} /> {/* done */}
 
       <Route path='/artist-dash' element={<ArtistDash />} /> {/* à revoir section events */}
-      <Route path='/artist/artworks' element={<ArtistArtworks />} /> {/* done */}
+      <Route path='/artist/artworks' element={<ArtistArtworks />} /> {/* à ajouter btn detail */}
       <Route path='/artist/events' element={<ArtistEvents />} />
       <Route path='/artist/:id/portfolio' element={<Portfolio />} />
       <Route path='/artist/:id/portfolio/editor' element={<ArtistPortfolioEditor />} />
