@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import Button from "../ui/button";
@@ -6,15 +6,35 @@ import ImageUpload from "../ui/ImageUpload";
 import Toast from "../ui/toast";
 import { TrashIcon } from 'lucide-react';
 import api from "../../api";
-import { jsx } from "react/jsx-runtime";
+import { useNavigate } from "react-router-dom";
 
-export default function EventForm() {
+export default function EventForm({ mode = "create", initialData = [] }) {
 
     const [errors, setErrors] = useState({});
     const [toast, setToast] = useState(null);
     const imageUploadRef = useRef();
     const [step, setStep] = useState(1);
     const [eventId, setEventId] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (initialData) {
+            const formatDate = (dateStr) => {
+                return dateStr ? new Date(dateStr).toISOString().split("T")[0] : "";
+            };
+
+            setFormData({
+                title: initialData.title || "",
+                location: initialData.location || "",
+                start_date: formatDate(initialData.start_date),
+                end_date: formatDate(initialData.end_date),
+                description: initialData.description || "",
+                is_online: initialData.is_online || false,
+                image: initialData.poster || null,
+            });
+            setEventId(initialData.id);
+        }
+    }, [initialData]);
 
     const [formData, setFormData] = useState({
         title: "",
@@ -113,22 +133,34 @@ export default function EventForm() {
             eventFormData.append("title", formData.title);
             eventFormData.append("location", formData.location);
             eventFormData.append("description", formData.description);
-            eventFormData.append("poster", formData.image);
+            if (formData.image instanceof File) {
+                eventFormData.append("poster", formData.image);
+            }
             eventFormData.append("start_date", formData.start_date);
             eventFormData.append("end_date", formData.end_date);
             eventFormData.append("is_online", formData.is_online ? 1 : 0);
             eventFormData.append("artist_id", artistId);
 
-            const res = await api.post("/events", eventFormData, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-
-            setEventId(res.data.event.id);
-            setStep(2);
-            setErrors({});
+            if (mode === "edit" && initialData?.id) {
+                await api.post(`/events/${initialData.id}?_method=PUT`, eventFormData, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "multipart/form-data",
+                    },
+                });
+                setToast({ message: "Événement mis à jour avec succès !", type: "success" });
+                navigate(`/events/${initialData.id}`);
+            } else {
+                const res = await api.post("/events", eventFormData, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "multipart/form-data",
+                    },
+                });
+                setEventId(res.data.event.id);
+                setStep(2);
+                setErrors({});
+            }
         } catch (error) {
             const messages = error.response?.data?.errors;
             if (messages) setErrors(messages);
@@ -149,6 +181,12 @@ export default function EventForm() {
         try {
             const token = localStorage.getItem("token");
 
+            if (mode === "edit") {
+                await api.delete(`/events/${eventId}/tickets`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+            }
+
             await Promise.all(
                 ticketData.map((ticket) => {
                     const payload = {
@@ -157,47 +195,25 @@ export default function EventForm() {
                         price: ticket.ticketPrice,
                         quantity: +ticket.ticketQuantity,
                         description: ticket.description,
-                        status: "available"
+                        status: "available",
                     };
 
-                    console.log("Payload ticket:", payload);
-
                     return api.post("/tickets", payload, {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
+                        headers: { Authorization: `Bearer ${token}` },
                     });
                 })
             );
 
             setToast({
-                message: "Événement et billets enregistrés avec succès !",
+                message:
+                    mode === "edit"
+                        ? "Billets mis à jour avec succès !"
+                        : "Événement et billets enregistrés avec succès !",
                 type: "success",
             });
 
-            if (imageUploadRef.current) imageUploadRef.current.reset();
-            setFormData({
-                title: "",
-                location: "",
-                start_date: "",
-                end_date: "",
-                description: "",
-                is_online: false,
-                image: null,
-            });
-            setTicketData([
-                {
-                    ticketType: "",
-                    ticketPrice: "",
-                    ticketQuantity: "",
-                },
-            ]);
-            setStep(1);
-            setEventId(null);
+            navigate(`/events/${eventId}`);
         } catch (err) {
-            console.error("Erreur :", err);
-            console.log("Réponse Laravel :", err.response?.data);
-
             const messages = err.response?.data?.errors;
             if (messages) {
                 setErrors(messages);

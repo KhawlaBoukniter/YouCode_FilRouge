@@ -50,6 +50,7 @@ function App() {
 
       <Route path='/events/:id' element={<EventDetails />} /> {/* done */}
       <Route path='/events/create' element={<CreateEvent />} /> {/* done */}
+      <Route path='/events/:id/edit' element={<CreateEvent />} /> {/* done */}
       <Route path='/events' element={<AllEvents />} /> {/* done */}
 
       <Route path='/artist-dash' element={<ArtistDash />} /> {/* à revoir section events */}
