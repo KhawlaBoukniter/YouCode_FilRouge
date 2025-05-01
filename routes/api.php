@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\ArtistTimelineController;
 use App\Http\Controllers\ArtworkController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
@@ -74,6 +75,11 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/my-stats/revenue', [StatsController::class, 'totalRevenue']);
         Route::get('/my-stats/top-events', [StatsController::class, 'topEvents']);
 
+        Route::get('/my-timelines', [ArtistTimelineController::class, 'index']);
+        Route::post('/my-timelines', [ArtistTimelineController::class, 'store']);
+        Route::put('/my-timelines/{timeline}', [ArtistTimelineController::class, 'update']);
+        Route::delete('/my-timelines/{timeline}', [ArtistTimelineController::class, 'destroy']);
+
         Route::post('/rooms', [RoomController::class, 'store']);
     });
 
@@ -97,8 +103,9 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('/artworks', [ArtworkController::class, 'index']);
     Route::get('/artworks/{artwork}', [ArtworkController::class, 'show']);
-
     Route::get('/artworks/{artwork}/comments', [CommentController::class, 'index']);
+
+    Route::get('/artist/{id}/portfolio', [ArtistController::class, 'showPortfolio']);
 
     Route::post('/comments', [CommentController::class, 'store']);
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
