@@ -29,6 +29,23 @@ export default function RecentArtworks({ user }) {
         fetchArtworks();
     }, []);
 
+    const handleDeleteArtwork = async (id) => {
+        const confirm = window.confirm("Êtes-vous sûr de vouloir supprimer cette œuvre ?");
+        if (!confirm) return;
+
+        try {
+            const token = localStorage.getItem("token");
+            await api.delete(`/artworks/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setArtworks(artworks.filter((artwork) => artwork.id !== id));
+        } catch (error) {
+            console.error("Erreur:", error);
+        }
+    };
+
     if (loading) return <p>Chargement des œuvres récentes...</p>;
     if (error) return <p className="text-red-500">{error}</p>;
 
@@ -67,9 +84,9 @@ export default function RecentArtworks({ user }) {
                                     <a href={`/artworks/edit/${artwork.id}`} className="hover:text-blue-700">
                                         <Edit className="w-4 h-4" />
                                     </a>
-                                    <a href={`/artworks/delete/${artwork.id}`} className="hover:text-red-500">
+                                    <button onClick={() => handleDeleteArtwork(artwork.id)} className="hover:text-red-500">
                                         <Trash2 className="w-4 h-4" />
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>

@@ -39,6 +39,22 @@ export default function Header({ artwork, isSaved, isLiked, canEdit, canDelete, 
             : `http://localhost:8000${image}`;
     };
 
+    const handleDelete = async () => {
+        const confirm = window.confirm("Voulez-vous vraiment supprimer cette œuvre ?");
+        if (!confirm) return;
+
+        try {
+            await api.delete(`/artworks/${artwork.id}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+            window.location.href = "/artist/artworks";
+        } catch (error) {
+            console.error("Erreur lors de la suppression :", error);
+        }
+    };
+
     return (
         <Card className="rounded-2xl shadow-md">
             <CardContent className="p-6 md:p-8 flex flex-col md:flex-row gap-8">
@@ -87,11 +103,15 @@ export default function Header({ artwork, isSaved, isLiked, canEdit, canDelete, 
                                     Modifier
                                 </Button>
                             </a>
-                            <a href={`/artworks/delete/${artwork.id}`}>
-                                <Button variant="destructive" className="rounded-lg font-playfair px-6 py-2 text-base transition">
+                            {canDelete && (
+                                <Button
+                                    variant="destructive"
+                                    className="rounded-lg font-playfair px-6 py-2 text-base transition"
+                                    onClick={handleDelete}
+                                >
                                     Supprimer
                                 </Button>
-                            </a>
+                            )}
                         </div>
                     )}
 

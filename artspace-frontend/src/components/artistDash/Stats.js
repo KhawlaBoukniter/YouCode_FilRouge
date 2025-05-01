@@ -24,7 +24,6 @@ export default function Stats({ user }) {
                 const artworks = artworksRes.data.artworks?.data || [];
                 setStats({
                     totalArtworks: artworks.length,
-                    pendingArtworks: artworks.filter(a => a.status === "pending").length,
                     totalTickets: ticketsRes.data.total_tickets_sold,
                     totalRevenue: +revenueRes.data.total_revenue,
                 });
@@ -53,13 +52,12 @@ export default function Stats({ user }) {
 
     const data = [
         { label: "Œuvres Totales", value: stats.totalArtworks },
-        { label: "En Attente", value: stats.pendingArtworks },
         { label: "Tickets Vendus", value: stats.totalTickets },
         { label: "Revenu", value: formattedRevenue },
     ];
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.map((stat, index) => (
                 <div
                     key={index}

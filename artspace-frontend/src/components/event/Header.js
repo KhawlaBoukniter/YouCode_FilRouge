@@ -2,17 +2,40 @@ import React from "react";
 import { Card, CardContent } from "../ui/card";
 import { CalendarIcon, MapPinIcon } from "lucide-react";
 import Button from "../ui/button";
+import api from "../../api";
 
 export default function Header({ event }) {
-    const currentUserId = +localStorage.getItem("user_id");
-    const isOwner = event.artist?.user?.id === currentUserId;
+    const userId = JSON.parse(localStorage.getItem("user")).artist.id;
+
+    const handleDelete = async () => {
+        const confirm = window.confirm("Voulez-vous vraiment supprimer cet événement ?");
+        if (!confirm) return;
+
+        try {
+            await api.delete(`/events/${event.id}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+            window.location.href = "/artist/events";
+        } catch (error) {
+            console.error("Erreur lors de la suppression :", error);
+        }
+    };
+
+    const imageUrl = (image) => {
+        return image.startsWith("http")
+            ? image
+            : `http://localhost:8000${image}`;
+    };
+
 
     return (
         <Card className="rounded-2xl shadow-md">
             <CardContent className="p-6 md:p-8 flex flex-col md:flex-row gap-8">
                 <div className="w-full md:w-1/2 h-64 md:h-96 overflow-hidden rounded-lg">
                     <img
-                        src={event.poster}
+                        src={imageUrl(event.poster)}
                         alt={event.title}
                         className="w-full h-full object-cover rounded-lg"
                     />
@@ -34,12 +57,12 @@ export default function Header({ event }) {
                     </div>
 
                     <div className="mt-6 flex gap-4 flex-wrap">
-                        {isOwner ? (
+                        {event.artist_id === userId ? (
                             <>
                                 <a href={`/events/${event.id}/edit`}>
-                                    <Button className="bg-yellow-500 text-white">Modifier</Button>
+                                    <Button className="text-white">Modifier</Button>
                                 </a>
-                                <Button className="bg-red-500 text-white">Supprimer</Button>
+                                <Button onClick={handleDelete} className="bg-white !text-black border">Supprimer</Button>
                             </>
                         ) : (
                             <a href="#tickets">
