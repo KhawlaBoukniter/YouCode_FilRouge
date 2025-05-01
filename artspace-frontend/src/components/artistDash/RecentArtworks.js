@@ -7,6 +7,12 @@ export default function RecentArtworks({ user }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
+    const imageUrl = (image) => {
+        return image.startsWith("http")
+            ? image
+            : `http://localhost:8000${image}`;
+    };
+
     useEffect(() => {
         const fetchArtworks = async () => {
             try {
@@ -45,7 +51,7 @@ export default function RecentArtworks({ user }) {
                     >
                         <div
                             className="h-64 bg-cover bg-center relative"
-                            style={{ backgroundImage: `url(${artwork.image})` }}
+                            style={{ backgroundImage: `url(${imageUrl(artwork.image)})` }}
                         >
                         </div>
 

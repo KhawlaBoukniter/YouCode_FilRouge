@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Input } from "../ui/input";
-import Tags from "../ui/tags";
 import { Textarea } from "../ui/textarea";
-import { Select, SelectOption } from "../ui/select";
 import Button from "../ui/button";
 import ImageUpload from "../ui/ImageUpload";
 import Toast from "../ui/toast";
+import api from "../../api";
 
 export default function ArtworkForm({ mode = "create", initialData = null }) {
 
@@ -33,6 +32,10 @@ export default function ArtworkForm({ mode = "create", initialData = null }) {
     }
 
     const handleFileSelect = (file) => {
+        if (file && file.size > 10 * 1024 * 1024) {
+            alert("L'image dépasse la taille maximale de 10 Mo.");
+            return;
+        }
         handleChange("image", file);
     };
 
@@ -46,38 +49,49 @@ export default function ArtworkForm({ mode = "create", initialData = null }) {
         return newErr;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErr = validateForm();
         if (Object.keys(validationErr).length > 0) {
             setErrors(validationErr);
         } else {
             setErrors({});
-            console.log(mode === "edit" ? "Updating" : "Submitting", formData);
+            const payload = new FormData();
+            payload.append("title", formData.title);
+            payload.append("description", formData.description);
+            payload.append("price", formData.price);
+            payload.append("image", formData.image);
 
-            setToast({
-                message:
-                    mode === "edit"
-                        ? "Œuvre mise à jour avec succès !"
-                        : "Œuvre enregistrée avec succès !",
-                type: "success",
-            });
+            try {
+                if (mode === "create") {
+                    await api.post("/artworks", payload, {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    });
+                    setToast({ message: "Œuvre enregistrée avec succès !", type: "success" });
 
-            if (mode === "create") {
-                setFormData({
-                    title: "",
-                    description: "",
-                    price: "",
-                    image: null,
-                });
+                    setFormData({
+                        title: "",
+                        description: "",
+                        price: "",
+                        image: null,
+                    });
 
-                if (imageUploadRef.current) {
-                    imageUploadRef.current.reset();
+                    if (imageUploadRef.current) {
+                        imageUploadRef.current.reset();
+                    }
                 }
+
+            } catch (err) {
+                console.error("Erreur lors de l'envoi :", err);
+
+                if (err.response && err.response.status === 422) {
+                    console.log('erreur', err.response.data.errors);
+
+                }
+                setToast({ message: "Erreur lors de l'enregistrement", type: "error" });
             }
         }
     };
-
 
     return (
         <form onSubmit={handleSubmit} className="space-y-10">
