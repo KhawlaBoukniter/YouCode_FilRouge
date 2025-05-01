@@ -18,7 +18,7 @@ export default function EventForm() {
 
     const [formData, setFormData] = useState({
         title: "",
-        lieu: "",
+        location: "",
         start_date: "",
         end_date: "",
         description: "",
@@ -38,7 +38,7 @@ export default function EventForm() {
     const validateForm = () => {
         const newErr = {};
         if (!formData.title.trim()) newErr.title = "Le titre est obligatoire.";
-        if (!formData.lieu.trim()) newErr.lieu = "Le lieu est obligatoire.";
+        if (!formData.location.trim()) newErr.location = "Le lieu est obligatoire.";
         if (!formData.start_date) newErr.start_date = "La date de début est obligatoire.";
         if (!formData.end_date) newErr.end_date = "La date de fin est obligatoire.";
 
@@ -53,10 +53,6 @@ export default function EventForm() {
         }
 
         if (!formData.image) newErr.image = "L'affiche de l'événement est obligatoire.";
-
-        if (formData.year && (isNaN(formData.year) || formData.year < 1900 || formData.year > new Date().getFullYear())) {
-            newErr.year = "Veuillez entrer une année valide";
-        }
 
         if (formData.start_date && formData.end_date) {
             const start = new Date(formData.start_date);
@@ -115,7 +111,7 @@ export default function EventForm() {
 
             const eventFormData = new FormData();
             eventFormData.append("title", formData.title);
-            eventFormData.append("lieu", formData.lieu);
+            eventFormData.append("location", formData.location);
             eventFormData.append("description", formData.description);
             eventFormData.append("poster", formData.image);
             eventFormData.append("start_date", formData.start_date);
@@ -182,7 +178,7 @@ export default function EventForm() {
             if (imageUploadRef.current) imageUploadRef.current.reset();
             setFormData({
                 title: "",
-                lieu: "",
+                location: "",
                 start_date: "",
                 end_date: "",
                 description: "",
@@ -244,10 +240,10 @@ export default function EventForm() {
                                 <label className="text-sm text-gray-600 font-playfair">Lieu</label>
                                 <Input
                                     placeholder="Entrez le lieu de l'événement"
-                                    value={formData.lieu}
-                                    onChange={(e) => handleChange("lieu", e.target.value)}
+                                    value={formData.location}
+                                    onChange={(e) => handleChange("location", e.target.value)}
                                 />
-                                {errors.lieu && <p className="text-red-500 text-sm">{errors.lieu}</p>}
+                                {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
                             </div>
 
                             <div className="space-y-2">
