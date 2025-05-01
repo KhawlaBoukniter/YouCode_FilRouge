@@ -9,39 +9,31 @@ export default function UpcomingEvents({ user }) {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        console.log(user.artist);
-        console.log(user);
-
-
         const fetchEvents = async () => {
             try {
-                const res = await api.get("/all-events");
+                const token = localStorage.getItem("token");
+                const res = await api.get("/my-events", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
+
                 const now = new Date();
-
-                console.log(res.data.events.data);
-
-
-                console.log(events);
-
-
-                const filtered = (res.data.events?.data || []).filter(event =>
-                    user?.artist?.id && event.artist_id === user.artist.id && new Date(event.start_date) >= now
-                );
-
-                console.log(filtered);
-
+                const filtered = res.data.events?.filter(event =>
+                    new Date(event.start_date) >= now
+                ).slice(0, 2);
 
                 setEvents(filtered);
                 setLoading(false);
             } catch (err) {
                 console.error("Erreur:", err);
-                setError("Erreur.");
+                setError("Erreur lors du chargement des événements.");
                 setLoading(false);
             }
         };
 
         fetchEvents();
-    }, [user]);
+    }, []);
 
     if (loading) return <p>Chargement des événements...</p>;
     if (error) return <p className="text-red-500">{error}</p>;
