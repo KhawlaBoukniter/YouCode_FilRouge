@@ -6,6 +6,7 @@ import Stats from "../components/artistDash/Stats";
 import RecentArtworks from "../components/artistDash/RecentArtworks";
 import UpcomingEvents from "../components/artistDash/UpcomingEvents";
 import useAuth from "../useAuth";
+import ChooseRoomStyle from "../components/ChooseRoomStyle";
 
 export default function ArtistDash() {
     const auth = useAuth();
@@ -28,6 +29,7 @@ export default function ArtistDash() {
                     <Stats user={user} />
                     <RecentArtworks user={user} />
                     <UpcomingEvents user={user} />
+                    <ChooseRoomStyle artist={user.artist} />
                 </div>
             </main>
             <Footer />

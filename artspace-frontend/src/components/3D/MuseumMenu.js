@@ -1,18 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { MapPinned } from 'lucide-react'
+import api from '../../api'
 
 const MuseumMenu = () => {
     const { roomId } = useParams()
     const [open, setOpen] = useState(false)
+    const [rooms, setRooms] = useState([]);
 
-    const links = [
-        { name: 'Trends', to: 'trending' },
-        { name: 'Room 1', to: 'room1' },
-        { name: 'Room 2', to: 'room2' },
-        { name: 'Room 3', to: 'room3' },
-        { name: 'Room 4', to: 'room4' }
-    ]
+    useEffect(() => {
+        api.get('/rooms/public')
+            .then((res) => setRooms(res.data.rooms || []))
+            .catch((err) => console.error(err));
+    }, []);
+
+    const allLinks = [...rooms.map(r => ({
+        name: r.name,
+        to: r.id
+    }))];
 
     return (
         <div className="fixed top-6 left-6 z-50">
@@ -30,42 +35,19 @@ const MuseumMenu = () => {
                         🧭 Interactive Map
                     </h2>
 
-                    {[...Array(12)].map((_, i) => (
-                        <div
-                            key={`v-${i}`}
-                            className="absolute w-px h-full bg-white/10"
-                            style={{
-                                left: `${Math.random() * 100}%`,
-                                transform: `rotate(${Math.random() * 30 - 15}deg)`
-                            }}
-                        />
+                    {allLinks.map((link, i) => (
+                        <Link
+                            key={i}
+                            to={`/museum/${link.to}`}
+                            className={`px-3 py-1.5 text-xs rounded-full text-center transition-all duration-200
+                            ${roomId === link.to.toString()
+                                    ? 'bg-[#3a6b8f] text-white shadow-md'
+                                    : 'bg-white/80 hover:bg-[#f0f0f0] text-gray-700'}`}
+                        >
+                            {link.name}
+                        </Link>
                     ))}
 
-                    {[...Array(12)].map((_, i) => (
-                        <div
-                            key={`h-${i}`}
-                            className="absolute h-px w-full bg-white/10"
-                            style={{
-                                top: `${Math.random() * 100}%`,
-                                transform: `rotate(${Math.random() * 30 - 15}deg)`
-                            }}
-                        />
-                    ))}
-
-                    <div className="relative z-10 grid grid-cols-2 gap-3 px-4 pt-2">
-                        {links.map((link, i) => (
-                            <Link
-                                key={i}
-                                to={`/museum/${link.to}`}
-                                className={`px-3 py-1.5 text-xs rounded-full text-center transition-all duration-200
-                  ${roomId === link.to
-                                        ? 'bg-[#3a6b8f] text-white shadow-md'
-                                        : 'bg-white/80 hover:bg-[#f0f0f0] text-gray-700'}`}
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
-                    </div>
                 </div>
             )}
         </div>

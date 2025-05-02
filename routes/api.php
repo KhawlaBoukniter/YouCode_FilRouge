@@ -99,6 +99,8 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/purchases', [PurchaseController::class, 'index'])->middleware('auth:api');
     });
 
+    Route::get('/rooms/{id}', [RoomController::class, 'show']);
+
     Route::get('/users/{user}/stats', [StatsController::class, 'userStats']);
 
     Route::get('/artworks', [ArtworkController::class, 'index']);

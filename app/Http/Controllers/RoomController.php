@@ -36,6 +36,17 @@ class RoomController extends Controller
         ]);
     }
 
+    public function show($id)
+    {
+        $room = Room::with('style')->find($id);
+
+        if (!$room) {
+            return response()->json(['message' => 'Salle introuvable'], 404);
+        }
+
+        return response()->json(['room' => $room]);
+    }
+
     public function getPublicRooms()
     {
         $rooms = $this->roomService->getPublicRooms();
