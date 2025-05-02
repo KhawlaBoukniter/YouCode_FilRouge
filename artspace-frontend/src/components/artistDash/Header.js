@@ -1,6 +1,8 @@
 import React from "react";
 
 export default function Header({ user }) {
+    const artistId = user?.artist?.id;
+
     return (
         <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-center">
             <div>
@@ -12,7 +14,7 @@ export default function Header({ user }) {
                 </p>
             </div>
             <div className="flex flex-wrap gap-4">
-                <a href="/artist/portfolio">
+                <a href={`/artist/${artistId}/portfolio`}>
                     <button className="flex items-center gap-2 border border-gray-800 text-gray-800 px-5 py-2 rounded-lg hover:bg-gray-100 transition">
                         🎨 Voir mon portfolio
                     </button>

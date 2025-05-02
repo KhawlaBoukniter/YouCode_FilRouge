@@ -57,7 +57,7 @@ function App() {
       <Route path='/artist/artworks' element={<ArtistArtworks />} /> {/* done */}
       <Route path='/artist/events' element={<ArtistEvents />} /> {/* done */}
       <Route path='/artist/:id/portfolio' element={<Portfolio />} />
-      <Route path='/artist/:id/portfolio/editor' element={<ArtistPortfolioEditor />} />
+      <Route path='/artist/portfolio/editor' element={<ArtistPortfolioEditor />} />
 
       <Route path='/admin-dash' element={<AdminDash />} />
       <Route path='/admin/users' element={<AdminUsersPage />} />
