@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { Textarea } from "../ui/textarea";
 
 export default function AboutEditorSection({ data, onChange }) {
-    const [aboutText, setAboutText] = useState(data || "");
 
     const handleChange = (e) => {
         const value = e.target.value;
-        setAboutText(value);
         onChange(value);
     };
 
@@ -20,7 +18,7 @@ export default function AboutEditorSection({ data, onChange }) {
                 <Textarea
                     rows={8}
                     placeholder="Décrivez votre parcours artistique, vos inspirations, votre vision..."
-                    value={aboutText}
+                    value={data}
                     onChange={handleChange}
                     className="w-full resize-none text-gray-700 font-playfair"
                 />
