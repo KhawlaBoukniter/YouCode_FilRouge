@@ -1,27 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import { Input } from "../ui/input";
 import Button from "../ui/button";
 import { TrashIcon } from "lucide-react";
 
 export default function UpcomingEventsEditorSection({ events = [], onChange }) {
-    const [eventList, setEventList] = useState(events);
 
     const handleUpdate = (index, field, value) => {
-        const updated = [...eventList];
+        const updated = [...events];
         updated[index][field] = value;
-        setEventList(updated);
         onChange(updated);
     };
 
     const handleAdd = () => {
-        const updated = [...eventList, { title: "", dateLocation: "", status: "" }];
-        setEventList(updated);
+        const updated = [...events, { title: "", dateLocation: "", status: "" }];
         onChange(updated);
     };
 
     const handleDelete = (index) => {
-        const updated = eventList.filter((_, i) => i !== index);
-        setEventList(updated);
+        const updated = events.filter((_, i) => i !== index);
         onChange(updated);
     };
 
@@ -32,7 +28,7 @@ export default function UpcomingEventsEditorSection({ events = [], onChange }) {
             </h2>
 
             <div className="max-w-5xl mx-auto space-y-6">
-                {eventList.map((event, index) => (
+                {events.map((event, index) => (
                     <div key={index} className="flex flex-col gap-4 bg-[#f9f9f9] p-4 rounded-md border shadow-sm relative">
                         <Input
                             placeholder="Titre de l’événement"
