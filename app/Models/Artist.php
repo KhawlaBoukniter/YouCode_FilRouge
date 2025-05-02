@@ -34,4 +34,14 @@ class Artist extends Model
     {
         return $this->hasMany(Room::class);
     }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    public function timelines()
+    {
+        return $this->hasMany(ArtistTimeline::class);
+    }
 }

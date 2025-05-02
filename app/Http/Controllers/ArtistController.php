@@ -49,4 +49,20 @@ class ArtistController extends Controller
 
         return response()->json(['message' => 'Artist validated successfully']);
     }
+
+    public function showPortfolio($id)
+    {
+        $artist = Artist::with(['user', 'timelines', 'artworks', 'events'])->find($id);
+
+        if (!$artist) {
+            return response()->json(['message' => 'Artiste introuvable'], 404);
+        }
+
+        return response()->json([
+            'artist' => $artist->user,
+            'timelines' => $artist->timelines,
+            'artworks' => $artist->artworks,
+            'events' => $artist->events
+        ]);
+    }
 }

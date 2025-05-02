@@ -9,6 +9,7 @@ import GalleryEditorSection from "../components/portfolio/GalleryEditorSection";
 import UpcomingEventsEditorSection from "../components/portfolio/UpcomingEventsEditorSection";
 import Button from "../components/ui/button";
 import api from "../api";
+import { useNavigate } from "react-router-dom";
 
 export default function ArtistPortfolioEditor() {
     const [heroData, setHeroData] = useState({
@@ -21,6 +22,7 @@ export default function ArtistPortfolioEditor() {
     const [timelines, setTimelines] = useState([]);
     const [gallery, setGallery] = useState([]);
     const [events, setEvents] = useState([]);
+    const navigate = useNavigate();
 
     const [saving, setSaving] = useState(false);
 
@@ -35,10 +37,6 @@ export default function ArtistPortfolioEditor() {
 
             const token = localStorage.getItem("token");
 
-            for (let [key, value] of formData.entries()) {
-                console.log(`${key}:`, value);
-            }
-
             await api.post("/my-profile", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -47,15 +45,23 @@ export default function ArtistPortfolioEditor() {
             });
 
             for (let t of timelines) {
-                await api.post("/my-timelines", t);
+                await api.post("/my-timelines", t, {
+                    Authorization: `Bearer ${token}`
+                });
             }
 
             alert("Portfolio enregistré avec succès !");
+
+            const user = JSON.parse(localStorage.getItem("user"));
+            navigate(`/artist/${user?.artist?.id}/portfolio`);
+
+            setSaving(false);
         } catch (error) {
-            console.error("Erreur lors de l'enregistrement du portfolio :", error);
+            console.error("Erreur :", error);
             if (error.response?.data?.errors) {
                 alert("Erreur : " + JSON.stringify(error.response.data.errors, null, 2));
             }
+            setSaving(false);
         }
     };
 
