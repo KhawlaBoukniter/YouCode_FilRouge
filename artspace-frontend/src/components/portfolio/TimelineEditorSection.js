@@ -1,27 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import { Input } from "../ui/input";
 import Button from "../ui/button";
 import { TrashIcon } from "lucide-react";
 
 export default function TimelineEditorSection({ data = [], onChange }) {
-    const [timeline, setTimeline] = useState(data);
 
     const handleUpdate = (index, field, value) => {
-        const updated = [...timeline];
+        const updated = [...data];
         updated[index][field] = value;
-        setTimeline(updated);
         onChange(updated);
     };
 
     const handleAdd = () => {
-        const updated = [...timeline, { year: "", title: "", location: "" }];
-        setTimeline(updated);
+        const updated = [...data, { year: "", title: "", location: "" }];
         onChange(updated);
     };
 
     const handleDelete = (index) => {
-        const updated = timeline.filter((_, i) => i !== index);
-        setTimeline(updated);
+        const updated = data.filter((_, i) => i !== index);
         onChange(updated);
     };
 
@@ -32,7 +28,7 @@ export default function TimelineEditorSection({ data = [], onChange }) {
             </h2>
 
             <div className="max-w-4xl mx-auto space-y-6">
-                {timeline.map((item, index) => (
+                {data.map((item, index) => (
                     <div key={index} className="flex flex-col md:flex-row gap-4 items-start border p-4 rounded-md shadow-sm bg-gray-50">
                         <Input
                             placeholder="Année"
