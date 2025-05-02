@@ -29,7 +29,7 @@ class TicketRepository
 
     public function getByArtistId(int $artistId)
     {
-        return Ticket::whereHas('event', function ($query) use ($artistId) {
+        return Ticket::with('event')->whereHas('event', function ($query) use ($artistId) {
             $query->where('artist_id', $artistId);
         })->with('event')->latest()->get();
     }

@@ -32,9 +32,12 @@ class EventController extends Controller
 
     public function show(Event $event)
     {
+        $event->load('tickets');
+        $tickets = $event->tickets->load('event');
+
         return response()->json([
             'event' => $event,
-            'tickets' => $event->tickets,
+            'tickets' => $tickets,
         ]);
     }
 

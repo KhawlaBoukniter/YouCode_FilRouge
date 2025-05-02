@@ -8,16 +8,12 @@ import { useNavigate } from "react-router-dom";
 export default function Profile({ user }) {
     const navigate = useNavigate();
 
-    const handleEdit = () => {
-        navigate("/user/edit");
-    }
-
     const handleLogout = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         localStorage.removeItem("user_id");
-
-        navigate("/login");
-    }
+        navigate("/");
+    };
 
     return (
         <Card className="w-full rounded-2xl shadow-md">
@@ -51,10 +47,6 @@ export default function Profile({ user }) {
                             </div>
 
                             <div className="flex gap-4">
-                                <Button variant="outline" onClick={handleEdit} className="h-10 bg-gray-100 rounded-lg text-gray-700">
-                                    <PenSquareIcon className="w-4 h-4 mr-2 md:mr-0" />
-                                    <span className="">Modifier</span>
-                                </Button>
                                 <Button variant="outline" onClick={handleLogout} className="h-10 bg-red-50 text-red-600 rounded-lg">
                                     <LogOutIcon className="w-4 h-4 mr-2 md:mr-0" />
                                     <span className="">Déconnexion</span>

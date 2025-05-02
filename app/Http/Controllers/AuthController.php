@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\UpdateAvatarRequest;
+use App\Models\Artist;
 use App\Services\AuthService;
 use Illuminate\Support\Facades\Auth;
 
@@ -53,8 +54,19 @@ class AuthController extends Controller
 
     public function me()
     {
+        $user = Auth::user();
+
+        $artist = $user->role_id === 2
+            ? Artist::where('user_id', $user->id)->first()
+            : null;
+
+        if ($artist) {
+            $user->avatar = $artist->avatar;
+            $user->bio = $artist->bio;
+        }
+
         return response()->json([
-            'user' => $this->authService->me()
+            'user' => $user,
         ]);
     }
 

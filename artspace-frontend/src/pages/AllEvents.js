@@ -40,13 +40,6 @@ export default function AllEvents() {
                         Tous les événements
                     </h1>
 
-                    <div className="flex flex-wrap justify-center gap-4">
-                        <input type="text" placeholder="Filtrer par artiste" className="px-4 py-2 border rounded-lg" />
-                        <input type="text" placeholder="Filtrer par lieu" className="px-4 py-2 border rounded-lg" />
-                        <input type="date" className="px-4 py-2 border rounded-lg" />
-                        <Button className="bg-[#3a6b8f] text-white px-6 rounded-lg">Filtrer</Button>
-                    </div>
-
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {events.map(event => (
                             <Card key={event.id} className="overflow-hidden rounded-xl shadow-md">

@@ -11,7 +11,6 @@ const navItems = [
     { name: "Galerie", path: "/gallery" },
     { name: "Evenements", path: "/events" },
     { name: "Musée 3D", path: "/museum/trending" },
-    { name: "Contact", path: "/contact" },
 ];
 
 const Navbar = () => {
@@ -23,6 +22,7 @@ const Navbar = () => {
 
     const imageUrl = (image) => {
         if (!image) return "/default-avatar.png";
+        if (image.startsWith('http')) return image;
         return `http://localhost:8000/storage/${image}`;
     };
 
@@ -65,6 +65,7 @@ const Navbar = () => {
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+        localStorage.removeItem("user_id");
         setUser(null);
         navigate("/");
     };
@@ -109,7 +110,7 @@ const Navbar = () => {
                                 <Link to={dashRoute()}>
 
                                     <img
-                                        src={imageUrl(user?.artist?.avatar ?? user?.avatar)}
+                                        src={imageUrl(user?.avatar)}
                                         alt="Avatar"
                                         className="w-10 h-10 rounded-full object-cover border border-gray-300 hover:shadow-md transition"
                                     />
@@ -169,7 +170,7 @@ const Navbar = () => {
                             {isAuthenticated && user ? (
                                 <Link to={dashRoute()} className="w-full">
                                     <img
-                                        src={imageUrl(user?.artist?.avatar ?? user?.avatar)}
+                                        src={imageUrl(user?.avatar)}
                                         alt="Avatar"
                                         className="w-10 h-10 rounded-full object-cover border border-gray-300 hover:shadow-md transition"
                                     />

@@ -1,8 +1,29 @@
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import Button from "../ui/button";
+import api from "../../api";
 
 export default function Tickets({ tickets }) {
+    const userId = JSON.parse(localStorage.getItem("user")).artist.id;
+
+    console.log(userId);
+
+
+    const handleDelete = async (ticketId) => {
+        const confirm = window.confirm("Voulez-vous vraiment supprimer ce ticket ?");
+        if (!confirm) return;
+
+        try {
+            await api.delete(`/tickets/${ticketId}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+            window.location.reload();
+        } catch (error) {
+            console.error("Erreur:", error);
+        }
+    };
 
     return (
         <section id="tickets">
@@ -36,6 +57,15 @@ export default function Tickets({ tickets }) {
                                             {ticket.status === "available" ? "Réserver" : "Non disponible"}
                                         </Button>
                                     </a>
+
+                                    {ticket.event?.artist_id === userId && (
+                                        <Button
+                                            onClick={() => handleDelete(ticket.id)}
+                                            className="bg-red-100 text-red-700 hover:bg-red-200 mt-2"
+                                        >
+                                            Supprimer
+                                        </Button>
+                                    )}
                                 </div>
                             </div>
                         ))}
