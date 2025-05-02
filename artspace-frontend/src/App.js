@@ -6,7 +6,6 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import About from './pages/About';
 import Gallery from './pages/Gallery';
-import Contact from './pages/Contact';
 import UserDash from './pages/UserDash';
 import Artwork from './pages/Artwork';
 import UserFavoriteArtworksPage from './pages/UserFavoriteArtworksPage';
@@ -26,7 +25,7 @@ import AdminStats from './pages/AdminStats';
 import AllEvents from './pages/AllEvents';
 import TicketReservation from './pages/TicketReservation';
 import ArtistPortfolioEditor from './pages/ArtistPortfolioEditor';
-import UserEdit from './pages/UserEdit';
+import EditPortfolio from './pages/EditPortfolio';
 
 function App() {
   return (
@@ -37,12 +36,10 @@ function App() {
       <Route path='/login' element={<Login />} /> {/* à revoir */}
       <Route path='/about' element={<About />} /> {/* done */}
       <Route path='/gallery' element={<Gallery />} /> {/* done */}
-      <Route path='/contact' element={<Contact />} />
 
       <Route path='/user-dash' element={<UserDash />} /> {/* done */}
       <Route path='/user/artworks/saved' element={<UserFavoriteArtworksPage />} /> {/* done */}
       <Route path='/user/artworks/purchased' element={<UserPurchaseHistoryPage />} /> {/* done */}
-      <Route path='/user/edit' element={<UserEdit />} /> {/* à revoir */}
 
       <Route path='/artworks/:id' element={<Artwork />} /> {/* done */}
       <Route path='/artworks/create' element={<CreateArtwork />} /> {/* done */}
@@ -56,8 +53,10 @@ function App() {
       <Route path='/artist-dash' element={<ArtistDash />} /> {/* à revoir section events */}
       <Route path='/artist/artworks' element={<ArtistArtworks />} /> {/* done */}
       <Route path='/artist/events' element={<ArtistEvents />} /> {/* done */}
-      <Route path='/artist/:id/portfolio' element={<Portfolio />} />
-      <Route path='/artist/portfolio/editor' element={<ArtistPortfolioEditor />} />
+      <Route path='/artist/:id/portfolio' element={<Portfolio />} /> {/* done */}
+      <Route path='/artist/portfolio/editor' element={<ArtistPortfolioEditor />} /> {/* done */}
+      <Route path='/artist/portfolio/create' element={<ArtistPortfolioEditor />} /> {/* done */}
+      <Route path="/artist/portfolio/edit" element={<EditPortfolio />} />
 
       <Route path='/admin-dash' element={<AdminDash />} />
       <Route path='/admin/users' element={<AdminUsersPage />} />

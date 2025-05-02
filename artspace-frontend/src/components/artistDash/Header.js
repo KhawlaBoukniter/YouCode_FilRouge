@@ -1,7 +1,9 @@
 import React from "react";
 
-export default function Header({ user }) {
-    const artistId = user?.artist?.id;
+export default function Header({ user, artist }) {
+    const artistId = artist?.id;
+    console.log(artistId);
+
 
     return (
         <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-center">

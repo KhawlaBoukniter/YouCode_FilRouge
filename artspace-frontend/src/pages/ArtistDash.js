@@ -14,6 +14,9 @@ export default function ArtistDash() {
 
     const { user } = auth;
 
+    console.log(user);
+
+
     if (!user) return <p>Chargement</p>;
 
     return (
@@ -21,7 +24,7 @@ export default function ArtistDash() {
             <Navbar />
             <main className="flex-1 w-full py-24 px-5 md:px-12">
                 <div className="max-w-[1280px] mx-auto space-y-12">
-                    <Header user={user} />
+                    <Header user={user} artist={user?.artist} />
                     <Stats user={user} />
                     <RecentArtworks user={user} />
                     <UpcomingEvents user={user} />

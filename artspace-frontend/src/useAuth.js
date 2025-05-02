@@ -16,6 +16,14 @@ export default function useAuth() {
                     }
                 });
 
+                const fullUser = {
+                    ...response.data.user,
+                    artist: response.data.artist,
+                };
+
+                localStorage.setItem("user", JSON.stringify(fullUser));
+                setUser(fullUser);
+
                 setUser(response.data);
             } catch (error) {
                 console.error("Erreur lors de la récupération de l'utilisateur :", error);
@@ -26,5 +34,5 @@ export default function useAuth() {
         fetchUser();
     }, []);
 
-    return user;
+    return { user };
 }

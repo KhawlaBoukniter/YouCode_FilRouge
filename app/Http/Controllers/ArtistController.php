@@ -58,12 +58,15 @@ class ArtistController extends Controller
             return response()->json(['message' => 'Artiste introuvable'], 404);
         }
 
-        $artistData = $artist->user->toArray();
-        $artistData['avatar'] = $artist->avatar ? asset('storage/' . $artist->avatar) : null;
-        $artistData['bio'] = $artist->bio;
-
         return response()->json([
-            'artist' => $artistData,
+            'artist' => [
+                'avatar' => $artist->avatar ? asset('storage/' . $artist->avatar) : null,
+                'bio' => $artist->bio,
+            ],
+            'user' => [
+                'name' => $artist->user->name,
+                'email' => $artist->user->email,
+            ],
             'timelines' => $artist->timelines,
             'artworks' => $artist->artworks,
             'events' => $artist->events

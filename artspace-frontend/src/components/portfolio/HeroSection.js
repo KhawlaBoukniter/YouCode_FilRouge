@@ -17,12 +17,8 @@ export default function HeroSection({ data }) {
             <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-12 items-center">
                 <div className="flex-1 space-y-6">
                     <h1 className="text-5xl font-normal font-playfair text-gray-900 leading-tight">
-                        {data.name}
+                        {data?.name}
                     </h1>
-
-                    <p className="text-xl font-playfair text-gray-600 leading-relaxed">
-                        {data.bio}
-                    </p>
 
                     <div className="flex flex-wrap gap-4 pt-6">
                         <a href={`mailto:${data?.email}`}>
