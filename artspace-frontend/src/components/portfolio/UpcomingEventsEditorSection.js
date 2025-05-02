@@ -1,23 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import Button from "../ui/button";
 import { TrashIcon } from "lucide-react";
+import api from "../../api";
 
 export default function UpcomingEventsEditorSection({ events = [], onChange }) {
 
-    const handleUpdate = (index, field, value) => {
-        const updated = [...events];
-        updated[index][field] = value;
-        onChange(updated);
-    };
+    const [eventList, setEventList] = useState(events);
+    const [eventOptions, setEventOptions] = useState([]);
 
-    const handleAdd = () => {
-        const updated = [...events, { title: "", dateLocation: "", status: "" }];
-        onChange(updated);
+    useEffect(() => {
+        api.get("/my-events").then(res => {
+            const allEvents = res.data.events || [];
+            setEventOptions(allEvents);
+        });
+    }, []);
+
+    // const handleUpdate = (index, field, value) => {
+    //     const updated = [...eventList];
+    //     updated[index][field] = value;
+    //     setEventList(updated);
+    //     onChange(updated);
+    // };
+
+    // const handleAdd = () => {
+    //     const updated = [...eventList, { title: "", start_date: "", end_date: "", location: "" }];
+    //     setEventList(updated);
+    //     onChange(updated);
+    // };
+
+    const handleAddFromList = (eventId) => {
+        const formatDate = (dateStr) => {
+            return dateStr ? new Date(dateStr).toISOString().split("T")[0] : "";
+        };
+
+        const selected = eventOptions.find(e => e.id === +eventId);
+        if (!selected || eventList.some(e => e.id === selected.id)) return;
+
+        const newList = [...eventList, {
+            id: selected.id,
+            title: selected.title,
+            start_date: formatDate(selected.start_date),
+            end_date: formatDate(selected.end_date),
+            location: selected.location || "",
+        }];
+        setEventList(newList);
+        onChange(newList);
     };
 
     const handleDelete = (index) => {
-        const updated = events.filter((_, i) => i !== index);
+        const updated = eventList.filter((_, i) => i !== index);
+        setEventList(updated);
         onChange(updated);
     };
 
@@ -28,24 +61,39 @@ export default function UpcomingEventsEditorSection({ events = [], onChange }) {
             </h2>
 
             <div className="max-w-5xl mx-auto space-y-6">
-                {events.map((event, index) => (
+                <div className="flex flex-col sm:flex-row items-center gap-4 mb-8">
+                    <select
+                        className="border p-2 rounded w-full sm:w-auto"
+                        onChange={(e) => handleAddFromList(e.target.value)}
+                        defaultValue=""
+                    >
+                        <option value="" disabled>Ajouter un événement existant</option>
+                        {eventOptions.map(ev => (
+                            <option key={ev.id} value={ev.id}>
+                                {ev.title}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                {eventList.map((event, index) => (
                     <div key={index} className="flex flex-col gap-4 bg-[#f9f9f9] p-4 rounded-md border shadow-sm relative">
                         <Input
-                            placeholder="Titre de l’événement"
                             value={event.title}
-                            onChange={(e) => handleUpdate(index, "title", e.target.value)}
+                            disabled
                         />
                         <Input
-                            placeholder="Date et lieu (ex: 15 Mars 2025 - Paris)"
-                            value={event.dateLocation}
-                            onChange={(e) => handleUpdate(index, "dateLocation", e.target.value)}
+                            value={event.start_date}
+                            disabled
                         />
                         <Input
-                            placeholder="Statut (ex: À venir)"
-                            value={event.status}
-                            onChange={(e) => handleUpdate(index, "status", e.target.value)}
+                            value={event.end_date}
+                            disabled
                         />
-
+                        <Input
+                            value={event.location}
+                            disabled
+                        />
                         <button
                             onClick={() => handleDelete(index)}
                             className="text-red-500 hover:text-red-700 absolute top-3 right-3"
@@ -56,11 +104,6 @@ export default function UpcomingEventsEditorSection({ events = [], onChange }) {
                     </div>
                 ))}
 
-                <div className="flex justify-center">
-                    <Button variant="outline" onClick={handleAdd}>
-                        Ajouter un événement
-                    </Button>
-                </div>
             </div>
         </section>
     );

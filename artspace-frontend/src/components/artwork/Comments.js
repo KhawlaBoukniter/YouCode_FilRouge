@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
+import { Avatar, AvatarImage } from "../ui/avatar";
 import { TrashIcon } from "lucide-react";
 import Toast from "../ui/toast";
 import api from "../../api";
@@ -10,6 +10,11 @@ export default function Comments({ artworkId }) {
     const [comments, setComments] = useState([]);
 
     const userId = JSON.parse(localStorage.getItem("user_id"));
+
+    const imageUrl = (image) => {
+        if (!image) return "/default-avatar.png";
+        return `http://localhost:8000/storage/${image}`;
+    };
 
     useEffect(() => {
         const fetchComments = async () => {
@@ -61,9 +66,6 @@ export default function Comments({ artworkId }) {
                             className="flex items-start gap-4 bg-gray-100 rounded-lg p-4 hover:shadow transition justify-between"
                         >
                             <div className="flex gap-4">
-                                <Avatar className="!h-12 w-12 self-center">
-                                    <AvatarImage src={comment.user?.avatar || ""} alt={comment.user?.name} />
-                                </Avatar>
                                 <div>
                                     <h4 className="font-playfair text-lg text-gray-800">
                                         {comment.user?.name || "Utilisateur"}

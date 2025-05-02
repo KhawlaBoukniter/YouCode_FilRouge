@@ -32,6 +32,7 @@ export default function TimelineEditorSection({ data = [], onChange }) {
                     <div key={index} className="flex flex-col md:flex-row gap-4 items-start border p-4 rounded-md shadow-sm bg-gray-50">
                         <Input
                             placeholder="Année"
+                            type="date"
                             value={item.year}
                             onChange={(e) => handleUpdate(index, "year", e.target.value)}
                             className="md:w-1/4"

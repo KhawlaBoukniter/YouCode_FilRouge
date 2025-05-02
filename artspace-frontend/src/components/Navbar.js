@@ -21,6 +21,11 @@ const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [user, setUser] = useState(null);
 
+    const imageUrl = (image) => {
+        if (!image) return "/default-avatar.png";
+        return `http://localhost:8000/storage/${image}`;
+    };
+
     const filteredNavItems = navItems.filter((item) => {
         if (!user || user.role_id === 3) return true;
         return item.name !== "Galerie" && item.name !== "Evenements";
@@ -39,6 +44,7 @@ const Navbar = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
+                console.log("Utilisateur connecté :", res.data.user);
 
                 setUser(res.data.user);
             } catch (err) {
@@ -103,7 +109,7 @@ const Navbar = () => {
                                 <Link to={dashRoute()}>
 
                                     <img
-                                        src={user.avatar || "/default-avatar.png"}
+                                        src={imageUrl(user?.artist?.avatar ?? user?.avatar)}
                                         alt="Avatar"
                                         className="w-10 h-10 rounded-full object-cover border border-gray-300 hover:shadow-md transition"
                                     />
@@ -163,7 +169,7 @@ const Navbar = () => {
                             {isAuthenticated && user ? (
                                 <Link to={dashRoute()} className="w-full">
                                     <img
-                                        src={user.avatar || "/default-avatar.png"}
+                                        src={imageUrl(user?.artist?.avatar ?? user?.avatar)}
                                         alt="Avatar"
                                         className="w-10 h-10 rounded-full object-cover border border-gray-300 hover:shadow-md transition"
                                     />

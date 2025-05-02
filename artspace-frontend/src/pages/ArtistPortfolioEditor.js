@@ -13,9 +13,8 @@ import api from "../api";
 export default function ArtistPortfolioEditor() {
     const [heroData, setHeroData] = useState({
         name: "",
-        shortBio: "",
-        contactEmail: "",
-        image: null,
+        email: "",
+        avatar: null,
     });
 
     const [aboutText, setAboutText] = useState("");
@@ -30,13 +29,21 @@ export default function ArtistPortfolioEditor() {
         try {
             const formData = new FormData();
             formData.append("name", heroData.name);
-            formData.append("short_bio", heroData.shortBio);
-            formData.append("contact_email", heroData.contactEmail);
-            formData.append("about", aboutText);
-            if (heroData.image) formData.append("image", heroData.image);
+            formData.append("email", heroData.email);
+            formData.append("bio", aboutText);
+            if (heroData.avatar) formData.append("avatar", heroData.avatar);
 
-            await api.put("/my-profile", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
+            const token = localStorage.getItem("token");
+
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}:`, value);
+            }
+
+            await api.post("/my-profile", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`
+                },
             });
 
             for (let t of timelines) {
@@ -46,6 +53,9 @@ export default function ArtistPortfolioEditor() {
             alert("Portfolio enregistré avec succès !");
         } catch (error) {
             console.error("Erreur lors de l'enregistrement du portfolio :", error);
+            if (error.response?.data?.errors) {
+                alert("Erreur : " + JSON.stringify(error.response.data.errors, null, 2));
+            }
         }
     };
 

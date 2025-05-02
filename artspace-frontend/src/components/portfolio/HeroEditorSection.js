@@ -11,7 +11,7 @@ export default function HeroEditorSection({ data, onChange }) {
     };
 
     const handleImageSelect = (file) => {
-        handleChange("image", file);
+        handleChange("avatar", file);
     };
 
     return (
@@ -30,22 +30,12 @@ export default function HeroEditorSection({ data, onChange }) {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-600">Bio courte</label>
-                        <Textarea
-                            rows={3}
-                            placeholder="Artiste contemporaine spécialisée..."
-                            value={data.shortBio}
-                            onChange={(e) => handleChange("shortBio", e.target.value)}
-                        />
-                    </div>
-
-                    <div>
                         <label className="block text-sm font-medium text-gray-600">Email de contact</label>
                         <Input
                             type="email"
                             placeholder="claire.dubois@artspace.com"
-                            value={data.contactEmail}
-                            onChange={(e) => handleChange("contactEmail", e.target.value)}
+                            value={data.email}
+                            onChange={(e) => handleChange("email", e.target.value)}
                         />
                     </div>
                 </div>
@@ -53,7 +43,7 @@ export default function HeroEditorSection({ data, onChange }) {
                 <div>
                     <label className="block text-sm font-medium text-gray-600 mb-2">Photo de profil</label>
                     <ImageUpload
-                        value={data.image}
+                        value={data.avatar}
                         onFileSelect={handleImageSelect}
                         title={"image"}
                         subtitle="Glissez une image ou cliquez"
