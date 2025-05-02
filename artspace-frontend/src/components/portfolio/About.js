@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardContent } from "../ui/card";
 
-export default function About() {
+export default function About({ description }) {
     return (
         <section className="w-full py-20 bg-[#f8f7f4b0]">
             <div className="container mx-auto px-4 max-w-[1280px]">
@@ -13,9 +13,7 @@ export default function About() {
                             </h2>
 
                             <p className="text-base text-gray-600 leading-relaxed font-playfair">
-                                Passionnée par l'art numérique depuis plus de 15 ans, je crée des expériences immersives
-                                qui fusionnent le réel et le virtuel. Mon travail explore les thèmes de la conscience
-                                collective, de la technologie et de la nature humaine.
+                                {description}
                             </p>
                         </div>
                     </CardContent>

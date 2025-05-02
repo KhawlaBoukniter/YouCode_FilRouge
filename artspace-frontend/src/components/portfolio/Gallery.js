@@ -3,27 +3,13 @@ import { Card, CardContent } from "../ui/card";
 import Button from "../ui/button";
 import { ChevronRightIcon } from "lucide-react";
 
-export default function GallerySection() {
-    const artworks = [
-        {
-            id: 1,
-            title: "Conscience Numérique",
-            description: "Installation interactive, 2025",
-            imageUrl: "https://c.animaapp.com/ma1evbt5xp47Lo/img/img-2.png",
-        },
-        {
-            id: 2,
-            title: "Métavers Poétique",
-            description: "VR Experience, 2024",
-            imageUrl: "https://c.animaapp.com/ma1evbt5xp47Lo/img/img-3.png",
-        },
-        {
-            id: 3,
-            title: "Résonance",
-            description: "Sculpture numérique, 2023",
-            imageUrl: "https://c.animaapp.com/ma1evbt5xp47Lo/img/img-4.png",
-        },
-    ];
+export default function GallerySection({ artworks }) {
+
+    const imageUrl = (image) => {
+        return image.startsWith("http")
+            ? image
+            : `http://localhost:8000${image}`;
+    };
 
     return (
         <section className="w-full py-20 bg-[#f8f7f4b0] p-10" id="artworks">
@@ -54,15 +40,12 @@ export default function GallerySection() {
                         >
                             <div
                                 className="h-64 w-full bg-cover bg-center"
-                                style={{ backgroundImage: `url(${work.imageUrl})` }}
+                                style={{ backgroundImage: `url(${imageUrl(work.image)})` }}
                             />
                             <CardContent className="p-6">
                                 <h3 className="text-xl font-playfair text-black mb-4 leading-5">
                                     {work.title}
                                 </h3>
-                                <p className="text-base font-playfair text-gray-600 leading-4">
-                                    {work.description}
-                                </p>
                             </CardContent>
                         </Card>
                     ))}

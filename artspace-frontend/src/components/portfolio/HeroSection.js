@@ -1,21 +1,31 @@
 import React from "react";
 import Button from "../ui/button";
 
-export default function HeroSection() {
+export default function HeroSection({ data }) {
+
+    const imageUrl = (image) => {
+        if (!image) return "/default-avatar.png";
+        if (image.startsWith('http')) return image;
+        return `http://localhost:8000/storage/${image}`;
+    };
+
+    console.log(data);
+
+
     return (
         <section className="w-full py-24 bg-white p-10">
             <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-12 items-center">
                 <div className="flex-1 space-y-6">
                     <h1 className="text-5xl font-normal font-playfair text-gray-900 leading-tight">
-                        Claire Dubois
+                        {data.name}
                     </h1>
 
                     <p className="text-xl font-playfair text-gray-600 leading-relaxed">
-                        Artiste contemporaine spécialisée en art numérique et installations immersives
+                        {data.bio}
                     </p>
 
                     <div className="flex flex-wrap gap-4 pt-6">
-                        <a href="mailto:claire.dubois@artspace.com">
+                        <a href={`mailto:${data?.email}`}>
                             <Button className="h-12 px-8 rounded-full bg-[#3a6b8f] hover:bg-[#2c5270] font-playfair text-base font-normal">
                                 Me contacter
                             </Button>
@@ -44,9 +54,7 @@ export default function HeroSection() {
                 <div className="flex-1">
                     <div
                         className="h-auto aspect-square w-full rounded-2xl bg-cover bg-center"
-                        style={{
-                            backgroundImage: "url(https://c.animaapp.com/ma1evbt5xp47Lo/img/img-1.png)",
-                        }}
+                        style={{ backgroundImage: `url(${imageUrl(data.avatar)})` }}
                     />
                 </div>
             </div>

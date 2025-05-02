@@ -1,22 +1,9 @@
 import React from "react";
 import { Card, CardContent } from "../ui/card";
 import Badge from "../ui/badge.js";
+import { MapPinCheck } from "lucide-react";
 
-export default function UpcomingEventsSection() {
-    const upcomingEvents = [
-        {
-            id: 1,
-            title: "Workshop: Art Numérique",
-            dateLocation: "15 Mars 2025 - Palais de Tokyo, Paris",
-            status: "À venir",
-        },
-        {
-            id: 2,
-            title: "Exposition Solo",
-            dateLocation: "5 Avril 2025 - Galerie Moderne, Lyon",
-            status: "À venir",
-        },
-    ];
+export default function UpcomingEventsSection({ events }) {
 
     return (
         <section className="w-full py-20 px-4 md:px-20">
@@ -25,9 +12,9 @@ export default function UpcomingEventsSection() {
                     Événements à venir
                 </h2>
 
-                <div className="max-w-[896px] mx-auto space-y-6">
-                    {upcomingEvents.map((event) => (
-                        <a href={`/events/${event.id}`}>
+                <div className="max-w-[896px] mx-auto space-y-6 flex flex-col">
+                    {events.slice(0, 2).map((event) => (
+                        <a key={event.id} href={`/events/${event.id}`}>
                             <Card key={event.id} className="rounded-xl border border-gray-100 hover:shadow-md transition">
                                 <CardContent className="p-6">
                                     <div className="flex justify-between items-start">
@@ -36,12 +23,12 @@ export default function UpcomingEventsSection() {
                                                 {event.title}
                                             </h3>
                                             <p className="mt-3 text-base font-playfair text-gray-600 leading-4">
-                                                {event.dateLocation}
+                                                {event.start_date} To {event.end_date}
                                             </p>
                                         </div>
 
                                         <Badge className="bg-emerald-100 text-emerald-700 rounded-full px-4 py-1 font-playfair text-sm font-normal">
-                                            {event.status}
+                                            <MapPinCheck className="m-2 h-4 w-4" /> {event.location}
                                         </Badge>
                                     </div>
                                 </CardContent>

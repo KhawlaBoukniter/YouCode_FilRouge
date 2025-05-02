@@ -1,25 +1,7 @@
 import React from "react";
 import { Card, CardContent } from "../ui/card";
 
-export default function TimelineSection() {
-    const timelineEvents = [
-        {
-            year: "2025",
-            title: 'Exposition "Digital Dreams"',
-            location: "Centre Pompidou, Paris",
-        },
-        {
-            year: "2024",
-            title: "Résidence Artistique",
-            location: "Tokyo Art Foundation",
-        },
-        {
-            year: "2023",
-            title: "Prix de l'Innovation Artistique",
-            location: "Biennale de Venise",
-        },
-    ];
-
+export default function TimelineSection({ timelines }) {
     return (
         <section className="py-20 w-full max-w-[1440px] mx-auto">
             <Card className="border-none shadow-none bg-transparent">
@@ -30,7 +12,7 @@ export default function TimelineSection() {
                         </h2>
 
                         <div className="w-full max-w-4xl mx-auto">
-                            {timelineEvents.map((event, index) => (
+                            {timelines.map((event, index) => (
                                 <div key={index} className="flex mb-8 last:mb-0">
                                     <div className="w-32 flex justify-end pr-4">
                                         <span className="font-playfair text-gray-800 text-base text-right mt-0.5">

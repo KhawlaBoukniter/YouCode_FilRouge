@@ -20,6 +20,8 @@ export default function Portfolio() {
             try {
                 const res = await api.get(`artist/${id}/portfolio`);
                 setPortfolio(res.data);
+                console.log(res.data);
+
                 setLoading(false);
             } catch (err) {
                 navigate("/artist/portfolio/editor");
@@ -38,7 +40,7 @@ export default function Portfolio() {
 
             <main className="flex-1 w-full">
                 <HeroSection data={portfolio.artist} />
-                <About description={portfolio.artist.about} />
+                <About description={portfolio.artist.bio} />
                 <Timeline timelines={portfolio.timelines} />
                 <Gallery artworks={portfolio.artworks} />
                 <UpcomingEvents events={portfolio.events} />
