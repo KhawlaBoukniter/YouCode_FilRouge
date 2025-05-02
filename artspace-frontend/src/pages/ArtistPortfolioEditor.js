@@ -23,12 +23,16 @@ export default function ArtistPortfolioEditor() {
     const [gallery, setGallery] = useState([]);
     const [events, setEvents] = useState([]);
 
+    const [saving, setSaving] = useState(false);
+
     const handleSave = async () => {
+        setSaving(true);
         try {
             const formData = new FormData();
             formData.append("name", heroData.name);
             formData.append("short_bio", heroData.shortBio);
             formData.append("contact_email", heroData.contactEmail);
+            formData.append("about", aboutText);
             if (heroData.image) formData.append("image", heroData.image);
 
             await api.put("/my-profile", formData, {
@@ -57,7 +61,9 @@ export default function ArtistPortfolioEditor() {
                 <UpcomingEventsEditorSection events={events} onChange={setEvents} />
 
                 <div className="flex justify-center">
-                    <Button onClick={handleSave}>Enregistrer le Portfolio</Button>
+                    <Button onClick={handleSave} disabled={saving}>
+                        {saving ? "Enregistrement..." : "Enregistrer le Portfolio"}
+                    </Button>
                 </div>
             </main>
 
