@@ -1,27 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { Input } from "../ui/input";
 import Button from "../ui/button";
 import { TrashIcon } from "lucide-react";
 
 export default function GalleryEditorSection({ artworks = [], onChange }) {
-    const [gallery, setGallery] = useState(artworks);
 
     const handleUpdate = (index, field, value) => {
-        const updated = [...gallery];
+        const updated = [...artworks];
         updated[index][field] = value;
-        setGallery(updated);
         onChange(updated);
     };
 
     const handleAdd = () => {
-        const updated = [...gallery, { title: "", description: "", imageUrl: "" }];
+        const updated = [...artworks, { title: "", description: "", imageUrl: "" }];
         setGallery(updated);
         onChange(updated);
     };
 
     const handleDelete = (index) => {
-        const updated = gallery.filter((_, i) => i !== index);
-        setGallery(updated);
+        const updated = artworks.filter((_, i) => i !== index);
         onChange(updated);
     };
 
@@ -32,7 +29,7 @@ export default function GalleryEditorSection({ artworks = [], onChange }) {
             </h2>
 
             <div className="max-w-5xl mx-auto space-y-6">
-                {gallery.map((artwork, index) => (
+                {artworks.map((artwork, index) => (
                     <div key={index} className="flex flex-col gap-4 bg-white p-4 rounded-md shadow-sm border relative">
                         <Input
                             placeholder="Titre de l'œuvre"
