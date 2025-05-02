@@ -1,20 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import Button from "../ui/button";
 import ImageUpload from "../ui/ImageUpload";
 
 export default function HeroEditorSection({ data, onChange }) {
-    const [localData, setLocalData] = useState(data || {
-        name: "",
-        shortBio: "",
-        contactEmail: "",
-        image: null,
-    });
 
     const handleChange = (field, value) => {
-        const updated = { ...localData, [field]: value };
-        setLocalData(updated);
+        const updated = { ...data, [field]: value };
         onChange(updated);
     };
 
@@ -32,7 +24,7 @@ export default function HeroEditorSection({ data, onChange }) {
                         <label className="block text-sm font-medium text-gray-600">Nom</label>
                         <Input
                             placeholder="Claire Dubois"
-                            value={localData.name}
+                            value={data.name}
                             onChange={(e) => handleChange("name", e.target.value)}
                         />
                     </div>
@@ -42,7 +34,7 @@ export default function HeroEditorSection({ data, onChange }) {
                         <Textarea
                             rows={3}
                             placeholder="Artiste contemporaine spécialisée..."
-                            value={localData.shortBio}
+                            value={data.shortBio}
                             onChange={(e) => handleChange("shortBio", e.target.value)}
                         />
                     </div>
@@ -52,7 +44,7 @@ export default function HeroEditorSection({ data, onChange }) {
                         <Input
                             type="email"
                             placeholder="claire.dubois@artspace.com"
-                            value={localData.contactEmail}
+                            value={data.contactEmail}
                             onChange={(e) => handleChange("contactEmail", e.target.value)}
                         />
                     </div>
@@ -61,8 +53,9 @@ export default function HeroEditorSection({ data, onChange }) {
                 <div>
                     <label className="block text-sm font-medium text-gray-600 mb-2">Photo de profil</label>
                     <ImageUpload
-                        value={localData.image}
+                        value={data.image}
                         onFileSelect={handleImageSelect}
+                        title={"image"}
                         subtitle="Glissez une image ou cliquez"
                     />
                 </div>
