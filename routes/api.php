@@ -9,6 +9,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\RoomArtworkController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\TicketController;
@@ -27,6 +28,18 @@ Route::middleware('guest')->group(function () {
 
 Route::get('/events/{event}/tickets', [TicketController::class, 'getEventTickets']);
 Route::get('/rooms/public', [RoomController::class, 'getPublicRooms']);
+
+Route::get('/rooms/{id}', [RoomController::class, 'show']);
+
+Route::get('/artist/{id}/portfolio', [ArtistController::class, 'showPortfolio']);
+
+Route::get('/artworks', [ArtworkController::class, 'index']);
+
+Route::get('/all-events', [EventController::class, 'index']);
+
+Route::get('/artist/{id}/artworks', [ArtworkController::class, 'getByArtist']);
+
+Route::get('/rooms/{room}/assigned-artworks', [RoomArtworkController::class, 'getAssignedArtworks']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
@@ -58,6 +71,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/my-artworks', [ArtworkController::class, 'myArtworks']);
         Route::get('/my-stats', [ArtworkController::class, 'myStats']);
         Route::post('/my-profile', [ArtistController::class, 'updateProfile']);
+        Route::post('/rooms/{room}/assign-artwork', [RoomArtworkController::class, 'assignArtwork']);
 
         Route::get('/my-events', [EventController::class, 'artistEvents']);
         Route::post('/events', [EventController::class, 'store']);
@@ -99,22 +113,17 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/purchases', [PurchaseController::class, 'index'])->middleware('auth:api');
     });
 
-    Route::get('/rooms/{id}', [RoomController::class, 'show']);
 
     Route::get('/users/{user}/stats', [StatsController::class, 'userStats']);
 
-    Route::get('/artworks', [ArtworkController::class, 'index']);
     Route::get('/artworks/{artwork}', [ArtworkController::class, 'show']);
     Route::get('/artworks/{artwork}/comments', [CommentController::class, 'index']);
-
-    Route::get('/artist/{id}/portfolio', [ArtistController::class, 'showPortfolio']);
 
     Route::post('/comments', [CommentController::class, 'store']);
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
 
     Route::post('/me/avatar', [AuthController::class, 'uploadAvatar']);
 
-    Route::get('/all-events', [EventController::class, 'index']);
     Route::get('/events/{event}', [EventController::class, 'show']);
 
     Route::post('/checkout/{reservation}', [PaymentController::class, 'checkout']);

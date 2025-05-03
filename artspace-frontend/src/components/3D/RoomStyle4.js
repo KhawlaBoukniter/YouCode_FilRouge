@@ -1,9 +1,10 @@
-import React, { useRef } from 'react'
+import React, { useRef, Suspense } from 'react'
 import { Text, MeshReflectorMaterial } from '@react-three/drei'
 import { useFrame, useLoader } from '@react-three/fiber'
 import ClickToMove from './ClickToMove'
 import { TextureLoader } from 'three'
 import * as THREE from 'three'
+import { useGLTF } from '@react-three/drei'
 
 export default function RoomStyle4({ position = [0, 0, 0], controlsRef }) {
     const ceilingLights = useRef([])
@@ -24,6 +25,52 @@ export default function RoomStyle4({ position = [0, 0, 0], controlsRef }) {
     })
 
     const texture = useLoader(TextureLoader, '/textures/5.jpg')
+    const { scene: frameModel } = useGLTF('/models/artwork_frame.glb');
+
+    const renderFrames = () => {
+        const frames = []
+
+        // Mur droit
+        for (let i = 0; i < 3; i++) {
+            frames.push(
+                <primitive
+                    object={frameModel.clone()}
+                    key={`right-${i}`}
+                    position={[14.9, 1.5, 10 - i * 10]}
+                    rotation={[0, -Math.PI / 2, 0]}
+                    scale={[20, 20, 20]}
+                />
+            )
+        }
+
+        // Mur arrière
+        for (let i = 0; i < 3; i++) {
+            frames.push(
+                <primitive
+                    object={frameModel.clone()}
+                    key={`back-${i}`}
+                    position={[-10 + i * 9, 1.5, -14.9]}
+                    rotation={[0, 0, 0]}
+                    scale={[20, 20, 20]}
+                />
+            )
+        }
+
+        // Musr devant
+        for (let i = 0; i < 3; i++) {
+            frames.push(
+                <primitive
+                    object={frameModel.clone()}
+                    key={`front-${i}`}
+                    position={[-10 + i * 10, 1.5, 14.9]}
+                    rotation={[0, Math.PI, 0]}
+                    scale={[20, 20, 20]}
+                />
+            )
+        }
+
+        return frames
+    }
 
 
     return (
@@ -108,13 +155,6 @@ export default function RoomStyle4({ position = [0, 0, 0], controlsRef }) {
                 </mesh>
             ))}
 
-            {/* Faux tableaux mur arrière */}
-            {[[-8, 2.5, -14.8], [-4, 2.5, -14.8], [0, 2.5, -14.8], [4, 2.5, -14.8], [8, 2.5, -14.8]].map(([x, y, z], i) => (
-                <mesh key={i} position={[x, y, z]}>
-                    <planeGeometry args={[2.5, 3]} />
-                    <meshStandardMaterial color="#111" />
-                </mesh>
-            ))}
 
             {/* Éclairage global */}
             <ambientLight intensity={0.85} color="#ffffff" />
@@ -122,7 +162,7 @@ export default function RoomStyle4({ position = [0, 0, 0], controlsRef }) {
 
             {/* Titre mural minimaliste */}
             <Text
-                position={[0, 4.6, -14.8]}
+                position={[0, 5.6, -14.8]}
                 fontSize={0.4}
                 color="#444"
                 anchorX="center"
@@ -132,7 +172,11 @@ export default function RoomStyle4({ position = [0, 0, 0], controlsRef }) {
                 MODERN ROOM STYLE 4
             </Text>
 
+            <Suspense fallback={null}>{renderFrames()}</Suspense>
+
             <ClickToMove floorRef={floorRef} controlsRef={controlsRef} />
         </group>
     )
 }
+
+useGLTF.preload('/models/artwork_frame.glb')

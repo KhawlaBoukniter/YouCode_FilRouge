@@ -170,4 +170,10 @@ class ArtworkController extends Controller
             'message' => 'État du like mis à jour avec succès.'
         ]);
     }
+
+    public function getByArtist($id)
+    {
+        $artworks = Artwork::where('artist_id', $id)->get();
+        return response()->json(['artworks' => $artworks]);
+    }
 }

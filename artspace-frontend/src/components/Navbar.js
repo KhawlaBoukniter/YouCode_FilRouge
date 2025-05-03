@@ -5,13 +5,6 @@ import logo from "../assets/logos/logo_artspace.png";
 import { MenuIcon, XIcon, LogOutIcon } from "lucide-react";
 import api from "../api";
 
-const navItems = [
-    { name: "Accueil", path: "/" },
-    { name: "À propos", path: "/about" },
-    { name: "Galerie", path: "/gallery" },
-    { name: "Evenements", path: "/events" },
-    { name: "Musée 3D", path: "/museum/trending" },
-];
 
 const Navbar = () => {
     const location = useLocation();
@@ -19,6 +12,36 @@ const Navbar = () => {
     const isAuthenticated = localStorage.getItem("token");
     const [menuOpen, setMenuOpen] = useState(false);
     const [user, setUser] = useState(null);
+
+    const staticNavItems = [
+        { name: "Accueil", path: "/" },
+        { name: "À propos", path: "/about" },
+        { name: "Galerie", path: "/gallery" },
+        { name: "Evenements", path: "/events" },
+    ];
+
+    const [firstRoomId, setFirstRoomId] = useState(null);
+
+    useEffect(() => {
+        const fetchRooms = async () => {
+            try {
+                const res = await api.get('/rooms/public');
+                const rooms = res.data.rooms;
+                if (rooms.length > 0) {
+                    setFirstRoomId(rooms[0].id);
+                }
+            } catch (error) {
+                console.error('Erreur lors du chargement des salles :', error);
+            }
+        };
+        fetchRooms();
+    }, []);
+
+    const navItems = [
+        ...staticNavItems,
+        ...(firstRoomId ? [{ name: "Musée 3D", path: `/museum/${firstRoomId}` }] : []),
+    ];
+
 
     const imageUrl = (image) => {
         if (!image) return "/default-avatar.png";
@@ -54,6 +77,8 @@ const Navbar = () => {
         };
         fetchUser();
     }, []);
+
+
 
     const dashRoute = () => {
         if (!user) return "/";

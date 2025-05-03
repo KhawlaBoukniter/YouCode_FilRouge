@@ -1,26 +1,56 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { MapPinned } from 'lucide-react'
+import { Link, useParams, useNavigate } from 'react-router-dom'
+import { MapPinned, LogOut, UserRound } from 'lucide-react'
 import api from '../../api'
 
 const MuseumMenu = () => {
     const { roomId } = useParams()
     const [open, setOpen] = useState(false)
     const [rooms, setRooms] = useState([]);
+    const navigate = useNavigate();
+    const [artistId, setArtistId] = useState(null);
 
     useEffect(() => {
         api.get('/rooms/public')
             .then((res) => setRooms(res.data.rooms || []))
             .catch((err) => console.error(err));
-    }, []);
 
-    const allLinks = [...rooms.map(r => ({
+        api.get(`/rooms/${roomId}`)
+            .then((res) => {
+                const room = res.data.room;
+                if (room?.artist_id) setArtistId(room.artist_id);
+                console.log(room.artist_id);
+
+            })
+            .catch((err) => console.error(err));
+    }, [roomId]);
+
+    const allLinks = rooms.map((r) => ({
         name: r.name,
         to: r.id
-    }))];
+    }));
 
     return (
         <div className="fixed top-6 left-6 z-50">
+            <div className="flex gap-2 mb-3">
+                {artistId && (
+                    <button
+                        onClick={() => navigate(`/artist/${artistId}/portfolio`)}
+                        className="bg-white/80 hover:bg-white text-gray-700 border border-gray-300 px-3 py-2 rounded-full shadow-md transition"
+                        title="Voir le portfolio de l'artiste"
+                    >
+                        <UserRound className="w-5 h-5" />
+                    </button>
+                )}
+
+                <button
+                    onClick={() => navigate("/")}
+                    className="bg-white/80 hover:bg-white text-gray-700 border border-gray-300 px-3 py-2 rounded-full shadow-md transition"
+                    title="Sortir du musée"
+                >
+                    <LogOut className="w-5 h-5" />
+                </button>
+            </div>
             <button
                 className="flex items-center gap-2 text-sm bg-white/70 hover:bg-white shadow-md rounded-full px-4 py-2 border border-gray-300 backdrop-blur-md transition-all duration-300"
                 onClick={() => setOpen(!open)}

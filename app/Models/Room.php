@@ -25,4 +25,11 @@ class Room extends Model
     {
         return $this->belongsTo(Style::class);
     }
+
+    public function artworks()
+    {
+        return $this->belongsToMany(Artwork::class, 'room_artworks')
+            ->withPivot('position_key')
+            ->withTimestamps();
+    }
 }

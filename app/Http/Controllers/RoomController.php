@@ -26,6 +26,7 @@ class RoomController extends Controller
             'name' => $request->input('name'),
             'style_id' => $request->input('style_id'),
             'is_public' => $request->boolean('is_public'),
+            'max_artworks' => $request->input('max_artworks', 12),
         ];
 
         $room = $this->roomService->create($data);
@@ -54,5 +55,21 @@ class RoomController extends Controller
         return response()->json([
             'rooms' => $rooms
         ]);
+    }
+
+    public function assignArtwork(Request $request, Room $room)
+    {
+        $request->validate([
+            'artwork_id' => 'required|exists:artworks,id',
+            'position_key' => 'required|string'
+        ]);
+
+        $room->artworks()->wherePivot('position_key', $request->position_key)->detach();
+
+        $room->artworks()->attach($request->artwork_id, [
+            'position_key' => $request->position_key
+        ]);
+
+        return response()->json(['message' => 'Artwork assigned successfully']);
     }
 }

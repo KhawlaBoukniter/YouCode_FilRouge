@@ -22,15 +22,13 @@ export default function Portfolio() {
 
         async function fetchPortfolio() {
             try {
-                const token = localStorage.getItem("token");
+                // const token = localStorage.getItem("token");
 
-                const artistId = user?.artist?.id;
+                // const artistId = user?.artist?.id;
 
-                if (!artistId) return;
+                // if (!artistId) return;
 
-                const res = await api.get(`/artist/${artistId}/portfolio`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
+                const res = await api.get(`/artist/${id}/portfolio`);
 
                 if (isMounted) {
                     setPortfolio(res.data);
@@ -39,16 +37,7 @@ export default function Portfolio() {
             } catch (err) {
                 console.log("Erreur: ", err);
                 if (isMounted) {
-                    setPortfolio({
-                        artist: {
-                            name: user?.name,
-                            bio: "Aucune biographie pour le moment.",
-                            avatar: null
-                        },
-                        timelines: [],
-                        artworks: [],
-                        events: []
-                    });
+                    setPortfolio(null);
                     setLoading(false);
                 }
             }
@@ -58,9 +47,14 @@ export default function Portfolio() {
         return () => {
             isMounted = false;
         };
-    }, []);
+    }, [id]);
 
     if (loading) return <div className="p-10 text-center text-gray-600">Chargement...</div>;
+    if (!portfolio) return <div className="p-10 text-center text-red-500">Portfolio introuvable</div>;
+
+    const isOwner = user?.artist?.id?.toString() === id;
+    console.log(isOwner);
+
 
     return (
         <div className="flex flex-col min-h-screen bg-white">
@@ -68,9 +62,10 @@ export default function Portfolio() {
 
             <main className="flex-1 w-full">
                 <HeroSection data={{
-                    name: user?.name,
+                    name: portfolio.artist?.name || "Artiste inconnu",
                     email: portfolio.user?.email || "Email non défini",
                     avatar: portfolio.artist?.avatar || null,
+                    isOwner: isOwner,
                 }} />
                 <About description={portfolio.artist.bio || "Biographie non disponible"} />
                 <Timeline timelines={portfolio.timelines || []} />

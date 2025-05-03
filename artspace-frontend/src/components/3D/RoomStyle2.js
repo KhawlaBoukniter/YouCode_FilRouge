@@ -1,9 +1,10 @@
-import React, { useRef } from 'react'
+import React, { useRef, Suspense } from 'react'
 import { Text, Environment, MeshReflectorMaterial } from '@react-three/drei'
 import ClickToMove from './ClickToMove'
 import { useFrame, useLoader } from '@react-three/fiber'
 import { TextureLoader } from 'three'
 import * as THREE from 'three'
+import { useGLTF } from '@react-three/drei'
 
 export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
     const ceilingLights = useRef([])
@@ -16,7 +17,66 @@ export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
         })
     })
 
-    const texture = useLoader(TextureLoader, '/textures/19.jpg')
+    const texture = useLoader(TextureLoader, '/textures/19.jpg');
+    const { scene: frameModel } = useGLTF('/models/artwork_frame.glb');
+
+    const renderFrames = () => {
+        const frames = []
+
+        // Mur gauche
+        for (let i = 0; i < 3; i++) {
+            frames.push(
+                <primitive
+                    object={frameModel.clone()}
+                    key={`left-${i}`}
+                    position={[-14.9, 1.5, -10 + i * 10]}
+                    rotation={[0, Math.PI / 2, 0]}
+                    scale={[20, 20, 20]}
+                />
+            )
+        }
+
+        // Mur droit
+        for (let i = 0; i < 3; i++) {
+            frames.push(
+                <primitive
+                    object={frameModel.clone()}
+                    key={`right-${i}`}
+                    position={[14.9, 1.5, 10 - i * 10]}
+                    rotation={[0, -Math.PI / 2, 0]}
+                    scale={[20, 20, 20]}
+                />
+            )
+        }
+
+        // Mur arrière
+        for (let i = 0; i < 3; i++) {
+            frames.push(
+                <primitive
+                    object={frameModel.clone()}
+                    key={`back-${i}`}
+                    position={[-10 + i * 9, 1.5, -14.9]}
+                    rotation={[0, 0, 0]}
+                    scale={[20, 20, 20]}
+                />
+            )
+        }
+
+        // Musr devant
+        for (let i = 0; i < 3; i++) {
+            frames.push(
+                <primitive
+                    object={frameModel.clone()}
+                    key={`front-${i}`}
+                    position={[-10 + i * 10, 1.5, 14.9]}
+                    rotation={[0, Math.PI, 0]}
+                    scale={[20, 20, 20]}
+                />
+            )
+        }
+
+        return frames
+    }
 
     return (
         <group position={position}>
@@ -102,7 +162,11 @@ export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
                 Light Gallery
             </Text>
 
+            <Suspense fallback={null}>{renderFrames()}</Suspense>
+
             <ClickToMove floorRef={floorRef} controlsRef={controlsRef} />
         </group>
     )
 }
+
+useGLTF.preload('/models/artwork_frame.glb')
