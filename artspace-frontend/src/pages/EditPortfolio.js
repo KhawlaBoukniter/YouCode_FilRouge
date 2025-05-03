@@ -99,7 +99,6 @@ export default function EditPortfolio() {
             }
 
             alert("Portfolio mis à jour !");
-
             const artistId = user?.artist?.id;
             if (artistId) {
                 navigate(`/artist/${artistId}/portfolio`);
@@ -130,9 +129,9 @@ export default function EditPortfolio() {
                         {saving ? "Enregistrement en cours..." : "Enregistrer le portfolio"}
                     </Button>
                 </div>
-            </main>
+            </main >
 
             <Footer />
-        </div>
+        </div >
     );
 }

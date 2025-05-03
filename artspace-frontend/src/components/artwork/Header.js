@@ -115,19 +115,6 @@ export default function Header({ artwork, isSaved, isLiked, canEdit, canDelete, 
                         </div>
                     )}
 
-                    {!canEdit && (
-                        <div className="mt-6">
-                            <a href={`/checkout/${artwork.id}`}>
-                                <Button
-                                    disabled={isPurchased}
-                                    className={`h-12 w-full md:w-auto rounded-lg font-playfair text-base transition 
-                                        ${isPurchased ? "bg-gray-300 text-gray-600 cursor-not-allowed" : "bg-[#3a6b8f] text-white hover:bg-[#345c78]"}`}
-                                >
-                                    {isPurchased ? "Déjà achetée" : "Acheter"}
-                                </Button>
-                            </a>
-                        </div>
-                    )}
                 </div>
             </CardContent>
         </Card >
