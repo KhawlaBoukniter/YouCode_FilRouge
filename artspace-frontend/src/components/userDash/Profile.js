@@ -58,6 +58,13 @@ export default function Profile({ user }) {
                                     <LogOutIcon className="w-4 h-4 mr-2 md:mr-0" />
                                     <span className="">Déconnexion</span>
                                 </Button>
+
+                                <a href="/user/reservations">
+                                    <Button className="bg-[#3a6b8f] text-white hover:bg-[#2c5270]">
+                                        Mes réservations
+                                    </Button>
+                                </a>
+
                             </div>
                         </div>
                     </div>
