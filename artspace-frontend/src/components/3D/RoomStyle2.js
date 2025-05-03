@@ -1,12 +1,12 @@
-import React, { useRef, Suspense } from 'react'
-import { Text, Environment, MeshReflectorMaterial } from '@react-three/drei'
-import ClickToMove from './ClickToMove'
+import React, { useRef, Suspense, useState } from 'react'
+import { Text, Environment, Html, MeshReflectorMaterial, useGLTF } from '@react-three/drei'
 import { useFrame, useLoader } from '@react-three/fiber'
+import ClickToMove from './ClickToMove'
 import { TextureLoader } from 'three'
 import * as THREE from 'three'
-import { useGLTF } from '@react-three/drei'
+import api from '../../api'
 
-export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
+export default function RoomStyle2({ position = [0, 0, 0], controlsRef, artistId, user, roomId, artworksInRoom = [] }) {
     const ceilingLights = useRef([])
     const floorRef = useRef()
 
@@ -17,70 +17,156 @@ export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
         })
     })
 
-    const texture = useLoader(TextureLoader, '/textures/19.jpg');
-    const { scene: frameModel } = useGLTF('/models/artwork_frame.glb');
+    const texture = useLoader(TextureLoader, '/textures/19.jpg')
+
+
+    const artworkMap = {}
+    artworksInRoom.forEach(entry => {
+        artworkMap[entry.position_key] = entry.artwork
+    })
+
+    const FrameSlot = ({ position, rotation, user, artistId, roomId, slotKey, initialArtwork }) => {
+        const { scene: frameModel } = useGLTF('/models/artwork_frame.glb')
+
+        const isOwner = user?.role_id === 2 && user?.artist?.id === artistId
+        const [showSelector, setShowSelector] = useState(false)
+        const [artworks, setArtworks] = useState([])
+        const [selectedArtwork, setSelectedArtwork] = useState(initialArtwork || null)
+
+        const handleClick = async () => {
+            if (!showSelector) {
+                try {
+                    const token = localStorage.getItem("token")
+                    const res = await api.get(`/my-artworks`, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    })
+                    setArtworks(res.data.artworks || [])
+                } catch (err) {
+                    console.error("Erreur lors de la récupération des œuvres :", err)
+                }
+            }
+            setShowSelector(!showSelector)
+        }
+
+        const handleSelectArtwork = async (artwork) => {
+            setSelectedArtwork(artwork)
+            setShowSelector(false)
+            try {
+                const token = localStorage.getItem("token")
+                await api.post(`/rooms/${roomId}/assign-artwork`, {
+                    artwork_id: artwork.id,
+                    position_key: slotKey,
+                }, {
+                    headers: { Authorization: `Bearer ${token}` }
+                })
+            } catch (err) {
+                console.error("Erreur d’enregistrement:", err)
+            }
+        }
+
+        const imageUrl = (image) => {
+            return image.startsWith("http")
+                ? image
+                : `http://localhost:8000${image}`
+        }
+
+        return (
+            <group position={position} rotation={rotation}>
+                <primitive object={frameModel.clone()} scale={[20, 20, 20]} />
+                {selectedArtwork && (
+                    <Html center position={[0, 1.5, 0.1]} distanceFactor={8}>
+                        <div style={{
+                            width: '180px',
+                            height: '290px',
+                            border: '3px solid white',
+                            borderRadius: '6px',
+                            overflow: 'hidden',
+                            boxShadow: '0 0 8px rgba(0,0,0,0.4)',
+                            background: 'white',
+                        }}>
+                            <img
+                                src={imageUrl(selectedArtwork.image)}
+                                alt={selectedArtwork.title}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover'
+                                }}
+                            />
+                        </div>
+                    </Html>
+                )}
+
+                {isOwner && (
+                    <group position={[0, 1.2, 0.1]}>
+                        <mesh onClick={handleClick}>
+                            <circleGeometry args={[0.6, 32]} />
+                            <meshBasicMaterial color="#d3bb75" />
+                        </mesh>
+                        <Text
+                            fontSize={0.4}
+                            color="#fff"
+                            anchorX="center"
+                            anchorY="middle"
+                            position={[0, 0, 0.01]}
+                        >
+                            +
+                        </Text>
+                        {showSelector && (
+                            <Html center distanceFactor={10}>
+                                <div className="bg-white p-2 rounded shadow max-h-40 overflow-y-auto w-44">
+                                    <h3 className="text-sm font-bold mb-2 text-gray-700">Mes œuvres</h3>
+                                    {artworks.length === 0 ? (
+                                        <p className="text-xs text-gray-500">Aucune œuvre.</p>
+                                    ) : (
+                                        <ul className="space-y-1">
+                                            {artworks.data.map((art) => (
+                                                <li
+                                                    key={art.id}
+                                                    onClick={() => handleSelectArtwork(art)}
+                                                    className="cursor-pointer text-xs text-gray-800 hover:text-[#3a6b8f] transition"
+                                                >
+                                                    {art.title}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
+                            </Html>
+                        )}
+                    </group>
+                )}
+            </group>
+        )
+    }
 
     const renderFrames = () => {
-        const frames = []
+        const positions = []
 
-        // Mur gauche
+        // left/right/back/front
         for (let i = 0; i < 3; i++) {
-            frames.push(
-                <primitive
-                    object={frameModel.clone()}
-                    key={`left-${i}`}
-                    position={[-14.9, 1.5, -10 + i * 10]}
-                    rotation={[0, Math.PI / 2, 0]}
-                    scale={[20, 20, 20]}
-                />
-            )
+            positions.push({ key: `left-${i}`, pos: [-14.9, 1.5, -10 + i * 10], rot: [0, Math.PI / 2, 0] })
+            positions.push({ key: `right-${i}`, pos: [14.9, 1.5, 10 - i * 10], rot: [0, -Math.PI / 2, 0] })
+            positions.push({ key: `back-${i}`, pos: [-10 + i * 9, 1.5, -14.9], rot: [0, 0, 0] })
+            positions.push({ key: `front-${i}`, pos: [-10 + i * 10, 1.5, 14.9], rot: [0, Math.PI, 0] })
         }
 
-        // Mur droit
-        for (let i = 0; i < 3; i++) {
-            frames.push(
-                <primitive
-                    object={frameModel.clone()}
-                    key={`right-${i}`}
-                    position={[14.9, 1.5, 10 - i * 10]}
-                    rotation={[0, -Math.PI / 2, 0]}
-                    scale={[20, 20, 20]}
-                />
-            )
-        }
-
-        // Mur arrière
-        for (let i = 0; i < 3; i++) {
-            frames.push(
-                <primitive
-                    object={frameModel.clone()}
-                    key={`back-${i}`}
-                    position={[-10 + i * 9, 1.5, -14.9]}
-                    rotation={[0, 0, 0]}
-                    scale={[20, 20, 20]}
-                />
-            )
-        }
-
-        // Musr devant
-        for (let i = 0; i < 3; i++) {
-            frames.push(
-                <primitive
-                    object={frameModel.clone()}
-                    key={`front-${i}`}
-                    position={[-10 + i * 10, 1.5, 14.9]}
-                    rotation={[0, Math.PI, 0]}
-                    scale={[20, 20, 20]}
-                />
-            )
-        }
-
-        return frames
+        return positions.map(({ key, pos, rot }) => (
+            <FrameSlot
+                key={key}
+                slotKey={key}
+                position={pos}
+                rotation={rot}
+                user={user}
+                artistId={artistId}
+                roomId={roomId}
+                initialArtwork={artworkMap[key]}
+            />
+        ))
     }
 
     return (
         <group position={position}>
-            {/* Sol blanc lumineux */}
             <mesh ref={floorRef} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
                 <planeGeometry args={[30, 30]} />
                 <MeshReflectorMaterial
@@ -92,10 +178,10 @@ export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
                     mixBlur={2}
                     depthScale={1.2}
                     minDepthThreshold={0.9}
-                    maxDepthThreshold={2} />
+                    maxDepthThreshold={2}
+                />
             </mesh>
 
-            {/* Murs blanc cassé */}
             {[
                 [0, 2.5, -15],
                 [0, 2.5, 15],
@@ -108,31 +194,28 @@ export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
                 </mesh>
             ))}
 
-            {/* Plafond blanc pur */}
             <mesh position={[0, 6.05, 0]} receiveShadow>
                 <boxGeometry args={[30, 0.1, 30]} />
                 <meshStandardMaterial map={texture} side={THREE.DoubleSide} />
             </mesh>
 
-            {/* Lumières encastrées modernes */}
             {[-10, 0, 10].map((x, i) => (
                 <group key={i} position={[x, 6.05, 0]}>
-                    {/* Encastrement physique */}
                     <mesh position={[0, -0.05, 0]}>
                         <cylinderGeometry args={[0.6, 0.6, 0.3, 32]} />
-                        <meshStandardMaterial color="#5a5958" metalness={1} roughness={0.1} clearcoat={1} clearcoatRoughness={0.05} reflectivity={1} emissive="#fff5cc" emissiveIntensity={0.3} envMapIntensity={2} />
+                        <meshStandardMaterial
+                            color="#5a5958"
+                            metalness={1}
+                            roughness={0.1}
+                            clearcoat={1}
+                            clearcoatRoughness={0.05}
+                            reflectivity={1}
+                            emissive="#fff5cc"
+                            emissiveIntensity={0.3}
+                            envMapIntensity={2}
+                        />
                     </mesh>
-
-                    {/* Source de lumière réelle */}
-                    <pointLight
-                        position={[0, -0.02, 0]}
-                        intensity={2.5}
-                        distance={8}
-                        decay={2}
-                        color="#ffffff"
-                    />
-
-                    {/* Effet lumineux émissif visuel */}
+                    <pointLight position={[0, -0.02, 0]} intensity={2.5} distance={8} decay={2} color="#ffffff" />
                     <mesh ref={(el) => (ceilingLights.current[i] = el)} position={[0, -0.01, 0]}>
                         <cylinderGeometry args={[0.4, 0.4, 0.4, 32]} />
                         <meshStandardMaterial emissive="#ffffff" emissiveIntensity={1.5} color="#fefefe" />
@@ -141,26 +224,9 @@ export default function RoomStyle2({ position = [0, 0, 0], controlsRef }) {
             ))}
 
             <Environment preset="dawn" />
-
             <ambientLight intensity={0.2} color="#eae5dc" />
             <spotLight position={[0, 6, 5]} angle={0.3} penumbra={0.3} intensity={0.7} castShadow />
             <spotLight position={[0, 6, -5]} angle={0.3} penumbra={0.3} intensity={0.7} castShadow />
-
-            {/* Éclairage ambiant et spot */}
-            {/* <ambientLight intensity={1} color="#ebe7e5" />
-            <pointLight position={[0, 5, 0]} intensity={1.2} color="#fefefe" /> */}
-
-            {/* Titre mural sobre */}
-            <Text
-                position={[0, 4.5, -14.8]}
-                fontSize={0.5}
-                color="#3a3a3a"
-                anchorX="center"
-                anchorY="middle"
-                maxWidth={20}
-            >
-                Light Gallery
-            </Text>
 
             <Suspense fallback={null}>{renderFrames()}</Suspense>
 

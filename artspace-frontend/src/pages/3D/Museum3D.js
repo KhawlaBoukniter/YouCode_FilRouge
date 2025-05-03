@@ -62,6 +62,9 @@ export default function Museum3D() {
                         position={[0, 0, 0]}
                         artistId={room.artist_id}
                         user={user}
+                        roomId={room.id}
+                        artworksInRoom={artworksInRoom}
+
                     />
                 )}
                 {room.style_id === 3 && (
@@ -70,6 +73,9 @@ export default function Museum3D() {
                         position={[0, 0, 0]}
                         artistId={room.artist_id}
                         user={user}
+                        roomId={room.id}
+                        artworksInRoom={artworksInRoom}
+
                     />
                 )}
                 {room.style_id === 4 && (
@@ -78,6 +84,9 @@ export default function Museum3D() {
                         position={[0, 0, 0]}
                         artistId={room.artist_id}
                         user={user}
+                        roomId={room.id}
+                        artworksInRoom={artworksInRoom}
+
                     />
                 )}
                 {room.style_id !== 1 && room.style_id !== 2 && room.style_id !== 3 && room.style_id !== 4 && (
