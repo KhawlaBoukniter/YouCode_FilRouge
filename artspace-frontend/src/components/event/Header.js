@@ -5,7 +5,7 @@ import Button from "../ui/button";
 import api from "../../api";
 
 export default function Header({ event }) {
-    const userId = JSON.parse(localStorage.getItem("user")).artist.id;
+    const userId = JSON.parse(localStorage.getItem("user")).artist?.id;
 
     const handleDelete = async () => {
         const confirm = window.confirm("Voulez-vous vraiment supprimer cet événement ?");

@@ -29,6 +29,9 @@ export default function AllEvents() {
 
     const events = allEvents?.data || [];
     const totalPages = allEvents?.last_page || 1;
+    console.log(events);
+
+
 
     return (
         <div className="flex flex-col min-h-screen bg-[#f8f7f4]">

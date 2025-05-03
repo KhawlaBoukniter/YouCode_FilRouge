@@ -55,11 +55,6 @@ export default function ChooseRoomStyle({ artist }) {
                         key={style.id}
                         className="border rounded-xl shadow-sm overflow-hidden bg-white"
                     >
-                        <img
-                            src={style.image}
-                            alt={style.name}
-                            className="w-full h-48 object-cover"
-                        />
                         <div className="p-4">
                             <h3 className="text-lg font-medium text-gray-800">
                                 {style.name}

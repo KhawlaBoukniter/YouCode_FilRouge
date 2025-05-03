@@ -14,6 +14,9 @@ export default function UserDash() {
 
     const { user } = auth;
 
+    console.log(user.user);
+
+
     if (!user) return <p>Chargement...</p>;
 
     return (
@@ -22,10 +25,10 @@ export default function UserDash() {
             <main className="flex-1 w-full py-24 px-5 md:px-12">
 
                 <div className="max-w-[1280px] mx-auto space-y-8">
-                    <Profile user={user} />
-                    <Stats user={user} />
-                    <FavoriteArtworks user={user} />
-                    <PurchaseHistory user={user} />
+                    <Profile user={user.user} />
+                    <Stats user={user.user} />
+                    <FavoriteArtworks user={user.user} />
+                    <PurchaseHistory user={user.user} />
                 </div>
             </main>
             <Footer />

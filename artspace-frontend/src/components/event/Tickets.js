@@ -4,7 +4,7 @@ import Button from "../ui/button";
 import api from "../../api";
 
 export default function Tickets({ tickets }) {
-    const userId = JSON.parse(localStorage.getItem("user")).artist.id;
+    const userId = JSON.parse(localStorage.getItem("user")).artist?.id;
 
     console.log(userId);
 
