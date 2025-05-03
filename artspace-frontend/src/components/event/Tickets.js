@@ -6,9 +6,6 @@ import api from "../../api";
 export default function Tickets({ tickets }) {
     const userId = JSON.parse(localStorage.getItem("user")).artist?.id;
 
-    console.log(userId);
-
-
     const handleDelete = async (ticketId) => {
         const confirm = window.confirm("Voulez-vous vraiment supprimer ce ticket ?");
         if (!confirm) return;

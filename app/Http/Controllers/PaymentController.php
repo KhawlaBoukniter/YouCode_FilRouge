@@ -42,8 +42,8 @@ class PaymentController extends Controller
                     'quantity' => $reservation->quantity,
                 ]],
                 'mode' => 'payment',
-                'success_url' => URL::to('/checkout/success?session_id={CHECKOUT_SESSION_ID}'),
-                'cancel_url' => URL::to('/checkout/cancel'),
+                'success_url' => 'http://localhost:3000/user/reservations',
+                'cancel_url' => 'http://localhost:3000/payment-cancel',
             ]);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Erreur Stripe : ' . $e->getMessage()], 500);

@@ -82,7 +82,6 @@ Route::middleware('auth:api')->group(function () {
         Route::put('/tickets/{ticket}', [TicketController::class, 'update']);
         Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy']);
         Route::get('/my-tickets', [TicketController::class, 'myTickets']);
-
         Route::get('/artist/reservations', [ReservationController::class, 'forArtist']);
 
         Route::get('/my-stats/tickets', [StatsController::class, 'totalTickets']);
@@ -112,6 +111,7 @@ Route::middleware('auth:api')->group(function () {
 
         Route::get('/purchases', [PurchaseController::class, 'index'])->middleware('auth:api');
     });
+    Route::get('/tickets/{ticket}', [TicketController::class, 'show']);
 
 
     Route::get('/users/{user}/stats', [StatsController::class, 'userStats']);

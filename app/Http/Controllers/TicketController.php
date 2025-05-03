@@ -28,6 +28,12 @@ class TicketController extends Controller
         ], 201);
     }
 
+    public function show(Ticket $ticket)
+    {
+        $ticket->load('event');
+        return response()->json(['ticket' => $ticket]);
+    }
+
     public function update(TicketRequest $request, Ticket $ticket)
     {
         $updated = $this->ticketService->update($ticket, $request->validated());

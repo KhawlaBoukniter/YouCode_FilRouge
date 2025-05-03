@@ -26,6 +26,9 @@ import AllEvents from './pages/AllEvents';
 import TicketReservation from './pages/TicketReservation';
 import ArtistPortfolioEditor from './pages/ArtistPortfolioEditor';
 import EditPortfolio from './pages/EditPortfolio';
+import CheckoutSuccess from './pages/PaymentSuccess';
+import UserReservationsPage from './pages/UserReservationsPage';
+import PaymentSuccess from './pages/PaymentSuccess';
 
 function App() {
   return (
@@ -65,6 +68,8 @@ function App() {
       <Route path='/admin/stats' element={<AdminStats />} />
 
       <Route path='/tickets/:id/reserve' element={<TicketReservation />} />
+      <Route path='/payment-success' element={<PaymentSuccess />} />
+      <Route path='/user/reservations' element={<UserReservationsPage />} />
 
     </Routes>
   );
