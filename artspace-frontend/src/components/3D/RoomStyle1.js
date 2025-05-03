@@ -28,7 +28,7 @@ export default function RoomStyle1({ position = [0, 0, 0], controlsRef, artistId
     const FrameSlot = ({ position, rotation, user, artistId, roomId, slotKey, initialArtwork }) => {
         const { scene: frameModel } = useGLTF('/models/artwork_frame.glb')
 
-        const isOwner = user.role_id === 2 && user?.artist?.id === artistId
+        const isOwner = user?.role_id === 2 && user?.artist?.id === artistId
         const [showSelector, setShowSelector] = useState(false)
         const [artworks, setArtworks] = useState([])
         const [selectedArtwork, setSelectedArtwork] = useState(initialArtwork || null)
